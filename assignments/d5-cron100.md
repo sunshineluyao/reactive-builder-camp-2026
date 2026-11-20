@@ -6,12 +6,18 @@
 
 | 项目 | 凭证 |
 | --- | --- |
-| Lasna 定时合约 `BoundedCron` | 待部署 |
-| Base Sepolia 接收合约 `CronReceiver` | 待部署 |
-| 第 1 次触发 | 待核验 Lasna 请求交易及 Base Sepolia `CronRecorded(1, ...)` 交易 |
-| 第 2 次触发 | 待核验 Lasna 请求交易及 Base Sepolia `CronRecorded(2, ...)` 交易 |
+| Lasna 定时合约 `BoundedCron` | [0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b](https://lasna.reactscan.net/address/0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b) · [部署交易](https://lasna.reactscan.net/tx/0xb685edbf16e21a5ffa06bc1614fec32cf4b549a8f7498d5333234a4398370e5b) |
+| Base Sepolia 接收合约 `CronReceiver` | [0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21](https://sepolia.basescan.org/address/0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21) · [部署交易](https://sepolia.basescan.org/tx/0xf2539ab5eed34d23ab9d12590699cf9b15dd4be20e4f60862b170099f6cd44e6) |
+| 启动 Cron100 | [Lasna 启动交易](https://lasna.reactscan.net/tx/0x2fcbbbb6e6b459620b412ac9f2dcfe75edcc8b009d57fcb03de02d1eee8c9d2d) |
+| 第 1 次触发 · Lasna 区块 8797900 | [Lasna 触发](https://lasna.reactscan.net/tx/0xcf027168df6970bbf14de08b5f3231f2007ef2da8254d7452480cec1de52f52c) · [Base Sepolia 回调](https://sepolia.basescan.org/tx/0x5e81250cfe684865fb933836223078ce9d18add2f83d71b4fa9f0dbdd255e02f) · 16:31:47（新加坡时间） |
+| 第 2 次触发 · Lasna 区块 8798000 | [Lasna 触发](https://lasna.reactscan.net/tx/0x18357019ea70c69ad627fbb2f7980459b2c013eff35540acc8a3abdd0872feb6) · [Base Sepolia 回调](https://sepolia.basescan.org/tx/0x71358f482aeaeade2d6de0dee2d57c386de71f702d879949dfebc5a83fc6716e) · 16:33:34（新加坡时间） |
+| 自动停止 | [第二次请求和 `CronStopped` 事件](https://lasna.reactscan.net/tx/0x18357019ea70c69ad627fbb2f7980459b2c013eff35540acc8a3abdd0872feb6) |
 
-本地 Solidity 0.8.29 已编译，6 项 Foundry 测试通过。公开测试网凭证在部署并收到两次回调后更新。
+2026 年 11 月 20 日核验了两组交易回执。两条 Base Sepolia 回调记录的区块源分别与 Lasna 的第 1、2 次请求匹配，记录间隔为 107 秒。最终 `attempts() = 2`，`stopped() = true`，`subscribed() = false`。
+
+本次通过 [OpenFaucet](https://openfaucet.org/base-sepolia) 领取 [0.014 Base Sepolia 测试 ETH](https://sepolia.basescan.org/tx/0xbaf09a3b591d8bad4299da988656aee1c92a5e703974024428c5437564bd57f4)，再经 [Reactive 官方水龙头的兑换交易](https://sepolia.basescan.org/tx/0xd22bdf121fa66fece4e0820052803afd5621ad133eeac5e5166709ba0ed3579b) 获得 1 lREACT。
+
+本地 Solidity 0.8.29 已编译，6 项 Foundry 测试通过。
 
 ## 如何防止无限执行或耗尽余额
 
