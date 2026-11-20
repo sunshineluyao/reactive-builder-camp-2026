@@ -60,20 +60,20 @@ flowchart TD
 
 ### 3. 在 Remix 编译合约
 
-1. [在官方 Remix 打开 Cron100 文件](https://app.remix.live/#url=https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/experiments/cron100/remix/BoundedCronRemix.sol)。等待左侧 **File Explorer** 显示文件，然后打开 **BoundedCronRemix.sol**。如果链接只打开了主页，从 Remix 首页点 **GitHub** 导入并粘贴 [该文件的 GitHub URL](remix/BoundedCronRemix.sol)。文件包含两份合约，依赖固定到一个 Reactive SDK 提交。
-2. 点击左侧 **Solidity Compiler**，选择 **0.8.29**。在 **Advanced Configurations** 选择 **Cancun**，开启 **Optimization**，**Runs** 填 **200**。点击 **Compile BoundedCronRemix.sol**。
-3. 打开 **Deploy & Run Transactions**，将 **Environment** 设为 **Browser Extension**，选择 **MetaMask** 并允许 Remix 连接测试账户。部署时 Remix 的 **Value** 字段用于发送测试币，单位选项里的 **ether** 表示 10¹⁸ 个当前链的最小单位。在 Lasna 上这里计的是 lREACT。[Remix 导入说明](https://remix-ide.readthedocs.io/en/latest/import.html) · [Remix 部署面板](https://remix-ide.readthedocs.io/en/latest/run.html)
+1. [在官方 Remix 打开 Cron100 文件](https://app.remix.live/#url=https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/experiments/cron100/remix/BoundedCronRemix.sol&lang=en&optimize=true&runs=200&evmVersion=cancun&version=soljson-v0.8.29+commit.ab55807c.js)。等待左侧 **File Explorer** 显示文件，再打开 **BoundedCronRemix.sol**。首次打开如果出现 **AI and Analytics Preferences**，可从 **Manage Preferences** 选择设置后继续。如果链接只打开了主页，从 Remix 首页点 **GitHub** 导入并粘贴 [该文件的 GitHub URL](remix/BoundedCronRemix.sol)。文件包含两份合约，依赖固定到一个 Reactive SDK 提交。
+2. 点击左侧 **Compile** 打开 **Solidity Compiler**。导入链接已带编译设置。核对编译器为 **0.8.29**，在 **Settings**（旧版称 **Advanced Configurations**）里核对 **EVM Version = cancun**、**Optimizer = 开启**、**Runs = 200**。点击 **Compile**，等待显示 **Compiled**。
+3. 打开 **Deploy & Run Transactions**，将 **Environment** 设为 **Browser Extension**，选择 **MetaMask** 并允许 Remix 连接测试账户。部署时 Remix 的 **Value** 是同时发给合约的原生币数量，**wei** 表示当前链的最小单位。[Remix 导入说明](https://remix-ide.readthedocs.io/en/latest/import.html) · [Remix 部署面板](https://remix-ide.readthedocs.io/en/latest/run.html)
 
 ### 4. 部署并启动
 
 每次点 **Deploy** 前先切换 MetaMask 网络，再检查 Remix 的网络、合约下拉框、构造参数和 **Value**。在 MetaMask 确认交易，等待成功后，从 Remix **Deployed Contracts** 的实例复制新合约地址。
 
-| 顺序 | MetaMask 网络 | Remix 合约 | Value，单位选 ether | 展开 Deploy 填写的构造参数 |
+| 顺序 | MetaMask 网络 | Remix 合约 | Value，单位选 wei | 构造参数 |
 | --- | --- | --- | --- | --- |
-| 1 | Reactive Lasna | BoundedCron | 0.6 | minimumReserve_ 填 100000000000000000，即 0.1 lREACT |
-| 2 | Base Sepolia | CronReceiver | 0.002 | reactive_ 填第 1 步得到的 Lasna 定时合约地址 |
+| 1 | Reactive Lasna | BoundedCron | 600000000000000000（0.6 lREACT） | minimumReserve_ 填 100000000000000000（0.1 lREACT） |
+| 2 | Base Sepolia | CronReceiver | 2000000000000000（0.002 测试 ETH） | reactive_ 填第 1 步得到的 Lasna 定时合约地址 |
 
-1. 复制两份合约地址后切回 **Reactive Lasna**。在 Remix 选择 **BoundedCron** 实例。若切网后实例不在列表，在合约下拉框选 **BoundedCron**，在 **Contract address** 粘贴该地址，再点 **Add Contract**。旧版界面将同一操作标为 **At Address**。
+1. 复制两份合约地址后切回 **Reactive Lasna**。在 Remix 选择 **BoundedCron** 实例。若切网后实例不在列表，在 **Deploy** 的合约下拉框选 **BoundedCron**，进入 **Deployed Contracts → Add Contract**，在 **Contract address** 粘贴该地址并确认。旧版界面将同一操作标为 **At Address**。
 2. 将 **Value** 改为 **0**。展开 **arm**，在 **recipient_** 输入刚部署的 Base Sepolia 接收合约地址，点击调用并在 MetaMask 确认。启动交易成功后，点 **subscribed** 应读到 **true**。Cron100 此后会自动触发。
 3. 等两次 Cron100，通常是几分钟，区块时间和回调确认可能有波动。在 Lasna 上用 Remix 读取 **attempts = 2**、**stopped = true**、**subscribed = false**。切到 **Base Sepolia**，在 **CronReceiver** 上分别查询 **executedAt(1)** 和 **executedAt(2)**，预期各有一个非零 Unix 秒数。[Cron 定时事件](https://dev.reactive.network/reactive-contracts#cron) · [加载已部署合约](https://remix-ide.readthedocs.io/en/latest/run.html)
 
@@ -109,4 +109,4 @@ flowchart TD
 1. 提交 Solidity 变更会自动触发 **Cron100 tests and Remix source**。想先跑基线或重新运行时，在 fork 中进入该工作流，点击 **Run workflow**，选 **cron100-lab** 并再次点 **Run workflow**。该工作流只编译和测试，钱包交易在 Remix 中由 MetaMask 确认。[手动运行 GitHub Actions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
 2. 在成功运行的 **Summary** 页找到 **Remix-ready Solidity** 代码块，使用复制按钮。打开 [Remix](https://app.remix.live/)，在 **File Explorer** 新建 **BoundedCronLab.sol**，粘贴经过测试的源码。它已将依赖路径换成 Remix 支持的固定 GitHub URL。选中刚粘贴的文件，沿用上文[编译步骤](#3-在-remix-编译合约)第 2、3 项的设置，编译 **BoundedCronLab.sol**。之后[部署并启动](#4-部署并启动)，最后[查交易并提交](#5-找到交易链接并提交)。
 
-开发者复现时也可在说明中保留成功的 Actions 运行 URL，用来链接测试过的提交版本与自己的两组链上交易。
+开发者复现时可把成功的 Actions 运行 URL 与自己的两组链上交易一起保留，方便他人核验实际测试过的源码版本。[本仓库通过的基线运行](https://github.com/sunshineluyao/reactive-builder-camp-2026/actions/runs/44709692332)
