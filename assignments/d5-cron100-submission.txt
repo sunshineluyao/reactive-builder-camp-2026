@@ -1,0 +1,37 @@
+场景小实验 A：两次 Cron100 回调后停止
+
+本实验在 Lasna 订阅 Cron100。在两个不同的 Cron100 区块，定时合约各请求一次 Base Sepolia 回调，并在第二次请求时停止和取消订阅。接收合约记录运行序号、源 Cron 区块号和执行时间戳。两次回调均成功，记录间隔 107 秒。
+
+1. 合约地址
+
+Lasna 定时合约 BoundedCron
+0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b
+https://lasna.reactscan.net/address/0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b
+
+Base Sepolia 接收合约 CronReceiver
+0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21
+https://sepolia.basescan.org/address/0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21
+
+2. 两次触发的交易链接
+
+第 1 次，Lasna Cron 区块 8797900
+Lasna 触发交易
+https://lasna.reactscan.net/tx/0xcf027168df6970bbf14de08b5f3231f2007ef2da8254d7452480cec1de52f52c
+Base Sepolia 成功回调
+https://sepolia.basescan.org/tx/0x5e81250cfe684865fb933836223078ce9d18add2f83d71b4fa9f0dbdd255e02f
+
+第 2 次，Lasna Cron 区块 8798000
+Lasna 触发交易
+https://lasna.reactscan.net/tx/0x18357019ea70c69ad627fbb2f7980459b2c013eff35540acc8a3abdd0872feb6
+Base Sepolia 成功回调
+https://sepolia.basescan.org/tx/0x71358f482aeaeade2d6de0dee2d57c386de71f702d879949dfebc5a83fc6716e
+
+3. 防失控说明
+
+合约对每个新的 Cron100 区块最多发起一次回调请求，失败的请求也计入次数。达到两次后停止发起请求并取消订阅。Lasna 定时合约余额低于 0.1 lREACT 时提前停止。若取消订阅失败，合约仍保持停止状态，部署者可在 Lasna 上调用 stop() 重试取消。每次回调的 gas 上限为 300,000。Base Sepolia 接收合约校验官方回调代理和授权的 Lasna 合约，每个运行序号只保存一次，并用 block.timestamp 记录执行时间。
+
+链上证据和合约源码
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d5-cron100.md
+
+浏览器复现指南和资金流图
+https://github.com/sunshineluyao/reactive-builder-camp-2026/tree/main/experiments/cron100
