@@ -68,7 +68,7 @@ Base Sepolia 的 **Callback Proxy** 是 **0x476F44b11F5C942c58f4c8E3d0300E571074
 
 ## 6. 粘贴到作业提交框
 
-将四个括号里的位置换成自己的记录，截图另行上传。
+把自己的三笔交易链接和失败实验记录写入 [D4 作业记录](../../assignments/d4-cross-chain-callback.md)。提交训练营作业时，粘贴下面的文字并上传失败截图。
 
 ~~~text
 跨链回调三步走
