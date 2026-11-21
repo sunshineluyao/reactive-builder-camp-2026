@@ -1,10 +1,12 @@
 # 用例拆解卡 · 稳定币价差的跨链预警
 
+> 正式提交链接见 [D1 用例拆解卡](../notes/d1-use-case.md)。
+
 我想给 Base 上的稳定币风险仪表板添加一条预警。Ethereum 上的 USDC/USDT 报价偏离 1:1 超过设定阈值时，仪表板可以从 Base 上读到告警，并追溯到原始交易。
 
 ## 1. 监听哪条链、哪个合约的什么事件？
 
-监听 Ethereum 主网（链 ID `1`）上 Uniswap v3 的 USDC/USDT 交易池（费率 0.01%，地址 `0x3416cF6C708Da44DB2624D63ea0AAef7113527C6`）发出的 `Swap` 事件。每次交换后，事件中的 `sqrtPriceX96` 记录了该池的价格信息。[交易池](https://www.geckoterminal.com/eth/pools/0x3416cf6c708da44db2624d63ea0aaef7113527c6) · [链上 Swap 日志](https://etherscan.io/tx/0x3a5e490d4ebe21f495b26daa0d806457f40bd31b8da0b4e79d637b057f784078#eventlog) · [Uniswap 事件定义](https://github.com/Uniswap/v3-core/blob/main/contracts/interfaces/pool/IUniswapV3PoolEvents.sol)
+监听 Ethereum 主网（链 ID `1`）上 Uniswap v3 的 USDC/USDT 交易池（费率 0.01%，地址 `0x3416cF6C708Da44DB2624D63ea0AAef7113527C6`）发出的 `Swap` 事件。每次交换后，事件中的 `sqrtPriceX96` 记录了该池的价格信息。[交易池](https://www.geckoterminal.com/eth/pools/0x3416cf6c708da44db2624d63ea0aaef7113527c6) · [已核验的 Swap 日志（索引 906）](https://etherscan.io/tx/0x08be604cced2000dfecae34acb01009104c6d277bd27b56fa636ca54246f68d3#eventlog) · [Uniswap 事件定义](https://github.com/Uniswap/v3-core/blob/main/contracts/interfaces/pool/IUniswapV3PoolEvents.sol)
 
 ## 2. 满足什么条件时触发？
 
