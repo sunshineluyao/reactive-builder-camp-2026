@@ -13,7 +13,7 @@ flowchart TD
 ## 1. 准备 MetaMask 和测试币
 
 1. 沿用 D5 的测试账户。在 MetaMask 确认两张网的 Chain ID 分别为 **Base Sepolia 84532** 和 **Reactive Lasna 5318007**。钱包交易只用两张测试网的测试币。[添加网络和领取测试币](../cron100/README.md#1-在-metamask-添加两条测试网)
-2. 检查两张网的钱包余额。下面复用模板的合约预算，需要 **0.02 测试 ETH 加 Base Sepolia gas**，以及 **0.5 lREACT 加 Lasna gas**。如果两张网都要补币，可先在 OpenFaucet 领取约 **0.04 Base Sepolia 测试 ETH**，再在 Base Sepolia 向官方水龙头 **0x2afaFD298b23b62760711756088F75B7409f5967** 发送 **0.01 测试 ETH**。同一地址会在 Lasna 收到 **1 lREACT**。[OpenFaucet](https://openfaucet.org/) · [Reactive 官方领币方法](https://dev.reactive.network/reactive-mainnet#reactive-faucet)
+2. 检查两张网的钱包余额。本次实测使用 **0.001 测试 ETH 加 Base Sepolia gas**，以及 **0.15 lREACT 加 Lasna gas**。如果两张网都要补币，可先在 OpenFaucet 领取约 **0.02 Base Sepolia 测试 ETH**，再在 Base Sepolia 向官方水龙头 **0x2afaFD298b23b62760711756088F75B7409f5967** 发送 **0.01 测试 ETH**。同一地址会在 Lasna 收到 **1 lREACT**。[OpenFaucet](https://openfaucet.org/) · [Reactive 官方领币方法](https://dev.reactive.network/reactive-mainnet#reactive-faucet)
 
 ## 2. 在 Remix 编译三份合约
 
@@ -28,8 +28,8 @@ flowchart TD
 | 顺序 | MetaMask 网络 | 合约 | Value（wei） | 构造参数 |
 | --- | --- | --- | --- | --- |
 | 1 | Base Sepolia | CampOrigin | 0 | 无 |
-| 2 | Reactive Lasna | CampReactive | 500000000000000000（0.5 lREACT） | 按下表设置 |
-| 3 | Base Sepolia | CampCallback | 20000000000000000（0.02 测试 ETH） | proxy_ 填 Base Sepolia 官方 Proxy，reactive_ 填第 2 步的 CampReactive 地址 |
+| 2 | Reactive Lasna | CampReactive | 150000000000000000（0.15 lREACT） | 按下表设置 |
+| 3 | Base Sepolia | CampCallback | 1000000000000000（0.001 测试 ETH） | proxy_ 填 Base Sepolia 官方 Proxy，reactive_ 填第 2 步的 CampReactive 地址 |
 
 | CampReactive 构造参数 | 填入 |
 | --- | --- |
@@ -38,7 +38,7 @@ flowchart TD
 | originTopic0_ | 114684359751101065429392085520984714040648842024659507369580916668773914000541 |
 | destChainId_ | 84532 |
 | threshold_ | 100 |
-| limit_ | 5 |
+| limit_ | 1 |
 
 Base Sepolia 的 **Callback Proxy** 是 **0x476F44b11F5C942c58f4c8E3d0300E5710743585**。表里的 originTopic0_ 以十进制表示 **Ping(address,uint256)** 事件签名的哈希，十六进制为 **0xfd8d0c1dc3ab254ec49463a1192bb2423b3b851adedec1aa94dcd362dc063c9d**。[官方 Proxy 表](https://dev.reactive.network/origins-and-destinations#testnet-chains)
 
@@ -68,7 +68,7 @@ Base Sepolia 的 **Callback Proxy** 是 **0x476F44b11F5C942c58f4c8E3d0300E571074
 
 ## 6. 粘贴到作业提交框
 
-把自己的三笔交易链接和失败实验记录写入 [D4 作业记录](../../assignments/d4-cross-chain-callback.md)。提交训练营作业时，粘贴下面的文字并上传失败截图。
+已归档 [本次实测的三笔交易、失败截图和 Mermaid 工作流](../../assignments/d4-cross-chain-callback.md)，可直接复制 [纯文本提交稿](../../assignments/d4-cross-chain-callback-submission.txt)。重新部署时，填入本次复现的实际交易链接，并上传对应的失败截图。
 
 ~~~text
 跨链回调三步走

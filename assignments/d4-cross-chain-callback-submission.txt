@@ -1,0 +1,24 @@
+【必做】跨链回调三步走
+
+Base Sepolia → Lasna → Base Sepolia。源合约发出 Ping(500)，Lasna 执行 react()，Base Sepolia 目标合约发出 Handled。三笔交易对应同一次源事件，目标合约 count() = 1、lastValue() = 500。
+
+1. 源链事件交易（Base Sepolia）
+https://sepolia.basescan.org/tx/0xd762648adca1999553c18986bb08588c35269f372f7910976e4aedc37710e9db
+
+2. Reactive 执行交易（Lasna）
+https://lasna.reactscan.net/tx/0xcc498be24f04699e4af51def4561b61f90454c96ba4d59e92e80a9b6356e3de0
+
+3. 目标链回调交易（Base Sepolia）
+https://sepolia.basescan.org/tx/0xc665874798405beee6a879354ce874c3fa182748dfdf89b561f6f658c9f8e2a4
+
+失败实验交易（Base Sepolia）
+https://sepolia.basescan.org/tx/0x4fa54872e9d6f55c1cfa3f13c444078a62668f8dbcc630e65272bfe7be9fd7f1
+
+失败原因
+实验测试钱包直接调用 onEvent 时，msg.sender 是该钱包地址。onlyServiceProvider 只允许 Base Sepolia 官方 Callback Proxy 调用，因此交易触发 NotAuthorized 并回滚。
+
+失败实验截图
+https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/assignments/d4-wallet-revert.jpg
+
+GitHub 实测记录和 Mermaid 工作流
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d4-cross-chain-callback.md
