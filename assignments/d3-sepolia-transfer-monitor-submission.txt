@@ -1,0 +1,19 @@
+【第一次部署】监控 Sepolia 上的代币转账
+
+1. Lasna 监控合约地址
+https://lasna.reactscan.net/address/0x86f87a011E240F5480495553c75bc0ca6F6628B6
+
+2. Lasna 上 react() 被调用的交易
+https://lasna.reactscan.net/tx/0x6cde9b2ea78204a1aed76970acbb1a37fcc702bf1f56c3479f644b43ed9913aa
+
+订阅过滤条件
+仅订阅 Ethereum Sepolia（链 ID 11155111）上测试 LINK 合约 0x779877A7B0D9E8603169DdbD7836e478b4624789 的 ERC-20 Transfer 事件，金额大于 0 才计数，计满 1 次后自动取消订阅。
+
+本次实测
+Ethereum Sepolia 的一笔 25 LINK 测试代币转账触发了 react()，监控合约计数为 1 后自动退订。
+
+对应的 Ethereum Sepolia 源交易
+https://sepolia.etherscan.io/tx/0x750bf3a2a4fc7c4f8a6e672401e63887e43402e09722d09cecc34f653defe2d0
+
+GitHub 实测记录和 Mermaid 工作流
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d3-sepolia-transfer-monitor.md
