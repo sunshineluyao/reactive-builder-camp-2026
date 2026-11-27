@@ -4,13 +4,20 @@
 
 当 USDC/USDT 模拟报价偏离 1:1 超过 0.5% 时，Ethereum Sepolia 提供报价证据，Reactive Lasna 请求跨链回调，Base Sepolia 记录告警。赛道 3 的链下模型根据可核对的美元报价和价格走势决定是否升级人工复核。
 
-### 项目演示 · 2 分 30 秒
+**[公开测试网演示视频 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · **[三个合约地址、三笔交易与复现说明](track3/README.md)** · [原始回执 JSON](track3/evidence/public-run.json) · [复制训练营提交链接](assignments/hackathon-submission.txt)
 
-![完整无声演示，含中文字幕：0.9930 的模拟报价触发一次跨链告警，模型根据美元参考证据给出三种复核结果。](track3/video/demo.gif)
+2026 年 11 月 27 日完成六次测试网签名。0.9990 的对照报价只产生源链记录。0.9930 的测试报价触发了 Lasna 的回调请求，Base Sepolia 记下一条预警。公开运行缺少同期美元证据，复核程序暂缓评分。录屏还演示了模型在合成价格证据齐全时给出的两种建议。
 
-[下载英文解说 MP4](https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/track3/video/demo.mp4) · [截图、中英文字幕与分段时间](track3/video/README.md) · [项目、安装与验证](track3/README.md) · [新增代码的 MIT 许可证](track3/LICENSE)
+[![两次模拟报价经过 Lasna 的阈值判断，0.9930 在 Base 触发预警。链下系统核对回执和市场证据后决定复核优先级。](track3/architecture.png)](track3/README.md#从报价到人工复核)
 
-当前演示提供三条独立本地 EVM 的原始回执、可重复的合约运行和 AI 决策。项目 README 标明公开测试网部署的核验状态。
+<details>
+<summary>查看本地三链演练动画（2 分 30 秒，中文字幕）</summary>
+
+![本地回放中的阈值、三笔回执与复核决定](track3/video/demo.gif)
+
+[本地演练音频、字幕和截图](track3/video/README.md) · [新增代码的 MIT 许可证](track3/LICENSE)
+
+</details>
 
 ## 训练营作业
 

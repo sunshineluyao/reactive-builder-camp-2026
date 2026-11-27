@@ -1,0 +1,5 @@
+仓库链接
+https://github.com/sunshineluyao/reactive-builder-camp-2026
+
+演示视频链接（2 分 30 秒，英文讲解、中文字幕）
+https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4

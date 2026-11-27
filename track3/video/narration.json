@@ -49,13 +49,17 @@
       "t": 69.5,
       "chapter": "One event, three receipts",
       "en": "The destination contract records the deviation. The review queue can trace that alert back to the quote that triggered it.",
-      "zh": "目标合约记录价格偏差。复核队列中的告警可以追溯到触发它的源链报价。"
+      "zh": "目标合约记录价格偏差。复核队列中的告警可以追溯到触发它的源链报价。",
+      "public_en": "Base Sepolia recorded this alert. Its block timestamp was two seconds after the source block. Both receipts identify the same quote.",
+      "public_zh": "Base Sepolia 已记录这条预警。两端区块时间戳相差 2 秒，回执指向同一笔报价。"
     },
     {
       "t": 79.0,
       "chapter": "A model reviews the evidence",
       "en": "The price difference alone cannot tell us which asset moved against the dollar. The model also sees recent pair prices and independent dollar references.",
-      "zh": "仅凭两币的相对价格，无法判断谁偏离美元。模型还读取近期报价和独立美元参考价。"
+      "zh": "仅凭两币的相对价格，无法判断谁偏离美元。模型还读取近期报价和独立美元参考价。",
+      "public_en": "This public run had no dollar reference packet, so the system withheld its score. We now replay the same alert with synthetic price history and dollar quotes.",
+      "public_zh": "本次公网运行缺少美元参考价，系统保留告警并暂缓评分。接下来的回放使用合成走势和美元报价。"
     },
     {
       "t": 90.0,
@@ -73,7 +77,9 @@
       "t": 111.0,
       "chapter": "The same alert, different context",
       "en": "Remove a required dollar reference. The evidence check returns insufficient evidence, so the system withholds the model score and requests human review.",
-      "zh": "移除必要的美元参考价后，证据检查返回“证据不足”，不输出模型分数，交给人工复核。"
+      "zh": "移除必要的美元参考价后，证据检查返回“证据不足”，不输出模型分数，交给人工复核。",
+      "public_en": "Remove one required dollar quote. The evidence check returns insufficient evidence and withholds the score until a matching reference is supplied.",
+      "public_zh": "移除一项必要的美元参考价，系统返回“证据不足”，等待补齐证据后再评分。"
     },
     {
       "t": 122.4,

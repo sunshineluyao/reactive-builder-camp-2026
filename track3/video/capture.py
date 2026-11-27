@@ -7,6 +7,7 @@ import json
 import os
 import threading
 import time
+import urllib.request
 from contextlib import ExitStack, contextmanager
 from pathlib import Path
 
@@ -123,10 +124,30 @@ def education(page, url):
     return started
 
 
-def review(page, base, public_file):
+def use_host_rpc(page):
+    """Forward the viewer's read-only RPC calls over the host's HTTPS connection."""
+    for role, network in page.evaluate('window.ReceiptProof.networks').items():
+        endpoint = os.environ.get(role.upper() + '_RPC') or network['rpc']
+        def forward(route, request, endpoint=endpoint):
+            body = request.post_data_json
+            if not isinstance(body, dict) or body.get('method') not in {
+                'eth_chainId', 'eth_getTransactionReceipt', 'eth_getBlockByNumber'
+            }:
+                route.abort()
+                return
+            query = urllib.request.Request(endpoint, data=json.dumps(body).encode(),
+                                           headers={'Content-Type':'application/json'})
+            with urllib.request.urlopen(query, timeout=18) as reply:
+                route.fulfill(status=reply.status, content_type='application/json', body=reply.read())
+        page.route(network['rpc'].rstrip('/') + '/', forward)
+
+
+def review(page, base, public_file, host_rpc):
     page.add_init_script(POINTER)
     page.goto(base + '/review/?source=local')
     if public_file:
+        if host_rpc:
+            use_host_rpc(page)
         page.locator('#manifest-input').set_input_files(public_file)
     mode = 'live' if public_file else 'local'
     page.locator(f'.run-notice[data-state="{mode}"]').wait_for(timeout=90000)
@@ -136,6 +157,7 @@ def review(page, base, public_file):
     if public_file:
         # Verify inclusion before using public copy. No cached/offline fallback is accepted.
         expect(page.locator('#trace .leg-ids a')).to_have_count(3)
+        expect(page.locator('#result-box')).to_have_attribute('data-decision','insufficient')
     started = time.monotonic()
     wait_until(page,started,10.7)
     scroll_to(page,'#trace')
@@ -178,6 +200,7 @@ def main():
     parser.add_argument('--chrome',default=os.environ.get('CHROMIUM_PATH'),help='Optional path to Chromium/Chrome for Testing')
     parser.add_argument('--cache',type=Path,default=Path.home()/'.cache/reactive-wanim')
     parser.add_argument('--public-manifest',type=Path,help='Use a signed run only after live RPC inclusion verification')
+    parser.add_argument('--host-rpc',action='store_true',help='Use host HTTPS for live RPC reads when recording behind a proxy')
     args=parser.parse_args()
     work=args.work.resolve()
     work.mkdir(parents=True,exist_ok=True)
@@ -192,7 +215,7 @@ def main():
         stack.callback(browser.close)
         cards(browser,work,site)
         record(browser,work,'threshold',1088,lambda p:education(p,visual),29.1)
-        record(browser,work,'review',1280,lambda p:review(p,site,args.public_manifest),97)
+        record(browser,work,'review',1280,lambda p:review(p,site,args.public_manifest,args.host_rpc),97)
     marker.write_text(json.dumps({'mode':'public' if args.public_manifest else 'local', 'thresholdSeconds':29.1, 'reviewSeconds':97},indent=2)+'\n')
     print(f'Saved verified screen captures in {work}')
 
