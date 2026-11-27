@@ -4,7 +4,9 @@
 
 DAO 财库看到 USDC/USDT 跌到 0.9930 时，需要先分清是单池报价异常，还是有独立美元报价支持的风险。项目把引发告警的源交易、Reactive 执行和目标回调串在一起，并用链下模型决定是否交由人工复核。所有链上报价均由测试报价合约发布。
 
-[演示视频](https://reactive-stablecoin-evidence.zlysunshine.chatgpt.site/video/) · [MP4](video/demo.mp4) · [部署页面](https://reactive-stablecoin-evidence.zlysunshine.chatgpt.site/site/) · [交互复核](https://reactive-stablecoin-evidence.zlysunshine.chatgpt.site/review/) · [阈值动画](https://reactive-stablecoin-evidence.zlysunshine.chatgpt.site/visual/)
+![完整的 2 分 30 秒无声演示，含中文字幕：模拟报价越过阈值后，三份回执指向同一笔告警，模型给出复核决定。](video/demo.gif)
+
+[下载英文解说 MP4](https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/track3/video/demo.mp4) · [截图、中英文字幕与分段时间](video/README.md) · [Wanim 阈值动画](visual/README.md)
 
 ## 运行状态与地址
 
@@ -43,6 +45,8 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 打开 <http://localhost:8080/review/>。页面从原始日志还原报价、时间与证据 ID。点击 **Pool-only movement** 或 **Missing USD reference** 可对同一事件更换证据，也可导入项目的 [JSON 样例](model/context-example.json)。页面提供两个 USD 输入的来源、时间和模型输出。直接运行 `python3 visual/serve.py --port 8767` 可缓存 Wanim，离线重放阈值画面。[动画复现](visual/README.md)
 
+同一本地服务也提供[有声视频播放器](http://localhost:8080/video/)、[交互阈值动画](http://localhost:8080/visual/)和[部署工作台](http://localhost:8080/site/)。
+
 ## 从零运行三个 EVM
 
 安装 Foundry v1.7.1（使用 `anvil` 和 `cast`）与原生 Solidity `solc 0.8.29+commit.ab55807c`，将可执行文件放入 PATH。编译目标是 Cancun，优化 200 次。[Foundry 版本](https://github.com/foundry-rs/foundry/releases/tag/v1.7.1) · [Solidity 版本](https://github.com/ethereum/solidity/releases/tag/v0.8.29)
@@ -59,7 +63,7 @@ node --test tests/wallet.test.js
 
 ## 部署到公开测试网
 
-在装有 MetaMask 的浏览器打开[部署工作台](https://reactive-stablecoin-evidence.zlysunshine.chatgpt.site/site/)，或在前述本地服务打开 <http://localhost:8080/site/>。选择同一测试账户，准备 Ethereum Sepolia ETH、Lasna lREACT、Base Sepolia ETH。每一步都由钱包显示签名请求。费用储备另加相应网络测试 gas。
+按上面的步骤启动本地服务，在装有 MetaMask 的浏览器打开 <http://localhost:8080/site/>。选择同一测试账户，准备 Ethereum Sepolia ETH、Lasna lREACT、Base Sepolia ETH。每一步都由钱包显示签名请求。费用储备另加相应网络测试 gas。
 
 | 顺序 | 网络 | 钱包动作 |
 | --- | --- | --- |

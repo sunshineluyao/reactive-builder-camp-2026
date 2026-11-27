@@ -2,6 +2,10 @@
 
 This Wanim scene illustrates the USDC/USDT price gate in `ReactiveAlert.react()`. The green band covers 0.9950 through 1.0050 USDT per USDC, including both endpoints. The chart uses simulated quotes and the readout describes what the price gate would do. The separate receipt evidence demonstrates an actual callback.
 
+![Wanim threshold chapter. Simulated quotes of 0.9990 and 0.9950 stay within the band. A quote of 0.9930 triggers a callback request.](../video/demo.threshold.gif)
+
+[Full captioned demo and narration](../video/README.md) · [Editable Python scene](threshold.py)
+
 | Simulated quote | Absolute deviation from 1.0000 | Price-gate decision |
 | --- | --- | --- |
 | 0.9990 | 10 bp / 0.10% | Observe |
