@@ -14,25 +14,49 @@ interface IDebt { function debt(address payer) external view returns (uint256); 
 /// Both the Lasna service and the destination proxy settle fees against the funded contract.
 abstract contract ServiceFees {
     address payable public immutable service;
+    uint256 public immutable maxFeePerPayment;
+    uint256 public immutable lifetimeFeeCap;
+    uint256 public remainingFeeBudget;
     error WrongService();
     error PaymentFailed();
     error BadAddress();
-    constructor(address provider) {
+    error FeeTooLarge();
+    error FeeBudgetExceeded();
+    error InsufficientFeeBalance();
+    error ExcessFunding();
+    constructor(address provider, uint256 perPayment, uint256 lifetime) payable {
         if (provider == address(0)) revert BadAddress();
+        if (msg.value > lifetime) revert ExcessFunding();
         service = payable(provider);
+        maxFeePerPayment = perPayment;
+        lifetimeFeeCap = lifetime;
+        remainingFeeBudget = lifetime;
     }
-    receive() external payable {}
+    receive() external payable { checkFunding(); }
     function pay(uint256 amount) external {
         if (msg.sender != service) revert WrongService();
         sendFee(amount);
     }
     function coverDebt() external payable {
-        uint256 amount = IDebt(service).debt(address(this));
-        if (amount != 0) sendFee(amount);
+        if (msg.value != 0) checkFunding();
+        sendFee(IDebt(service).debt(address(this)));
+    }
+    function checkFunding() private view {
+        if (address(this).balance > remainingFeeBudget) revert ExcessFunding();
     }
     function sendFee(uint256 amount) private {
+        if (amount == 0) return;
+        if (amount > maxFeePerPayment) revert FeeTooLarge();
+        if (amount > remainingFeeBudget) revert FeeBudgetExceeded();
+        if (amount > address(this).balance) revert InsufficientFeeBalance();
+        // Charge before settlement. A failed transfer also rolls back this debit.
+        remainingFeeBudget -= amount;
         (bool sent,) = service.call{value: amount}("");
         if (!sent) revert PaymentFailed();
+    }
+    function requireFeeReserve() internal view {
+        if (remainingFeeBudget == 0) revert FeeBudgetExceeded();
+        if (address(this).balance == 0) revert InsufficientFeeBalance();
     }
 }
 
@@ -71,7 +95,8 @@ contract ReactiveAlert is ServiceFees {
     event QuoteRouted(bytes32 indexed evidenceId, bytes32 indexed originTx, uint256 logIndex, uint256 priceBps, uint256 observedAt);
     error NotOwner();
     error AlreadyBound();
-    constructor(address source) payable ServiceFees(SYSTEM) {
+    // Native units on Lasna are lREACT (18 decimals).
+    constructor(address source) payable ServiceFees(SYSTEM, 0.05 ether, 0.30 ether) {
         if (source == address(0)) revert BadAddress();
         origin = source;
         IOmni(SYSTEM).subscribe(ORIGIN_CHAIN, source, QUOTE_TOPIC, WILDCARD, WILDCARD, WILDCARD);
@@ -86,12 +111,13 @@ contract ReactiveAlert is ServiceFees {
     function react(LogRecord calldata item) external {
         if (msg.sender != SYSTEM) revert WrongService();
         if (item.chainId != ORIGIN_CHAIN || item.contractAddress != origin || item.topic0 != QUOTE_TOPIC) return;
-        if (destination == address(0) || sent >= MAX_REQUESTS || item.data.length != 64) return;
+        if (destination == address(0) || sent >= MAX_REQUESTS || item.data.length != 64 || item.txHash == 0) return;
         (uint256 price, uint256 observedAt) = abi.decode(item.data, (uint256, uint256));
         if (price == 0 || price > 20_000 || observedAt == 0 || (price >= 9950 && price <= 10050)) return;
         bytes32 sourceHash = bytes32(item.txHash);
         bytes32 id = keccak256(abi.encode(ORIGIN_CHAIN, sourceHash, item.logIndex));
         if (routed[id]) return;
+        requireFeeReserve();
         routed[id] = true;
         ++sent;
         bytes memory payload = abi.encodeCall(AlertSink.record, (address(0), ORIGIN_CHAIN, sourceHash, item.logIndex, price, observedAt));
@@ -110,7 +136,7 @@ contract AlertSink is ServiceFees {
     event PriceDeviation(bytes32 indexed evidenceId, bytes32 indexed originTx, uint256 logIndex, uint256 priceBps, uint256 observedAt);
     error WrongSender();
     error WrongOrigin();
-    constructor(address proxy, address authorizedReactive) payable ServiceFees(proxy) {
+    constructor(address proxy, address authorizedReactive) payable ServiceFees(proxy, 0.00025 ether, 0.002 ether) {
         if (authorizedReactive == address(0)) revert BadAddress();
         reactive = authorizedReactive;
     }
@@ -121,6 +147,7 @@ contract AlertSink is ServiceFees {
             price > 20_000 || (price >= 9950 && price <= 10050)) revert WrongOrigin();
         bytes32 id = keccak256(abi.encode(sourceChain, originTx, logIndex));
         if (recorded[id]) return;
+        requireFeeReserve();
         recorded[id] = true;
         ++alertCount;
         emit PriceDeviation(id, originTx, logIndex, price, observedAt);

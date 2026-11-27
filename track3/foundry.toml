@@ -1,0 +1,8 @@
+[profile.default]
+src = "contracts"
+test = "tests"
+solc = "0.8.29"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+bytecode_hash = "none"

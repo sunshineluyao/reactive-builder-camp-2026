@@ -1,0 +1,13 @@
+Stablecoin Alerts ｜ 防误触发、防重复、设上限
+
+Foundry 测试代码
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/tests/StablecoinGuards.t.sol
+
+forge test 通过截图
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/evidence/forge-guards.png
+
+同次运行的完整输出（15 项通过，0 项失败，0 项跳过）
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/evidence/forge-guards.txt
+
+README「出问题怎么办」（余额耗尽、充值恢复、预算用尽和目标链回调失败）
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/README.md#出问题怎么办

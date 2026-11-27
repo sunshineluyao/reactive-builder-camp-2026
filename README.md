@@ -31,3 +31,4 @@ Reactive Builder Camp 2026 的个人学习笔记与作业。
 - [Day 4 作业 · 跨链回调三步走](assignments/d4-cross-chain-callback.md) · [可粘贴提交文本](assignments/d4-cross-chain-callback-submission.txt) · [浏览器实操指南](experiments/cross-chain-callback/README.md)
 - [Day 5 场景小实验 · 两次 Cron100 回调后停止](assignments/d5-cron100.md) · [可粘贴提交文本](assignments/d5-cron100-submission.txt) · [浏览器复现与资金流图](experiments/cron100/README.md)
 - [Day 6 项目方向卡 · 稳定币跨链告警与证据核验](assignments/d6-project-direction.md)
+- [给项目加保护 · 防误触发、防重复、设上限](track3/README.md#三条自动化保护) · [Foundry 测试截图](track3/evidence/forge-guards.png) · [出问题怎么办](track3/README.md#出问题怎么办) · [可粘贴提交文本](assignments/automation-guards-submission.txt)

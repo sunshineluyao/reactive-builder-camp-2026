@@ -1,0 +1,35 @@
+track3 $ forge --version
+forge Version: 1.7.1
+Commit SHA: 4072e48705af9d93e3c0f6e29e93b5e9a40caed8
+Build Timestamp: 2026-05-08T07:50:55.527285345Z (1778226655)
+Build Profile: dist
+track3 $ forge test
+[⠊] Compiling...
+[⠒] Compiling 3 files with Solc 0.8.29
+[⠢] Solc 0.8.29 finished in 1.08s
+Compiler run successful!
+
+Ran 6 tests for tests/StablecoinGuards.t.sol:FeeBudgetTest
+[PASS] testLifetimeCapsStopPaymentsAndNewWorkEvenAfterTopUp() (gas: 297483)
+[PASS] testOnlyServiceCanCollectAndDebtSettlementUsesTheSameBudget() (gas: 52161)
+[PASS] testPerPaymentLimitsAllowExactBoundaryOnBothNetworks() (gas: 64918)
+[PASS] testRejectedSettlementPreservesBalanceAndBudget() (gas: 50747)
+[PASS] testTopUpSettlesOutstandingDebtAndResumesRouting() (gas: 134381)
+[PASS] testTopUpsAndPayableDebtSettlementRejectExcessFunds() (gas: 39339)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 2.31ms (3.57ms CPU time)
+
+Ran 9 tests for tests/StablecoinGuards.t.sol:AlertGuardTest
+[PASS] testControlAndBothBoundariesStayQuiet() (gas: 124536)
+[PASS] testCrossingQueuesExpectedCallbackAndRecordsOneAlert() (gas: 147221)
+[PASS] testDestinationRevertKeepsSourceAndAllowsOneAuthorizedRedelivery() (gas: 203329)
+[PASS] testDuplicateSourceAndCallbackAreHandledOncePerLog() (gas: 209569)
+[PASS] testEmptyRouterPausesAndTopUpResumesWithinBudget() (gas: 132871)
+[PASS] testOnlyPublisherSystemAndAuthorizedProxySenderCanAct() (gas: 33657)
+[PASS] testSinkRechecksChainAndThresholdAtDelivery() (gas: 19884)
+[PASS] testTwentiethRequestUnsubscribesAndBlocksTheNext() (gas: 760845)
+[PASS] testWrongNetworkEmitterTopicAndMissingTxAreIgnored() (gas: 28537)
+Suite result: ok. 9 passed; 0 failed; 0 skipped; finished in 10.44ms (7.30ms CPU time)
+
+Ran 2 test suites in 20.00ms (12.76ms CPU time): 15 tests passed, 0 failed, 0 skipped (15 total tests)
+track3 $ echo $?
+0

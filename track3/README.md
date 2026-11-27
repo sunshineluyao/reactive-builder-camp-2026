@@ -22,6 +22,8 @@ DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是�
 
 六次签名依次用于部署三个合约、绑定接收合约、发布对照报价和发布触发报价。部署与运行使用同一测试钱包。[部署 QuoteSource](https://sepolia.etherscan.io/tx/0xb053216af3d5513ac0c07fed29da488e8f5c5b2b8985a877c907e2d7e7a06402) · [部署 ReactiveAlert](https://lasna.reactscan.net/tx/0xecfb63c4a3f36f74dfd720eeec42a85948641cec233971fdbd71491961321739) · [部署 AlertSink](https://sepolia.basescan.org/tx/0x3c57912774bd2239c7d81f2d0b10497272ed740e8813be447fcdd2e3a9f7c254) · [绑定接收合约](https://lasna.reactscan.net/tx/0x2101030cf92f84c67db2ca3bee8ed05325a481961276cf35f534e8b344e27cd0) · [0.9990 对照报价](https://sepolia.etherscan.io/tx/0x33ce718f56820da45bf4fd48b2534df5dc199d89a5214d709187d22db9c622de) · [0.9930 触发报价](https://sepolia.etherscan.io/tx/0xd97a9579a96a20c9868dd7f759079975e2ff1603eb903e42d3fd5ddfbbcc6604)
 
+上述地址和视频对应加设服务费上限前的公开部署。工作台新部署时使用带有金额上限的合约。Foundry 用例验证各项限额，三条本地 Anvil 链复现报价到告警的完整流程。[公开部署时的合约源码](https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/76acc493cf5802ebdc3f8365ec8cb1c9dab3b097/track3/contracts/StablecoinAlerts.sol) · [本次 Foundry 输出](evidence/forge-guards.txt)
+
 ## 从报价到人工复核
 
 ```mermaid
@@ -54,6 +56,40 @@ flowchart TD
 
 0.9990 偏离 10 个基点。0.9950 和 1.0050 恰好位于两个边界。以上三种报价均保留源日志。0.9930 偏离 70 个基点，产生一条告警。重复交付同一源日志或目标回调时，告警计数仍为一。Reactive 合约最多为 20 个不同事件请求回调，达到上限时取消订阅。[合约](contracts/StablecoinAlerts.sol)
 
+## 三条自动化保护
+
+| 保护 | 合约执行的规则 | 测试验证了什么 |
+| --- | --- | --- |
+| 防误触发 | 只有指定发布者能发报价。Lasna 只接受 Omni 系统转来的指定 Sepolia 合约及事件，价差须严格超过 50 个基点。Base 同时核对代理和发送回调的 Reactive 合约。 | 0.9930 产生一条告警。0.9990、两端恰好 0.5% 的报价、错误来源和未经授权的调用均未产生告警。 |
+| 防重复 | Lasna 和 Base 各自用源链 ID、源交易哈希、日志索引标识同一事件。 | 同一日志投递两次只请求一次回调，同一回调送达两次只记录一次。同笔交易的另一条日志仍能独立处理。 |
+| 限金额 | 每个合约都有固定的单笔和累计服务费上限。`pay()` 和 `coverDebt()` 共用剩余额度。 | 恰好达到上限可支付，多 1 wei 会被拒绝。充值不会重置累计额度，转账失败会回滚扣额。 |
+
+项目只记录告警，每次及累计动用的 USDC、USDT 本金都是 **0**。能够从合约转出的是以下两笔独立的测试币预算。
+
+| 付款合约 | 单次最高 | 部署以来累计最高 | 工作台初始注资 |
+| --- | ---: | ---: | ---: |
+| Lasna · ReactiveAlert | 0.05 lREACT | 0.30 lREACT | 0.15 lREACT |
+| Base Sepolia · AlertSink | 0.00025 ETH | 0.002 ETH | 0.001 ETH |
+
+这些数值是项目设定的测试预算。钱包签名的 gas、协议计入的欠费以及第三方直接存入协议的预付费各自独立结算。[费用机制](https://dev.reactive.network/economy)
+
+## 出问题怎么办
+
+- **合约余额用完。** Lasna 停止为新事件请求回调，或 Base 停止记录新告警，取决于哪边耗尽。向对应的 `ReactiveAlert` 充 Lasna lREACT，或向 `AlertSink` 充 Base Sepolia ETH。可充金额最多为 `remainingFeeBudget() − 合约余额`。在该合约的 `service()` 上查询 `debt(合约地址)`。如果有欠费且在单次和剩余额度内，调用付款合约的 `coverDebt()` 结清。欠费归零、合约仍有余额和预算后，可处理后续合格事件。[官方充值与恢复说明](https://dev.reactive.network/economy#funding-reactive-contracts)
+- **碰到硬上限。** 一笔费用超限会被拒付。累计额度用完后，该合约停止新工作，充值无法扩额。Lasna 发出第 20 个不同事件的请求后还会取消订阅。如果要继续运行，应先复核开支，重新部署并绑定新实例。
+- **目标链回调失败。** Base 的失败调用不增加告警数，Lasna 保留已发出的请求。已执行并回滚的回调仍会产生费用。用源交易哈希在 Reactscan 查状态，再在 Base 回执中核对 `PriceDeviation` 及其事件 ID，确认告警已写入。欠费拦截的请求不会自动重试。排除故障后可以继续监听新事件。若服务重新投递原回调，去重逻辑最多写入一次。[回调状态](https://dev.reactive.network/reactscan#callback-lifecycle) · [失败费用](https://dev.reactive.network/economy#fee-model)
+
+## Foundry 测试与提交凭证
+
+在仓库根目录运行以下命令。Foundry 使用 Solidity 0.8.29，在本地创建三个项目合约并模拟两个网络服务。运行测试无需钱包或测试币。
+
+```sh
+cd track3
+forge test
+```
+
+实际结果为 **15 项通过，0 项失败，0 项跳过**。其中 9 项检查报价、权限、去重和回调行为，6 项检查付款限额、充值和结算。[测试代码](tests/StablecoinGuards.t.sol) · [完整终端截图](evidence/forge-guards.png) · [同次运行的文本输出](evidence/forge-guards.txt)
+
 ## 两分钟开始复核
 
 使用 Git、Python 3.10+ 和 Node.js 20+。复核现有交易只需读取公开数据，无需钱包、私钥或 API 密钥。
@@ -67,7 +103,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 验证成功时，终端显示 `Public testnet | receipts and canonical blocks match the selected RPCs`，报价为 `9930`，三条日志序号依次为 `2 / 2 / 0`。打开 <http://localhost:8080/review/?source=public> 查看三份回执和本次“证据不足”的结果。点击 **Corroborating evidence** 和 **Pool-only movement**，可以用同一事件重放两个有完整输入的模型决定。页面标明合成数据来源。
 
-离线复核保存的原始日志可运行 `python3 scripts/verify_receipts.py evidence/public-run.json --offline`。要独立复现三条本地 Anvil 链，使用下节命令。本地回执保存在 [local-run.json](evidence/local-run.json)。同一服务还提供[视频播放器](http://localhost:8080/video/)和[部署工作台](http://localhost:8080/site/)。交互式阈值动画的离线运行方法见[动画说明](visual/README.md)。
+离线复核保存的原始日志可运行 `python3 scripts/verify_receipts.py evidence/public-run.json --offline`。下节命令可复现[当前合约的三链本地回执](evidence/guarded-local-run.json)。早期演练的视频保留了[录制时的本地回执](evidence/local-run.json)。同一服务还提供[视频播放器](http://localhost:8080/video/)和[部署工作台](http://localhost:8080/site/)。交互式阈值动画的离线运行方法见[动画说明](visual/README.md)。
 
 ## 从零运行三个 EVM
 
@@ -76,7 +112,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 ```sh
 python3 scripts/build_contracts.py --check
 python3 scripts/local_evm.py --out /tmp/stablecoin-local-run.json
-cmp evidence/local-run.json /tmp/stablecoin-local-run.json
+cmp evidence/guarded-local-run.json /tmp/stablecoin-local-run.json
 python3 -m unittest discover -s tests -v
 node --test tests/wallet.test.js
 ```

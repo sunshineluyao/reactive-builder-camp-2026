@@ -8,6 +8,12 @@ const networks = {
 const proxy = '0x476F44b11F5C942c58f4c8E3d0300E5710743585';
 const delegationManager = '0xdb9b1e94b5b69df7e401ddbede43491141047db3';
 const receiptProof = typeof module !== 'undefined' && module.exports ? require('../review/receipts') : window.ReceiptProof;
+// Creation code from the published pre-budget release (76acc49). Constructor arguments,
+// signer and value are still checked for each individual historical deployment.
+const previousDeployment = {
+  1: {name:'ReactiveAlert', bytes:3268, hash:'0x8bb6b8665a8e242ca55d59f3aa2f776406e6201aaceebe6142609f51bd7f4e86'},
+  2: {name:'AlertSink', bytes:1728, hash:'0xe1d1b31a108762457371d1e4aeeeaa206acc048012609863eb897fbdd7e9ff83'}
+};
 const steps = [
   ['origin', '部署报价合约 QuoteSource', '0 ETH'],
   ['reactive', '部署并订阅 ReactiveAlert', '0.15 lREACT · 合约服务费储备'],
@@ -83,6 +89,16 @@ function matchesSingleRedemption(input, plan) {
 
 async function confirmStepTransaction(i, contracts, plan, receipt, tx, account, hash, request) {
   if (i !== 4 && i !== 5) {
+    const previous = previousDeployment[i];
+    const input = lower(tx?.input);
+    if (previous && input !== lower(plan.data)) {
+      const args = lower(plan.data.slice(contracts[previous.name].bytecode.length));
+      const codeEnd = 2 + previous.bytes * 2;
+      if (input.length === codeEnd + args.length && input.slice(codeEnd) === args && /^0x[0-9a-f]+$/.test(input)) {
+        const code = Uint8Array.from(input.slice(2,codeEnd).match(/../g), pair => parseInt(pair,16));
+        if (receiptProof.keccak(code) === previous.hash) plan = {...plan, data:input};
+      }
+    }
     return confirmTransaction(plan, receipt, tx, account, hash);
   }
   if (!tx || !receipt || !validAddress(account) || !validAddress(tx.from) || !validHash(hash) ||
@@ -273,7 +289,7 @@ async function startConsole() {
           const receipt = await walletRead('eth_getTransactionReceipt', [hash]);
           if (receipt) {
             const tx = await walletRead('eth_getTransactionByHash', [hash]);
-            verified = confirmTransaction(plan, receipt, tx, a, hash);
+            verified = await confirmStepTransaction(i, contracts, plan, receipt, tx, a, hash, walletRead);
           }
         }
         if (verified) {
@@ -376,7 +392,7 @@ async function startConsole() {
   $('download').onclick = () => download('public-run.json',manifest());
   $('review').onclick = () => {localStorage.setItem('reactive-track3-review',JSON.stringify(manifest()));location.href='../review/?source=wallet';};
   try {
-    const resp = await fetch('contracts.json'); if (!resp.ok) throw new Error('无法读取 contracts.json。');
+    const resp = await fetch('contracts.json', {cache:'no-store'}); if (!resp.ok) throw new Error('无法读取 contracts.json。');
     contracts = (await resp.json()).contracts; render(); status('合约字节码已加载。连接 MetaMask 即可开始。');
   } catch (e) {render();status(e.message || String(e),true);}
 }
