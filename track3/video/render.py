@@ -168,6 +168,22 @@ def stills(path, public):
                '-compression_level', 6, '-pix_fmt', 'bgra', folder / (name + '.webp'))
 
 
+def github_media(video, work):
+    """Export the captioned film, Wanim chapter and original narration separately."""
+    sampling = 'fps=5,scale=896:-2:flags=lanczos'
+    palette = work / 'readme-palette.png'
+    ffmpeg('-threads', 2, '-filter_threads', 2, '-i', video,
+           '-vf', sampling + ',palettegen=stats_mode=diff', '-frames:v', 1, palette)
+    palette_filter = f'[0:v]{sampling}[v];[v][1:v]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle'
+    cues = json.loads((VIDEO / 'narration.json').read_text())['cues']
+    start = next(c['t'] for c in cues if c['chapter'] == 'The price threshold')
+    end = next(c['t'] for c in cues if c['t'] > start and c['chapter'] != 'The price threshold')
+    for suffix, input_args in [('.gif', []), ('.threshold.gif', ['-ss', start, '-t', end - start])]:
+        ffmpeg('-threads', 2, '-filter_complex_threads', 2, *input_args, '-i', video, '-i', palette,
+               '-filter_complex', palette_filter, '-an', '-loop', 0, video.with_suffix(suffix))
+    ffmpeg('-i', video, '-map', '0:a:0', '-c:a', 'copy', '-movflags', '+faststart', video.with_suffix('.en.m4a'))
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('work',type=Path,help='Temporary directory used by capture.py')
@@ -176,7 +192,12 @@ def main():
     parser.add_argument('--prepare',action='store_true',help='Generate speech and subtitles while screen recording runs')
     parser.add_argument('--reuse-voice',action='store_true',help='Use the prepared voice only when its mode and narration match')
     parser.add_argument('--out',type=Path,default=VIDEO/'demo.mp4')
+    parser.add_argument('--media-only', action='store_true', help='Export GitHub animations and narration from the existing MP4 at --out.')
     args=parser.parse_args(); work=args.work.resolve();work.mkdir(parents=True,exist_ok=True)
+    path = args.out.resolve()
+    if args.media_only:
+        github_media(path, work)
+        return
     data=json.loads((VIDEO/'narration.json').read_text());cues=data['cues'];total=data['duration']
     mode='public' if args.public else 'local'
     for i,cue in enumerate(cues):
@@ -193,8 +214,9 @@ def main():
     if args.prepare:return
     manifest=json.loads((work/'capture.json').read_text())
     if manifest['mode']!=mode: raise ValueError('Capture and narration evidence modes differ.')
-    path=args.out.resolve();film(work,path,manifest)
+    film(work,path,manifest)
     stills(path,args.public)
+    github_media(path, work)
     for lang in ['en','zh']:
         path.with_suffix(f'.{lang}.srt').write_bytes((work/f'demo.{lang}.srt').read_bytes())
     print(f'Saved {path} ({duration(path):.2f}s)')
