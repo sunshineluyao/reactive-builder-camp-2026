@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {planStep,confirmTransaction,confirmStepTransaction,parseHash} = require('../site/console');
+const {planStep,confirmTransaction,confirmStepTransaction,readQuoteReceipt,parseHash} = require('../site/console');
 const {collect,evaluate} = require('../scripts/watch');
 const contracts = require('../site/contracts.json').contracts;
 const run = require('../evidence/local-run.json');
@@ -53,7 +53,7 @@ function delegatedQuote(step, sponsored = false) {
   };
   const verify = (changes = {}) => confirmStepTransaction(step, contracts, changes.plan ?? plan, receipt,
     changes.tx ?? tx, changes.account ?? account, changes.hash ?? h, request);
-  return {verify, receipt, tx, block};
+  return {verify, receipt, tx, block, request, account, plan};
 }
 
 test('both delegated quotes confirm using their original hash and the effective publisher', async () => {
@@ -81,6 +81,41 @@ test('delegated quote verification rejects mismatched calls, publishers and chai
   await assert.rejects(verify());
   receipt.status = '0x0';
   assert.deepEqual(await verify(),{hash:h,state:'failed'});
+});
+
+test('a saved quote uses public chain data and falls back only after an RPC read fails', async () => {
+  const {receipt, tx, block, request, account, plan} = delegatedQuote(4);
+  const read = async (method, params) => {
+    if (method === 'eth_chainId') return '0xaa36a7';
+    if (method === 'eth_getTransactionReceipt') return receipt;
+    if (method === 'eth_getTransactionByHash') return tx;
+    return request(method, params);
+  };
+  const walletReads = [];
+  const wallet = (method, params) => { walletReads.push(method); return read(method, params); };
+  const check = primary => readQuoteReceipt(4, contracts, plan, account, h, primary, wallet);
+  assert.equal((await check(read)).state, 'confirmed');
+  assert.equal(await check((m,p) => m === 'eth_getTransactionReceipt' ? null : read(m,p)), null);
+  await assert.rejects(check((m,p) => m === 'eth_chainId' ? '0x1' : read(m,p)), /Sepolia/);
+  block.transactions[0] = run.reactive.txHash;
+  await assert.rejects(check(read), /canonical block/);
+  assert.deepEqual(walletReads, []);
+  block.transactions[0] = h;
+  assert.equal((await check((m,p) => {
+    if (m === 'eth_getBlockByNumber') throw Error('RPC unavailable');
+    return read(m,p);
+  })).state, 'confirmed');
+  assert.ok(walletReads.includes('eth_getTransactionReceipt'));
+  assert.ok(walletReads.includes('eth_call'));
+});
+
+test('a direct quote still requires a matching canonical event and publisher', async () => {
+  const {verify, receipt, tx, plan, account} = delegatedQuote(5);
+  const direct = {...tx, from:account, to:plan.to, input:plan.data};
+  Object.assign(receipt, {from:account, to:plan.to});
+  assert.equal((await verify({tx:direct})).state, 'confirmed');
+  receipt.logs.length = 0;
+  await assert.rejects(verify({tx:direct}), /matching event/);
 });
 test('receipt links accept the expected explorers and reject unrelated URLs',()=>{
   assert.equal(parseHash(h),h);assert.equal(parseHash('https://sepolia.etherscan.io/tx/'+h),h);

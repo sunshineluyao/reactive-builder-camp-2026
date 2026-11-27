@@ -47,9 +47,11 @@ function planStep(i, contracts, records) {
 
 function confirmTransaction(plan, receipt, tx, account, expectedHash) {
   if (!receipt || !tx || !validHash(expectedHash) || lower(receipt.transactionHash) !== lower(expectedHash) ||
-      lower(tx.hash) !== lower(expectedHash) || lower(tx.from) !== lower(account) ||
-      lower(tx.to) !== lower(plan.to) || lower(tx.input) !== lower(plan.data) ||
-      BigInt(tx.value) !== BigInt(plan.value)) throw new Error('交易与当前步骤的签名地址、接收地址、金额或 calldata 不匹配。');
+      lower(tx.hash) !== lower(expectedHash)) throw new Error('节点返回的交易或回执与保存的哈希不一致。');
+  if (lower(tx.from) !== lower(account)) throw new Error('链上交易的发送账户与连接的钱包不同。');
+  if (lower(tx.to) !== lower(plan.to)) throw new Error('链上交易的接收地址与本步的目标合约不同。');
+  if (lower(tx.input) !== lower(plan.data)) throw new Error('链上交易调用的函数或参数与本步骤不同。');
+  if (BigInt(tx.value) !== BigInt(plan.value)) throw new Error('链上交易附带的金额与本步骤不同。');
   if (BigInt(receipt.status) === 0n) return {hash: expectedHash, state: 'failed'};
   if (BigInt(receipt.status) !== 1n || !/^0x[0-9a-f]+$/i.test(receipt.blockNumber) ||
       (!plan.to && !validAddress(receipt.contractAddress))) throw new Error('回执缺少成功状态、区块或合约地址。');
@@ -80,15 +82,21 @@ function matchesSingleRedemption(input, plan) {
 }
 
 async function confirmStepTransaction(i, contracts, plan, receipt, tx, account, hash, request) {
-  if ((i !== 4 && i !== 5) || lower(tx?.to) !== delegationManager) {
+  if (i !== 4 && i !== 5) {
     return confirmTransaction(plan, receipt, tx, account, hash);
   }
-  if (!validHash(hash) || !validAddress(account) || !validAddress(tx.from) ||
-      lower(tx.hash) !== lower(hash) || lower(receipt?.transactionHash) !== lower(hash) ||
-      lower(receipt.to) !== delegationManager || lower(receipt.from) !== lower(tx.from) ||
-      (tx.chainId != null && BigInt(tx.chainId) !== BigInt(networks.origin.id)) ||
-      tx.value == null || BigInt(tx.value) !== 0n || !matchesSingleRedemption(tx.input, plan)) {
-    throw new Error('委托交易的哈希、网络、目标合约、金额或报价调用与本步骤不匹配。');
+  if (!tx || !receipt || !validAddress(account) || !validAddress(tx.from) || !validHash(hash) ||
+      lower(tx.hash) !== lower(hash) || lower(receipt.transactionHash) !== lower(hash) ||
+      lower(receipt.to) !== lower(tx.to) || lower(receipt.from) !== lower(tx.from) ||
+      (tx.chainId != null && BigInt(tx.chainId) !== BigInt(networks.origin.id))) {
+    throw new Error('Sepolia 交易和回执的哈希、网络或账户信息不一致。');
+  }
+  if (lower(tx.to) === delegationManager) {
+    if (tx.value == null || BigInt(tx.value) !== 0n || !matchesSingleRedemption(tx.input, plan)) {
+      throw new Error('委托交易的目标合约、金额或报价参数与本步骤不匹配。');
+    }
+  } else {
+    confirmTransaction(plan, receipt, tx, account, hash);
   }
 
   const [block, publisher] = await Promise.all([
@@ -106,6 +114,30 @@ async function confirmStepTransaction(i, contracts, plan, receipt, tx, account, 
   return {hash, state:'confirmed', block:quote.blockNumber};
 }
 
+async function readQuoteReceipt(i, contracts, plan, account, hash, readPublic, readWallet) {
+  // Keep all evidence from one reader. A wallet can return a different representation
+  // of a delegated transaction. Only a failed RPC read permits switching readers.
+  let publicReadFailed = false;
+  async function verify(request) {
+    const chain = await request('eth_chainId', []);
+    if (BigInt(chain) !== BigInt(networks.origin.id)) throw new Error('核验报价需要 Ethereum Sepolia。');
+    const [receipt, tx] = await Promise.all([
+      request('eth_getTransactionReceipt', [hash]), request('eth_getTransactionByHash', [hash])
+    ]);
+    if (!receipt || !tx) return null;
+    return confirmStepTransaction(i, contracts, plan, receipt, tx, account, hash, request);
+  }
+  try {
+    return await verify(async (method, params) => {
+      try { return await readPublic(method, params); }
+      catch (err) { publicReadFailed = true; throw err; }
+    });
+  } catch (err) {
+    if (!publicReadFailed) throw err;
+    return verify(readWallet);
+  }
+}
+
 function parseHash(raw) {
   if (validHash(raw.trim())) return raw.trim();
   try {
@@ -116,7 +148,7 @@ function parseHash(raw) {
   } catch { return ''; }
 }
 
-if (typeof module !== 'undefined') module.exports = {planStep, confirmTransaction, confirmStepTransaction, parseHash, networks, steps};
+if (typeof module !== 'undefined') module.exports = {planStep, confirmTransaction, confirmStepTransaction, readQuoteReceipt, parseHash, networks, steps};
 if (typeof window !== 'undefined') window.addEventListener('DOMContentLoaded', startConsole);
 
 async function startConsole() {
@@ -160,9 +192,10 @@ async function startConsole() {
       }
       const btn = document.createElement('button');
       const done = r?.state === 'confirmed';
-      btn.textContent = done ? '已确认' : r?.state === 'pending' ? '检查回执' : r?.state === 'failed' ? '重新签名' : '签名';
+      const check = i >= 4 ? '核验链上回执' : '检查回执';
+      btn.textContent = done ? '已确认' : r?.state === 'pending' ? check : r?.state === 'failed' ? '重新签名' : '签名';
       btn.disabled = !contracts || !account || running || done || (i > 0 && records[i - 1]?.state !== 'confirmed');
-      btn.addEventListener('click', () => guardedStep(i)); row.append(info, btn); $('steps').append(row);
+      btn.addEventListener('click', () => guardedStep(i, r?.state === 'pending' ? r : null)); row.append(info, btn); $('steps').append(row);
     });
     const ready = records[5]?.state === 'confirmed';
     $('sourceHash').value = ready ? records[5].hash : '';
@@ -187,32 +220,37 @@ async function startConsole() {
     }
   }
   async function assertWallet(a, net) {
-    const [chain, accounts] = await Promise.all([provider.request({method:'eth_chainId'}),provider.request({method:'eth_accounts'})]);
-    if (Number(BigInt(chain)) !== net.id || lower(accounts[0]) !== lower(a) || lower(account) !== lower(a))
+    const [chain, accounts] = await Promise.all([net ? provider.request({method:'eth_chainId'}) : null,provider.request({method:'eth_accounts'})]);
+    if ((net && Number(BigInt(chain)) !== net.id) || lower(accounts[0]) !== lower(a) || lower(account) !== lower(a))
       throw new Error('钱包账户或网络已切换。回到相同账户后可继续。');
   }
   window.addEventListener('storage',ev => {
     if (!running && account && ev.key === key()) showAccount(account,true);
   });
-  async function guardedStep(i) {
-    if (!navigator.locks) return runStep(i);
+  async function guardedStep(i, pending) {
+    if (!navigator.locks) return runStep(i, pending);
     const signer=account;
     await navigator.locks.request('stablecoin-sign/'+lower(signer),{ifAvailable:true},async lock => {
       if (!lock) return status('另一个标签页正在处理此钱包。请在该页完成当前步骤。',true);
       if (lower(signer)!==lower(account)) return;
       showAccount(signer,true);
       if (records[i]?.state==='confirmed' || (i>0 && records[i-1]?.state!=='confirmed')) return;
-      await runStep(i);
+      await runStep(i, pending);
     });
   }
-  async function runStep(i) {
+  async function runStep(i, pending) {
     if (running || !account) return;
+    if (pending && (!validHash(pending.hash) || records[i]?.state !== 'pending' || lower(records[i].hash) !== lower(pending.hash))) {
+      return status('已保存的交易记录发生变化。请核对本步的交易链接后再检查回执。', true);
+    }
     const a = account, net = networks[steps[i][0]];
     running = true; render();
     try {
       const plan = planStep(i, contracts, records);
-      await pickNetwork(net); await assertWallet(a, net);
+      const quote = i === 4 || i === 5;
+      const walletRead = (method,params) => provider.request({method,params});
       let hash = records[i]?.state === 'pending' ? records[i].hash : '';
+      if (!hash || !quote) { await pickNetwork(net); await assertWallet(a, net); }
       if (!hash) {
         status('请在 MetaMask 核对 ' + net.name + '、' + steps[i][1] + ' 和金额 ' + steps[i][2] + '。');
         hash = await provider.request({method:'eth_sendTransaction',params:[{from:a,...plan}]});
@@ -224,15 +262,22 @@ async function startConsole() {
         }
         records[i] = {hash,state:'pending'}; save(); render();
       }
-      status(net.name + ' 已返回交易哈希。等待交易入块…');
+      status(quote ? '正在用已有哈希核验 Sepolia 链上报价：' + hash : net.name + ' 已返回交易哈希。等待交易入块…');
       for (let k = 0; k < 32; k++) {
-        await assertWallet(a, net);
-        const receipt = await provider.request({method:'eth_getTransactionReceipt',params:[hash]});
-        if (receipt) {
-          const tx = await provider.request({method:'eth_getTransactionByHash',params:[hash]});
-          const verified = await confirmStepTransaction(i, contracts, plan, receipt, tx, a, hash,
-            (method,params) => provider.request({method,params}));
-          await assertWallet(a, net);
+        await assertWallet(a, quote ? null : net);
+        let verified;
+        if (quote) {
+          verified = await readQuoteReceipt(i, contracts, plan, a, hash,
+            (method,params) => rpc(net, method, params), walletRead);
+        } else {
+          const receipt = await walletRead('eth_getTransactionReceipt', [hash]);
+          if (receipt) {
+            const tx = await walletRead('eth_getTransactionByHash', [hash]);
+            verified = confirmTransaction(plan, receipt, tx, a, hash);
+          }
+        }
+        if (verified) {
+          await assertWallet(a, quote ? null : net);
           records[i] = verified; save();
           if (verified.state === 'failed') throw new Error('交易已回滚。请检查该网测试币余额和浏览器回执，再决定是否重试。');
           status('第 ' + (i + 1) + ' 步已在 ' + net.name + ' 确认。' + (i < 5 ? '可以继续下一步。' : '正在查找跨链回执。'));
