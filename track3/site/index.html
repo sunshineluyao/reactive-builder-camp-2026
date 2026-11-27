@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Stablecoin Alerts · Testnet Console</title><link rel="stylesheet" href="console.css"><script src="../review/receipts.js" defer></script><script src="../model/weights.js" defer></script><script src="../model/runtime.js" defer></script><script src="console.js" defer></script></head>
+<body><header><a href="./" class="brand"><span class="mark" aria-hidden="true">∿</span> Stablecoin Alerts</a><span class="network">TESTNET · 测试网</span></header>
+<main><section class="intro"><div><p class="eyebrow">REACTIVE MEETS AI</p><h1>部署稳定币预警</h1><p>用测试网报价启动跨链告警，然后将三笔交易交给 AI 复核。每笔交易由你在自己的 MetaMask 里确认。</p></div><aside><strong>USDC / USDT</strong><span>模拟报价 · 触发条件</span><b>偏离 1:1 超过 0.5%</b></aside></section>
+<div class="wallet"><div><span>签名钱包</span><strong id="accountText">尚未连接</strong></div><button id="connect" disabled>连接 MetaMask</button></div>
+<div class="grid"><section class="work"><h2>部署与运行</h2><p class="hint">账户和进度只保存在当前浏览器。每笔签名会显示目标测试网、用途和金额，另付该网测试 gas。</p><ol id="steps"></ol>
+<details><summary>恢复或导出本次部署进度</summary><p>同一测试账户可以从备份继续。导入后，请用对应的浏览器链接复核部署记录。</p><button id="backup" class="minor">下载部署记录</button> <label class="file">导入记录<input type="file" id="restore" accept=".json,application/json"></label></details></section>
+<section class="work evidence"><h2>三笔运行回执</h2><p class="hint">追踪同一条 0.993 报价。目标事件中的源交易哈希和日志索引将用于核验。</p><label for="sourceHash">Ethereum Sepolia · 报价交易</label><input id="sourceHash" readonly placeholder="完成第 6 步后填入">
+<label for="reactiveHash">Lasna · 执行交易</label><input id="reactiveHash" placeholder="自动查找，也可粘贴交易哈希或浏览器链接" autocomplete="off">
+<label for="destHash">Base Sepolia · 回调交易</label><input id="destHash" placeholder="自动查找，也可粘贴交易哈希或浏览器链接" autocomplete="off">
+<div class="buttons"><button id="locate" class="minor" disabled>查找链上回执</button><button id="download" class="minor" disabled>下载 public-run.json</button><button id="review" disabled>在复核页打开</button></div><small>将下载的 public-run.json 发回，即可核对公开地址和交易。同一事件的三段回执都需通过校验。</small></section></div>
+<p role="status" aria-live="polite" id="status">正在读取发布的合约字节码…</p>
+<footer><a href="../video/">观看演示</a><a href="../visual/">交互阈值动画</a><a href="../review/">本地回执与 AI 复核</a><a href="../contracts/StablecoinAlerts.sol" target="_blank" rel="noopener">本次合约源码</a><a href="https://dev.reactive.network/origins-and-destinations#testnet-chains" target="_blank" rel="noopener">官方链与代理地址</a><a href="https://dev.reactive.network/reactive-mainnet#reactive-faucet" target="_blank" rel="noopener">测试币说明</a></footer>
+</main></body></html>

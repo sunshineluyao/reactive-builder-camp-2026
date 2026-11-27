@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>The 0.5% price trigger · USDC / USDT</title>
+  <link rel="stylesheet" href="threshold.css">
+  <script>
+    const offlineRuntime = new URLSearchParams(location.search).has("offline");
+    const packages = offlineRuntime ? "./_runtime/" : "https://cdn.jsdelivr.net/npm/";
+    const numpy = offlineRuntime ? "numpy.js" : "numpy-ts@1.7.0/dist/numpy-ts.browser.js";
+    const imports = document.createElement("script");
+    imports.type = "importmap";
+    imports.textContent = JSON.stringify({ imports: { "numpy-ts": new URL(packages + numpy, document.baseURI).href } });
+    document.head.append(imports);
+  </script>
+  <script defer src="player.js"></script>
+</head>
+<body>
+  <main>
+    <section id="stage" aria-labelledby="heading" data-ready="false" data-signal="observe">
+      <header>
+        <div class="identity"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span> USDC / USDT</div>
+        <span class="simulation"><i aria-hidden="true"></i> Simulated quotes <span lang="zh">/ 模拟报价</span></span>
+      </header>
+      <div class="headline">
+        <h1 id="heading">The <em>0.5%</em> price trigger</h1>
+        <p>A quote must move <strong>more than 50 basis points</strong> from parity to request a callback.</p>
+      </div>
+      <div class="analysis">
+        <section class="chart-panel" aria-labelledby="chart-heading">
+          <div class="chart-heading"><h2 id="chart-heading">Price per USDC</h2><span>USDT</span></div>
+          <div class="plot">
+            <canvas id="wanim-canvas" width="1280" height="720" aria-label="Simulated USDT price of one USDC across three sample quotes"></canvas>
+            <span class="tick" style="--y:10%">1.010</span>
+            <span class="tick" style="--y:30%">1.005</span>
+            <span class="tick parity" style="--y:50%">1.000</span>
+            <span class="tick" style="--y:70%">0.995</span>
+            <span class="tick" style="--y:90%">0.990</span>
+            <div class="loading" id="loading" role="status">Loading Wanim…</div>
+          </div>
+          <div class="sample-labels"><span>Quote 1</span><span>Quote 2</span><span>Quote 3</span></div>
+          <div class="legend"><i aria-hidden="true"></i> Within ±0.5%, including both boundaries</div>
+        </section>
+        <section class="readout" aria-labelledby="sample-heading">
+          <div class="sample-index" id="sample-heading">Quote <span id="sample-index">1</span> of 3</div>
+          <div class="amount" id="quote-value">0.9990</div><div class="unit">USDT per USDC</div>
+          <div class="decision">
+            <span class="decision-label">Absolute deviation</span>
+            <strong id="deviation">10 bp <span>/ 0.10%</span></strong>
+            <h2><i class="status-dot" aria-hidden="true"></i><span id="action">Observe</span></h2>
+            <p><span id="reason">The quote is inside the band.</span><span id="reason-zh" lang="zh">报价在观察区间内。</span></p>
+          </div>
+        </section>
+      </div>
+      <footer><span>Reference peg <b>1.0000 USDT</b></span><span>1 basis point = 0.01%</span></footer>
+    </section>
+    <section class="controls" aria-label="Explore simulated quotes">
+      <button id="play-film" type="button" disabled>Replay three quotes</button>
+      <div class="presets" aria-label="Select example quote">
+        <button type="button" data-sample="0" aria-pressed="true">0.999</button>
+        <button type="button" data-sample="1" aria-pressed="false">0.995</button>
+        <button type="button" data-sample="2" aria-pressed="false">0.993</button>
+      </div>
+      <label for="quote-slider">Adjust quote <output id="slider-output" for="quote-slider">0.9990</output></label>
+      <input id="quote-slider" type="range" min="9900" max="10100" step="1" value="9990" aria-valuetext="0.9990 USDT per USDC" disabled>
+    </section>
+    <p class="sr" id="announcement" role="status"></p>
+  </main>
+</body>
+</html>

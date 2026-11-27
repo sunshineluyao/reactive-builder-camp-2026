@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#112b31">
+  <title>Stablecoin alert review · Reactive</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="receipts.js"></script>
+  <script defer src="../model/weights.js"></script>
+  <script defer src="../model/runtime.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="masthead"><div class="frame mast-inner">
+    <a class="brand" href="./" aria-label="Alert review home"><span class="monogram" aria-hidden="true">R</span><span>Reactive <span class="brand-sub">/ Alert review</span></span></a>
+    <a class="navlink" href="../site/">Deployment console</a>
+  </div></header>
+  <main class="frame">
+    <header class="page-head">
+      <div><p class="eyebrow">USDC / USDT</p><h1>Stablecoin alert review</h1></div>
+      <div class="top-actions"><label class="file-button">Load evidence JSON<input type="file" accept=".json,application/json" id="manifest-input"></label></div>
+    </header>
+    <section class="run-notice" role="status" aria-live="polite"><span class="signal" aria-hidden="true"></span><div><strong id="mode">Checking evidence</strong><p id="verification">Loading the three transaction receipts.</p><button type="button" id="snapshot" hidden>Inspect saved receipts offline</button></div></section>
+    <div class="metrics" aria-label="Verified alert figures">
+      <div><span class="metric-label">Pair quote</span><strong id="price">—</strong><small>USDT per USDC</small></div>
+      <div><span class="metric-label">Distance from parity</span><strong id="distance">—</strong><small>Trigger above 0.50%</small></div>
+      <div><span class="metric-label">Matched receipts</span><strong id="count">—</strong><small id="queue">Awaiting evidence</small></div>
+    </div>
+    <div class="workspace">
+      <section class="card trace" id="trace" aria-labelledby="trace-title">
+        <header class="section-head"><p class="eyebrow">Transaction evidence</p><h2 id="trace-title">Trace the alert</h2><p>Follow one source event through all three receipts.</p></header>
+        <ol id="legs" aria-label="Transaction chain"></ol>
+        <details class="event-detail" id="match-details"><summary>Shared source event ID</summary><code id="evidence-id">Awaiting matched receipts</code></details>
+      </section>
+      <section class="card decision" id="decision" aria-labelledby="decision-title">
+        <header class="section-head"><p class="eyebrow">Off-chain triage</p><h2 id="decision-title">Review decision</h2><p>Keep the alert fixed and change its reference evidence.</p></header>
+        <div class="context-switch"><div class="field-title">Reference context</div>
+          <div class="scenario-group" role="group" aria-label="Evidence scenarios">
+            <button class="scenario" type="button" data-kind="corroborated" aria-pressed="true" disabled>Corroborating evidence</button>
+            <button class="scenario" type="button" data-kind="pool-only" aria-pressed="false" disabled>Pool-only movement</button>
+            <button class="scenario" type="button" data-kind="missing" aria-pressed="false" disabled>Missing USD reference</button>
+          </div>
+          <button type="button" id="return-context" class="return-context" hidden>Return to alert evidence</button>
+          <span id="source-kind" class="caption">References load after receipt validation.</span>
+        </div>
+        <div class="result" id="result-box" aria-live="polite"><div class="result-head"><span class="field-title" id="result-type">Queue decision</span><span class="score" id="score"></span></div><h3 id="decision-label">Awaiting receipts</h3><p id="reason"></p></div>
+        <div class="input-panel"><div class="field-title">Model inputs</div><dl id="features" class="features"></dl></div>
+        <details class="model-detail"><summary>Inspect or import model evidence</summary>
+          <p>Reference packets contain an alert ID, timestamped USD quotes, source citations and pair history.</p>
+          <div class="detail-tools"><label class="file-button secondary">Import context JSON<input type="file" id="context-input" accept=".json,application/json" disabled></label><a href="../model/context-example.json">Example packet</a></div>
+          <p id="context-error" role="status"></p><pre id="context-data">Awaiting model inputs</pre>
+        </details>
+      </section>
+    </div>
+    <footer><span>Reactive Builder Camp · Track 3</span><button type="button" id="print">Print review</button></footer>
+  </main>
+</body>
+</html>

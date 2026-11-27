@@ -1,0 +1,187 @@
+{
+  "schema": "stablecoin-model-cases/v1",
+  "description": "Constructed sensitivity examples. The first four hold the same simulated event fixed and vary only the off-chain evidence.",
+  "cases": [
+    {
+      "name": "corroborated",
+      "alert": {
+        "priceBps": 9930,
+        "observedAt": 1795770000,
+        "evidenceId": "fixture:target-alert/0001"
+      },
+      "context": {
+        "schema": "stablecoin-evidence/v1",
+        "alertId": "fixture:target-alert/0001",
+        "pair": "USDC/USDT",
+        "provenance": "synthetic",
+        "history": [
+          {
+            "priceBps": 9945,
+            "observedAt": 1795769820,
+            "source": "fixture:pair/1"
+          },
+          {
+            "priceBps": 9939,
+            "observedAt": 1795769880,
+            "source": "fixture:pair/2"
+          },
+          {
+            "priceBps": 9934,
+            "observedAt": 1795769940,
+            "source": "fixture:pair/3"
+          }
+        ],
+        "references": {
+          "USDC/USD": {
+            "usdMicros": 990400,
+            "observedAt": 1795769985,
+            "source": "fixture:usd-reference/usdc"
+          },
+          "USDT/USD": {
+            "usdMicros": 1000100,
+            "observedAt": 1795769990,
+            "source": "fixture:usd-reference/usdt"
+          }
+        }
+      },
+      "expected": "escalate"
+    },
+    {
+      "name": "pool-only",
+      "alert": {
+        "priceBps": 9930,
+        "observedAt": 1795770000,
+        "evidenceId": "fixture:target-alert/0001"
+      },
+      "context": {
+        "schema": "stablecoin-evidence/v1",
+        "alertId": "fixture:target-alert/0001",
+        "pair": "USDC/USDT",
+        "provenance": "synthetic",
+        "history": [
+          {
+            "priceBps": 9997,
+            "observedAt": 1795769820,
+            "source": "fixture:pair/1"
+          },
+          {
+            "priceBps": 10000,
+            "observedAt": 1795769880,
+            "source": "fixture:pair/2"
+          },
+          {
+            "priceBps": 9998,
+            "observedAt": 1795769940,
+            "source": "fixture:pair/3"
+          }
+        ],
+        "references": {
+          "USDC/USD": {
+            "usdMicros": 999900,
+            "observedAt": 1795769985,
+            "source": "fixture:usd-reference/usdc"
+          },
+          "USDT/USD": {
+            "usdMicros": 1000100,
+            "observedAt": 1795769990,
+            "source": "fixture:usd-reference/usdt"
+          }
+        }
+      },
+      "expected": "observe"
+    },
+    {
+      "name": "missing",
+      "alert": {
+        "priceBps": 9930,
+        "observedAt": 1795770000,
+        "evidenceId": "fixture:target-alert/0001"
+      },
+      "context": {
+        "schema": "stablecoin-evidence/v1",
+        "alertId": "fixture:target-alert/0001",
+        "pair": "USDC/USDT",
+        "provenance": "synthetic",
+        "history": [
+          {
+            "priceBps": 9945,
+            "observedAt": 1795769820,
+            "source": "fixture:pair/1"
+          },
+          {
+            "priceBps": 9939,
+            "observedAt": 1795769880,
+            "source": "fixture:pair/2"
+          },
+          {
+            "priceBps": 9934,
+            "observedAt": 1795769940,
+            "source": "fixture:pair/3"
+          }
+        ],
+        "references": {
+          "USDC/USD": {
+            "usdMicros": 990400,
+            "observedAt": 1795769985,
+            "source": "fixture:usd-reference/usdc"
+          }
+        }
+      },
+      "expected": "insufficient"
+    },
+    {
+      "name": "stale",
+      "alert": {
+        "priceBps": 9930,
+        "observedAt": 1795770000,
+        "evidenceId": "fixture:target-alert/0001"
+      },
+      "context": {
+        "schema": "stablecoin-evidence/v1",
+        "alertId": "fixture:target-alert/0001",
+        "pair": "USDC/USDT",
+        "provenance": "synthetic",
+        "history": [
+          {
+            "priceBps": 9945,
+            "observedAt": 1795769820,
+            "source": "fixture:pair/1"
+          },
+          {
+            "priceBps": 9939,
+            "observedAt": 1795769880,
+            "source": "fixture:pair/2"
+          },
+          {
+            "priceBps": 9934,
+            "observedAt": 1795769940,
+            "source": "fixture:pair/3"
+          }
+        ],
+        "references": {
+          "USDC/USD": {
+            "usdMicros": 990400,
+            "observedAt": 1795769985,
+            "source": "fixture:usd-reference/usdc"
+          },
+          "USDT/USD": {
+            "usdMicros": 1000100,
+            "observedAt": 1795768800,
+            "source": "fixture:usd-reference/usdt"
+          }
+        }
+      },
+      "expected": "insufficient"
+    },
+    {
+      "name": "inside-band",
+      "alert": {
+        "priceBps": 9990,
+        "observedAt": 1795770000,
+        "evidenceId": "fixture:source-quote/0002"
+      },
+      "context": null,
+      "expected": "observe"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "stablecoin-evidence/v1",
+  "alertId": "0x1244d50a17152f9b3122ba08a736e1c330f158c9659c9af8b2ac46355832fffe",
+  "pair": "USDC/USDT",
+  "provenance": "synthetic",
+  "history": [
+    {
+      "priceBps": 9945,
+      "observedAt": 1795607831,
+      "source": "fixture:pair/1"
+    },
+    {
+      "priceBps": 9939,
+      "observedAt": 1795607891,
+      "source": "fixture:pair/2"
+    },
+    {
+      "priceBps": 9934,
+      "observedAt": 1795607951,
+      "source": "fixture:pair/3"
+    }
+  ],
+  "references": {
+    "USDC/USD": {
+      "usdMicros": 990400,
+      "observedAt": 1795607996,
+      "source": "fixture:usd-reference/usdc"
+    },
+    "USDT/USD": {
+      "usdMicros": 1000100,
+      "observedAt": 1795608001,
+      "source": "fixture:usd-reference/usdt"
+    }
+  }
+}
