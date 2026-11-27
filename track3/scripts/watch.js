@@ -6,7 +6,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const {parseArgs} = require('node:util');
 const proof = require('../review/receipts.js');
-const {planStep, confirmTransaction, steps} = require('../site/console.js');
+const {planStep, confirmStepTransaction, steps} = require('../site/console.js');
 const contracts = require('../site/contracts.json').contracts;
 const model = require('../model/runtime.js');
 const hex = n => '0x' + BigInt(n).toString(16);
@@ -32,9 +32,11 @@ async function deployments(backup, read) {
     if (!/^0x[0-9a-f]{64}$/i.test(h)) throw Error('Missing transaction hash at step '+(i+1));
     const [id,tx,receipt] = await Promise.all([read(role,'eth_chainId',[]),read(role,'eth_getTransactionByHash',[h]),read(role,'eth_getTransactionReceipt',[h])]);
     if (Number(BigInt(id)) !== proof.networks[role].id) throw Error('RPC chain ID mismatch for '+role);
-    const result = confirmTransaction(planStep(i,contracts,records),receipt,tx,backup.account,h);
+    const request = (method,params) => read(role,method,params);
+    const result = await confirmStepTransaction(i,contracts,planStep(i,contracts,records),receipt,tx,backup.account,h,request);
     if (result.state !== 'confirmed') throw Error('Step '+(i+1)+' was not successful.');
-    proof.verifyBlock(receipt,await read(role,'eth_getBlockByNumber',[receipt.blockNumber,false]),role);
+    // Quote verification already checks the canonical block and its timestamp.
+    if (i < 4) proof.verifyBlock(receipt,await request('eth_getBlockByNumber',[receipt.blockNumber,false]),role);
     records.push(result);
   }
   return records;

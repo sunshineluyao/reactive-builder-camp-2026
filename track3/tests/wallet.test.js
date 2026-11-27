@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {planStep,confirmTransaction,confirmStepTransaction,readQuoteReceipt,parseHash} = require('../site/console');
-const {collect,evaluate} = require('../scripts/watch');
+const {planStep,confirmTransaction,confirmStepTransaction,readQuoteReceipt,parseHash,steps} = require('../site/console');
+const {deployments,collect,evaluate} = require('../scripts/watch');
 const contracts = require('../site/contracts.json').contracts;
 const run = require('../evidence/local-run.json');
 const proof = require('../review/receipts');
@@ -116,6 +116,46 @@ test('a direct quote still requires a matching canonical event and publisher', a
   assert.equal((await verify({tx:direct})).state, 'confirmed');
   receipt.logs.length = 0;
   await assert.rejects(verify({tx:direct}), /matching event/);
+});
+test('the watcher resumes all six signatures with a delegated control quote and a direct trigger', async () => {
+  const delegated = delegatedQuote(4);
+  const account = delegated.account;
+  const byHash = new Map(), byBlock = new Map();
+  const hashes = steps.map(([role], i) => {
+    const plan = planStep(i,contracts,records);
+    const hash = '0x' + (i+1).toString(16).padStart(64,'0');
+    const blockNumber = '0x' + (i+1).toString(16);
+    const tx = i === 4 ? {...delegated.tx,hash} : {hash,from:account,to:plan.to ?? null,input:plan.data,value:plan.value};
+    const receipt = {...run.receipts.origin,transactionHash:hash,blockNumber,from:tx.from,to:tx.to,
+      contractAddress:records[i]?.address ?? null,logs:[]};
+    if (i >= 4) {
+      const log = (i === 4 ? delegated.receipt : run.receipts.origin).logs[0];
+      receipt.logs.push({...log,transactionHash:hash,blockNumber});
+    }
+    byHash.set(hash,{role,tx,receipt});
+    byBlock.set(blockNumber,{number:blockNumber,hash:receipt.blockHash,transactions:[hash],timestamp:run.alert.observedAt});
+    return hash;
+  });
+  let publisher = account;
+  const read = async (role, method, [key, atBlock]) => {
+    if (method === 'eth_chainId') return '0x' + proof.networks[role].id.toString(16);
+    if (method === 'eth_getBlockByNumber') return byBlock.get(key);
+    if (method === 'eth_call') {
+      assert.equal(role,'origin');
+      assert.deepEqual(key,{to:run.origin.address,data:'0x8c72c54e'});
+      assert.ok(byBlock.has(atBlock));
+      return '0x' + publisher.slice(2).padStart(64,'0');
+    }
+    const entry = byHash.get(key);
+    assert.equal(entry.role,role);
+    if (method === 'eth_getTransactionByHash') return entry.tx;
+    assert.equal(method,'eth_getTransactionReceipt');
+    return entry.receipt;
+  };
+  const backup = {version:1,account,hashes};
+  assert.deepEqual((await deployments(backup,read)).map(record=>record.hash),hashes);
+  publisher = run.destination.address;
+  await assert.rejects(deployments(backup,read),/发布账户/);
 });
 test('receipt links accept the expected explorers and reject unrelated URLs',()=>{
   assert.equal(parseHash(h),h);assert.equal(parseHash('https://sepolia.etherscan.io/tx/'+h),h);
