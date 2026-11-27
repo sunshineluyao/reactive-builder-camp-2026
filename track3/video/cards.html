@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stablecoin Alerts · Film titles</title>
+<style>
+* { box-sizing: border-box; }
+:root { font-family: Inter, "DejaVu Sans", sans-serif; color: #f4f4e8; background: #10272d; }
+body { margin: 0; }
+main { min-height: 100vh; padding: 46px 60px 44px; display: grid; grid-template-rows: auto 1fr auto; }
+header, footer { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: inline-flex; gap: 12px; align-items: center; font-weight: 600; letter-spacing: -.02em; font-size: 20px; }
+.mark { width: 31px; height: 26px; display: flex; gap: 4px; justify-content: center; align-items: center; transform: skewX(-12deg); }
+.mark i { border-radius: 2px; background: #a7e1bd; width: 6px; height: 19px; }
+.mark i:nth-child(2) { height: 28px; }
+.kicker, .unit, footer, .row code { font-family: "IBM Plex Mono", "DejaVu Sans Mono", monospace; }
+.kicker, footer { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: #b7d6cb; }
+main section { display: none; align-self: center; }
+body[data-card="title"] .title, body[data-card="end"] .end { display: grid; grid-template-columns: 1.15fr .85fr; gap: 74px; align-items: center; }
+h1 { font-size: 88px; line-height: .95; letter-spacing: -.07em; font-weight: 500; margin: 0 0 25px; }
+.lead { max-width: 520px; font-size: 25px; line-height: 1.28; letter-spacing: -.025em; color: #c1d4ce; margin: 0; }
+.quote { border-left: 1px solid #46665f; padding: 8px 0 8px 35px; }
+.unit { color: #b3d5c4; font-size: 18px; }
+.number { display: block; color: #a7e1bd; font-weight: 450; letter-spacing: -.075em; font-size: 110px; line-height: 1.07; font-variant-numeric: tabular-nums; }
+.small { margin-top: 15px; font-size: 19px; color: #c1d4ce; }
+.end h1 { font-size: 72px; }
+.rows { border-top: 1px solid #46665f; }
+.row { padding: 18px 0; display: grid; gap: 6px; border-bottom: 1px solid #46665f; }
+.row span { font-size: 22px; color: #e5ede5; }
+.row code { font-size: 15px; color: #a7e1bd; }
+footer { border-top: 1px solid #38554f; padding-top: 16px; gap: 22px; }
+footer span:last-child { text-align: right; }
+</style>
+<body><main>
+<header><div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Stablecoin Alerts</div><span class="kicker">Reactive Builder Camp 2026</span></header>
+<section class="title"><div><h1>Stablecoin<br>Alerts</h1><p class="lead">Which price moves deserve a treasury review?</p></div><div class="quote"><span class="unit">Simulated quote</span><strong class="number">0.993</strong><span class="unit">USDT per USDC</span><div class="small">0.7% below parity</div></div></section>
+<section class="end"><div><h1>Reproduce<br>the run.</h1><p class="lead">Start with the project README and follow one quote across all three receipts.</p></div><div class="rows"><div class="row"><span>Run the contracts</span><code>track3/contracts/</code></div><div class="row"><span>Verify the receipts</span><code>track3/review/</code></div><div class="row"><span>Inspect the decision</span><code>track3/model/</code></div></div></section>
+<footer><span>Track 3 · Reactive meets AI</span><span id="repo">USDC / USDT</span></footer>
+</main><script>const end = new URLSearchParams(location.search).get('card') === 'end'; document.body.dataset.card = end ? 'end' : 'title'; if (end) document.getElementById('repo').textContent = 'github.com/sunshineluyao/reactive-builder-camp-2026';</script></body></html>
