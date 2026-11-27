@@ -51,10 +51,16 @@ class Tools:
         subprocess.run(["python3", str(ROOT / "scripts/build_contracts.py"), "--solc", self.solc, "--check"],
                        check=True)
         source = ROOT / "tests/LocalTransport.sol"
-        result = json.loads(subprocess.check_output([
-            self.solc, "--optimize", "--evm-version", "cancun", "--combined-json", "bin-runtime",
-            str(source)], text=True))["contracts"]
-        return {entry.rsplit(":", 1)[1]: "0x" + v["bin-runtime"] for entry, v in result.items()}
+        # Fix the Solidity source-unit name used in the filmed rehearsal. Otherwise the
+        # metadata embeds the checkout path, changing the local transport's state root.
+        unit = "buildcamp/track3/tests/LocalTransport.sol"
+        spec = {"language": "Solidity", "sources": {unit: {"content": source.read_text()}},
+                "settings": {"optimizer": {"enabled": True, "runs": 200}, "evmVersion": "cancun",
+                             "outputSelection": {"*": {"*": ["evm.deployedBytecode.object"]}}}}
+        compiled = subprocess.check_output([self.solc, "--standard-json"], input=json.dumps(spec), text=True)
+        result = json.loads(compiled[compiled.index("{"):])["contracts"][unit]
+        return {name: "0x" + artifact["evm"]["deployedBytecode"]["object"]
+                for name, artifact in result.items()}
 
 
 class Chain:
