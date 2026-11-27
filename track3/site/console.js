@@ -6,6 +6,8 @@ const networks = {
   destination: {id: 84532, name: 'Base Sepolia', symbol: 'ETH', rpc: 'https://sepolia.base.org', explorer: 'https://sepolia.basescan.org'}
 };
 const proxy = '0x476F44b11F5C942c58f4c8E3d0300E5710743585';
+const delegationManager = '0xdb9b1e94b5b69df7e401ddbede43491141047db3';
+const receiptProof = typeof module !== 'undefined' && module.exports ? require('../review/receipts') : window.ReceiptProof;
 const steps = [
   ['origin', '部署报价合约 QuoteSource', '0 ETH'],
   ['reactive', '部署并订阅 ReactiveAlert', '0.15 lREACT · 合约服务费储备'],
@@ -54,6 +56,56 @@ function confirmTransaction(plan, receipt, tx, account, expectedHash) {
   return {hash: expectedHash, state: 'confirmed', block: Number(BigInt(receipt.blockNumber)), ...(plan.to ? {} : {address: receipt.contractAddress})};
 }
 
+function matchesSingleRedemption(input, plan) {
+  // redeemDelegations(bytes[],bytes32[],bytes[]) with one default-mode ERC-7579 call.
+  const data = lower(input);
+  const args = data.slice(10);
+  if (!data.startsWith('0xcef6d209') || args.length < 6 * 64 ||
+      args.length % 64 !== 0 || !/^[0-9a-f]+$/.test(args)) return false;
+
+  // The three offsets, permission count, element offset and byte length occupy six words.
+  // The manager validates the permission bytes. Rebuild the canonical ABI envelope so
+  // extra executions, different modes, or bytes outside the actual call cannot match.
+  const permissionLength = BigInt('0x' + args.slice(5 * 64, 6 * 64));
+  if (permissionLength > BigInt(args.length / 2 - 192)) return false;
+  const length = Number(permissionLength);
+  const permissions = args.slice(6 * 64, 6 * 64 + 2 * length);
+  const paddedLength = Math.ceil(length / 32) * 32;
+  const modesOffset = 192 + paddedLength;
+  const header = [96, modesOffset, modesOffset + 64, 1, 32, length].map(word).join('');
+  const call = lower(plan.to).slice(2) + word(plan.value) + lower(plan.data).slice(2);
+  const modesAndCallHeader = [1, 0, 1, 32, call.length / 2].map(word).join('');
+  return args === header + permissions.padEnd(paddedLength * 2, '0') +
+    modesAndCallHeader + call.padEnd(Math.ceil(call.length / 64) * 64, '0');
+}
+
+async function confirmStepTransaction(i, contracts, plan, receipt, tx, account, hash, request) {
+  if ((i !== 4 && i !== 5) || lower(tx?.to) !== delegationManager) {
+    return confirmTransaction(plan, receipt, tx, account, hash);
+  }
+  if (!validHash(hash) || !validAddress(account) || !validAddress(tx.from) ||
+      lower(tx.hash) !== lower(hash) || lower(receipt?.transactionHash) !== lower(hash) ||
+      lower(receipt.to) !== delegationManager || lower(receipt.from) !== lower(tx.from) ||
+      (tx.chainId != null && BigInt(tx.chainId) !== BigInt(networks.origin.id)) ||
+      tx.value == null || BigInt(tx.value) !== 0n || !matchesSingleRedemption(tx.input, plan)) {
+    throw new Error('委托交易的哈希、网络、目标合约、金额或报价调用与本步骤不匹配。');
+  }
+
+  const [block, publisher] = await Promise.all([
+    request('eth_getBlockByNumber', [receipt.blockNumber, false]),
+    request('eth_call', [{to:plan.to, data:'0x' + contracts.QuoteSource.methodIdentifiers['publisher()']}, receipt.blockNumber])
+  ]);
+  receiptProof.verifyBlock(receipt, block, 'origin');
+  // QuoteSource only lets its immutable publisher emit PriceObserved, even if a relayer pays gas.
+  if (lower(publisher) !== '0x' + word(account)) throw new Error('报价合约的发布账户与当前钱包不匹配。');
+  if (BigInt(receipt.status) === 0n) return {hash, state:'failed'};
+  const quote = receiptProof.readQuote({address:lower(plan.to), txHash:lower(hash)}, receipt);
+  if (BigInt(quote.priceBps) !== BigInt('0x' + plan.data.slice(10)) || BigInt(quote.observedAt) !== BigInt(block.timestamp)) {
+    throw new Error('报价合约的链上事件与本步价格或区块时间不匹配。');
+  }
+  return {hash, state:'confirmed', block:quote.blockNumber};
+}
+
 function parseHash(raw) {
   if (validHash(raw.trim())) return raw.trim();
   try {
@@ -64,7 +116,7 @@ function parseHash(raw) {
   } catch { return ''; }
 }
 
-if (typeof module !== 'undefined') module.exports = {planStep, confirmTransaction, parseHash, networks, steps};
+if (typeof module !== 'undefined') module.exports = {planStep, confirmTransaction, confirmStepTransaction, parseHash, networks, steps};
 if (typeof window !== 'undefined') window.addEventListener('DOMContentLoaded', startConsole);
 
 async function startConsole() {
@@ -178,7 +230,8 @@ async function startConsole() {
         const receipt = await provider.request({method:'eth_getTransactionReceipt',params:[hash]});
         if (receipt) {
           const tx = await provider.request({method:'eth_getTransactionByHash',params:[hash]});
-          const verified = confirmTransaction(plan, receipt, tx, a, hash);
+          const verified = await confirmStepTransaction(i, contracts, plan, receipt, tx, a, hash,
+            (method,params) => provider.request({method,params}));
           await assertWallet(a, net);
           records[i] = verified; save();
           if (verified.state === 'failed') throw new Error('交易已回滚。请检查该网测试币余额和浏览器回执，再决定是否重试。');

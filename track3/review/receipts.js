@@ -128,16 +128,21 @@
     requireThat(log.topics.length===(role==='origin'?1:3),role+' event has the wrong indexed parameters.');
     return {log,blockHash,blockNumber,logIndex:quantity(log.logIndex,role+' log index')};
   }
+  function readQuote(coordinates,receipt) {
+    const source=selectLog('origin',coordinates,receipt);
+    const [priceBps,observedAt]=words(source.log,2,'origin');
+    requireThat(observedAt>0 && observedAt<253402300800,'Invalid observation timestamp.');
+    for (const stamp of [source.log.blockTimestamp,receipt.blockTimestamp]) {
+      if (stamp!==undefined) requireThat(quantity(stamp,'origin block timestamp')===observedAt,'Origin quote time differs from its block timestamp.');
+    }
+    return {...source,priceBps,observedAt};
+  }
   function verify(input,receipts) {
     const run=manifest(input);
     requireThat(receipts && typeof receipts==='object','Receipt bodies are required.');
-    const source=selectLog('origin',run.origin,receipts.origin);
-    const [priceBps,observedAt]=words(source.log,2,'origin');
+    const source=readQuote(run.origin,receipts.origin);
+    const {priceBps,observedAt}=source;
     requireThat(priceBps>0 && priceBps<=20000 && Math.abs(priceBps-10000)>50,'Origin quote does not cross the strict 0.5% alert threshold.');
-    requireThat(observedAt>0 && observedAt<253402300800,'Invalid observation timestamp.');
-    for (const stamp of [source.log.blockTimestamp,receipts.origin.blockTimestamp]) {
-      if (stamp!==undefined) requireThat(quantity(stamp,'origin block timestamp')===observedAt,'Origin quote time differs from its block timestamp.');
-    }
     const evidenceId=eventId(run.origin.chainId,run.origin.txHash,source.logIndex);
     const legs={};
     for (const role of roles) {
@@ -179,7 +184,7 @@
     requireThat(result.alert.observedAt===sourceBlockTime,'Origin quote time differs from its canonical block timestamp.');
     return {result,receipts};
   }
-  const api={roles,networks,signatures,topics,keccak,eventId,manifest,verify,verifyBlock,fetchPublic};
+  const api={roles,networks,signatures,topics,keccak,eventId,manifest,readQuote,verify,verifyBlock,fetchPublic};
   if (typeof module==='object' && module.exports) module.exports=api;
   else root.ReceiptProof=api;
 })(globalThis);

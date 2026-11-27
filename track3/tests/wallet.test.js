@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {planStep,confirmTransaction,parseHash} = require('../site/console');
+const {planStep,confirmTransaction,confirmStepTransaction,parseHash} = require('../site/console');
 const {collect,evaluate} = require('../scripts/watch');
 const contracts = require('../site/contracts.json').contracts;
 const run = require('../evidence/local-run.json');
@@ -26,6 +26,61 @@ test('import rechecks signer, bytecode, amount, target and successful deployment
     assert.throws(()=>confirmTransaction(plan,receipt,{...tx,...changed},from,h));
   assert.equal(confirmTransaction(plan,{...receipt,status:'0x0'},tx,from,h).state,'failed');
   assert.throws(()=>confirmTransaction(plan,{...receipt,contractAddress:null},tx,from,h));
+});
+
+function delegatedQuote(step, sponsored = false) {
+  const plan = planStep(step, contracts, records);
+  const account = run.receipts.origin.from;
+  const manager = '0xdb9b1e94b5b69df7e401ddbede43491141047db3';
+  const from = sponsored ? run.destination.address : account;
+  const uint = n => BigInt(n).toString(16).padStart(64,'0');
+  // ABI fixture with one byte of permission data and an 88-byte target/value/publish call.
+  const input = '0xcef6d209' + [96,224,288,1,32,1].map(uint).join('') + 'ab'.padEnd(64,'0') +
+    [1,0,1,32,88].map(uint).join('') + plan.to.slice(2) + uint(0) + plan.data.slice(2) + '0'.repeat(16);
+  const tx = {hash:h, from, to:manager, value:'0x0', input, chainId:'0xaa36a7'};
+  const receipt = structuredClone(run.receipts.origin);
+  Object.assign(receipt,{from, to:manager});
+  receipt.logs[0].data = '0x' + plan.data.slice(10) + uint(run.alert.observedAt);
+  const block = {hash:receipt.blockHash, number:receipt.blockNumber, timestamp:run.alert.observedAt, transactions:[h]};
+  const request = async (method, params) => {
+    if (method === 'eth_getBlockByNumber') {
+      assert.deepEqual(params,[receipt.blockNumber,false]);
+      return block;
+    }
+    assert.equal(method,'eth_call');
+    assert.deepEqual(params,[{to:plan.to,data:'0x8c72c54e'},receipt.blockNumber]);
+    return '0x' + uint(account);
+  };
+  const verify = (changes = {}) => confirmStepTransaction(step, contracts, changes.plan ?? plan, receipt,
+    changes.tx ?? tx, changes.account ?? account, changes.hash ?? h, request);
+  return {verify, receipt, tx, block};
+}
+
+test('both delegated quotes confirm using their original hash and the effective publisher', async () => {
+  for (const [step,sponsored] of [[4,false],[5,true]]) {
+    const {verify} = delegatedQuote(step,sponsored);
+    assert.deepEqual(await verify(),{hash:h, state:'confirmed', block:Number(BigInt(run.receipts.origin.blockNumber))});
+  }
+});
+
+test('delegated quote verification rejects mismatched calls, publishers and chain evidence', async () => {
+  const {verify, tx, receipt, block} = delegatedQuote(4);
+  await assert.rejects(verify({plan:planStep(5,contracts,records)}));
+  await assert.rejects(verify({account:run.destination.address}));
+  await assert.rejects(verify({hash:run.reactive.txHash}));
+  for (const change of [{value:'0x1'},{to:run.destination.address},{chainId:'0x1'},
+    {input:tx.input+'00'.repeat(32)}, {input:tx.input.replace(run.origin.address.slice(2),run.destination.address.slice(2))}]) {
+    await assert.rejects(verify({tx:{...tx,...change}}));
+  }
+  block.transactions[0] = run.reactive.txHash;
+  await assert.rejects(verify());
+  block.transactions[0] = h;
+  receipt.logs[0].data = run.receipts.origin.logs[0].data; // 0.9930 instead of the requested 0.9990
+  await assert.rejects(verify());
+  receipt.logs.length = 0;
+  await assert.rejects(verify());
+  receipt.status = '0x0';
+  assert.deepEqual(await verify(),{hash:h,state:'failed'});
 });
 test('receipt links accept the expected explorers and reject unrelated URLs',()=>{
   assert.equal(parseHash(h),h);assert.equal(parseHash('https://sepolia.etherscan.io/tx/'+h),h);
