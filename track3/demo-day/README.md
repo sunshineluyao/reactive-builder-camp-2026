@@ -39,6 +39,6 @@ Reactive Omni Buildathon 的 **Reactive Meets AI** 赛道项目。Ethereum Sepol
 
 ### 登记与制作材料
 
-[登记表四栏可复制答案](registration.txt) · [科学动画与数字讲者制作手册](production.md) · [主持人中英讲稿和模拟问答](script.md) · [中文字幕](captions.zh.srt) · [English subtitles](captions.en.srt)
+[登记表四栏可复制答案](registration.txt) · [视频制作流程图与工具清单](production.md#视频制作流程图) · [主持人中英讲稿和模拟问答](script.md) · [中文字幕](captions.zh.srt) · [English subtitles](captions.en.srt)
 
 讲者数字分身依据本人提供的蓝帽照片生成，普通话由独立的合成声音朗读。四道模拟问题是针对评审标准准备的预设问题。项目的公链回执和合约地址可独立核对。[源报价交易](https://sepolia.etherscan.io/tx/0xd97a9579a96a20c9868dd7f759079975e2ff1603eb903e42d3fd5ddfbbcc6604) · [Lasna 执行交易](https://lasna.reactscan.net/tx/0x63639779506a135ff8cba06c4d8aff5230d029aed5dc781f8f902868f54e8d27) · [Base 回调交易](https://sepolia.basescan.org/tx/0x5e2a48caaf7ab64dd3f25c4f4b804cf30d09aabc6f885efb44033b91ce3ce602) · [主办方评审标准](https://blog.reactive.network/reactive-omni-buildathon-thirty-days-to-find-out-what-one-second-buys/)

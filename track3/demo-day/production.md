@@ -4,6 +4,30 @@
 
 这次制作围绕一个可以当场判断的问题展开。模拟报价从 0.9990 走到 0.9950，再走到 0.9930，哪一步会触发告警？先用动画解释规则，再切到程序的实际输出。字幕、讲稿、幻灯片和主持人的时间表使用同一组数字。最后把展示和模拟问答编入一个文件。
 
+## 视频制作流程图
+
+```mermaid
+flowchart TD
+    accTitle: Reactive PegPulse 视频制作流程
+    accDescr: 核验后的三链回执和 Wanim 动画用于录屏。双语讲稿生成幻灯片、旁白和字幕，旁白音量驱动数字讲者的口型。FFmpeg 将这些素材合成一条视频，核对时长与章节后保存到 GitHub，通过 jsDelivr 分发。
+    receipts["核验三条链上的回执"] --> capture["Playwright 采集演示画面"]
+    wanim["Wanim 绘制报价阈值动画"] --> capture
+    script["双语讲稿与模拟问答"] --> deck["PowerPoint 导出 PDF 画面"]
+    script --> audio["合成旁白并对齐双语字幕"]
+    photo["蓝帽照片生成两种姿态"] --> avatar["同步数字讲者口型"]
+    audio -->|旁白音量| avatar
+    capture --> film["FFmpeg 合成一个 MP4"]
+    deck --> film
+    audio --> film
+    avatar --> film
+    film -->|ffprobe 核对时长与章节| github["GitHub 保存成片"]
+    github --> cdn["jsDelivr CDN 向观众分发"]
+    classDef master fill:#163c46,stroke:#6eb5a6,color:#ffffff,stroke-width:2px
+    class film master
+```
+
+发布前核对两个时间点。**02:50** 自动进入预录模拟问答，**04:40** 播放结束。[GitHub 上的 MP4](Reactive-PegPulse-Demo-Day.mp4) · [主持人播放链接](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Reactive-PegPulse-Demo-Day.mp4)
+
 ## 各个画面的证据
 
 | 画面 | 来源 | 可以从中得出什么 |
