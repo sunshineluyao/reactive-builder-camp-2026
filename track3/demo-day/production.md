@@ -1,5 +1,7 @@
 # 怎样制作一场可以复核的科学动画演示
 
+本片由 Sunshine 代表 Sunshine Swarm Superintelligence (3S) Lab 展示。项目名为 **Reactive PegPulse**，英文标语为 **One quote. Three chains. Anyone can verify.**，中文标语为 **一条报价，三链共证，人人可验。**
+
 这次制作围绕一个可以当场判断的问题展开。模拟报价从 0.9990 走到 0.9950，再走到 0.9930，哪一步会触发告警？先用动画解释规则，再切到程序的实际输出。字幕、讲稿、幻灯片和主持人的时间表使用同一组数字。最后把展示和模拟问答编入一个文件。
 
 ## 各个画面的证据
@@ -31,11 +33,13 @@
 
 ## 制作顺序
 
-1. **按评委的问题编排叙事。** 前六页从财库人员看到 0.9930 开始，依次回答门槛、链上执行、人工复核和付款保护。后四页分别回答 Execution、Integration、Usefulness 和 Craft。中文是播出稿，英文是字幕与备注的译文。[双语讲稿](source/story.json)
+1. **按评委的问题编排叙事。** 前六页从社区财库志愿者看到 0.9930 开始，依次解释阈值、链上执行、人工复核、费用保护和无需钱包的公开核验。后四页分别回答 Execution、Integration、Usefulness 和 Craft。中文是播出稿，英文是字幕与备注的译文。[双语讲稿](source/story.json)
 2. **先验证，再录屏。** 价格门槛使用 `abs(priceBps - 10000) > 50`。控制组、边界值、触发值和两个过渡分别截图。浏览器随后检查公开回执，依次读取“证据不足”“升级复核”“继续观察”。录制程序断言页面状态和三笔外链都存在。[采集脚本](source/capture.py)
 3. **制作两种讲者姿态。** 人物视觉简报是保留参考照中的脸部特征、蓝色棒球帽与紫色边光，以深蓝工作台背景和休闲外套表现 hacker house 氛围。要求画面左右各一名相同尺寸的同一讲者，保持机位、眼睛和肩膀的位置，只改变嘴部姿态。冻结导出的两幅图，后续重剪可以直接复用。[静态姿态](media/avatar.jpg) · [说话姿态](media/avatar-speaking.jpg)
 4. **先确定语句时长，再加运动。** 合成器逐句输出音频，去掉前后过长的静音，再由 FFmpeg 统一语速。成片对整轨人声做两遍响度归一化，目标为 −16 LUFS，方便会场播放。段内与换页采用不同停顿。每秒采样 24 次声音强弱，平滑后在两种嘴部姿态间混合。这个方法按音量近似开合，不做逐音素口型识别。屏幕上的“数字分身与合成旁白”向观众披露制作方式。[对时与字幕](source/audio.py) · [视频合成](source/film.py)
 5. **出两种交付格式。** 讲者和主持人获得可编辑的 PowerPoint 与带链接的 PDF。视频将其与真实 Wanim 帧、复核器画面和数字讲者合成，在同一条时间线上写入中英字幕。00:00–02:50 展示项目，02:50–04:40 播放预设问答。[离线幻灯片生成器](source/layout.py) · [在线版布局适配](source/native.mjs)
+第六页把公开回执、可解释的缺证结果和双语文字稿与 SDG 10.2、16.6 对应。未来用户测试将衡量社区成员独立核验的完成率。[联合国目标 10.2](https://sdgs.un.org/goals/goal10) · [联合国目标 16.6](https://sdgs.un.org/goals/goal16)
+
 6. **验收后分享。** 复查十页 PDF、演示截图、公开数据版本差异、价格标签、字幕安全区、视频时长、音轨、章节和播放器的跳转。训练营作业可提交幻灯片链接。登记表只需填写一个视频链接。[逐栏登记文本](registration.txt)
 
 ## 本地复现
@@ -56,10 +60,10 @@ mkdir -p "$WORK/pdf"
 python source/get_voice.py "$WORK/melo"
 DESTINATION_RPC=https://base-sepolia-rpc.publicnode.com python source/capture.py "$WORK/capture"
 python source/audio.py "$WORK/sound" "$WORK/melo"
-python source/layout.py "$WORK/Stablecoin-Alerts-Demo-Day.pptx"
-soffice --headless --convert-to pdf --outdir "$WORK/pdf" "$WORK/Stablecoin-Alerts-Demo-Day.pptx"
-python source/film.py "$WORK" "$WORK/pdf/Stablecoin-Alerts-Demo-Day.pdf" "$WORK/Stablecoin-Alerts-Demo-Day.mp4"
-ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -show_chapters "$WORK/Stablecoin-Alerts-Demo-Day.mp4"
+python source/layout.py "$WORK/Reactive-PegPulse-Demo-Day.pptx"
+soffice --headless --convert-to pdf --outdir "$WORK/pdf" "$WORK/Reactive-PegPulse-Demo-Day.pptx"
+python source/film.py "$WORK" "$WORK/pdf/Reactive-PegPulse-Demo-Day.pdf" "$WORK/Reactive-PegPulse-Demo-Day.mp4"
+ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -show_chapters "$WORK/Reactive-PegPulse-Demo-Day.mp4"
 ```
 
 如需指定浏览器，可为 `capture.py` 增加 `--chrome /path/to/chrome-headless-shell`。公网 RPC 可按脚本说明用 `ORIGIN_RPC`、`REACTIVE_RPC` 和 `DESTINATION_RPC` 切换。音频程序会写出双语 SRT，视频程序会写出本目录的演示截图。要让离线 PowerPoint 使用重录截图，将采集目录的 `chart-2.png`、`trace.png`、`model-insufficient.png` 依次复制到 `media/wanim-still.png`、`media/trace.png`、`media/decision.png`，再导出幻灯片。重新合成语音和使用不同浏览器、编码器或字体版本时，画面与语音的字节可能不同。固定的节目时长、报价分类和三种复核状态可逐项核验。

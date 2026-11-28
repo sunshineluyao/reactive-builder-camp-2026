@@ -1,227 +1,239 @@
 1
-00:00:00,760 --> 00:00:04,160
-Hello, I’m Luyao Zhang from Duke Kunshan University.
+00:00:00,760 --> 00:00:08,442
+Hello, I’m Sunshine from 3S Lab. Our project is Reactive PegPulse. One quote. Three chains.
 
 2
-00:00:04,160 --> 00:00:08,017
-My digital avatar will walk you through a stablecoin alert.
+00:00:08,442 --> 00:00:09,962
+Anyone can verify.
 
 3
-00:00:08,347 --> 00:00:14,560
-Imagine running a DAO treasury. One USDC now buys only 0.9930 USDT.
+00:00:10,292 --> 00:00:16,481
+Imagine volunteering for a community treasury. One USDC buys only 0.9930 USDT.
 
 4
-00:00:14,560 --> 00:00:18,269
-Should a colleague review it right away?
+00:00:16,481 --> 00:00:19,179
+Would you ask others to review it?
 
 5
-00:00:18,599 --> 00:00:22,462
-I wanted to answer two questions. Did the alert actually happen?
+00:00:19,509 --> 00:00:22,186
+First, check that the alert reached the chain.
 
 6
-00:00:22,462 --> 00:00:25,359
-What evidence makes it worth a colleague’s time?
+00:00:22,186 --> 00:00:24,921
+Then ask whether market evidence is sufficient.
 
 7
-00:00:26,119 --> 00:00:33,212
-The center line is parity. The green band extends half a percent on either side.
+00:00:24,921 --> 00:00:28,004
+Anyone with a mobile browser can follow the receipts.
 
 8
-00:00:33,542 --> 00:00:38,233
-The control quote, 0.9990, is ten basis points below parity.
+00:00:28,764 --> 00:00:35,734
+The center line is parity. The green band extends half a percent on either side.
 
 9
-00:00:38,233 --> 00:00:43,628
-The animation’s 0.9950 sits exactly on the boundary. Both stay quiet.
+00:00:36,064 --> 00:00:40,672
+The control quote, 0.9990, is ten basis points below parity.
 
 10
-00:00:43,958 --> 00:00:47,428
-At 0.9930, the gap reaches seventy basis points.
+00:00:40,672 --> 00:00:45,972
+The animation’s 0.9950 sits exactly on the boundary. Both stay quiet.
 
 11
-00:00:47,428 --> 00:00:51,839
-Crossing the threshold makes the contract request a callback.
+00:00:46,302 --> 00:00:49,711
+At 0.9930, the gap reaches seventy basis points.
 
 12
-00:00:52,599 --> 00:00:58,514
-These are actual testnet transactions. I published the simulated quote on Ethereum Sepolia.
+00:00:49,711 --> 00:00:54,044
+Crossing the threshold makes the contract request a callback.
 
 13
-00:00:58,514 --> 00:01:02,220
-The Lasna contract subscribes to this publisher’s events.
+00:00:54,804 --> 00:00:59,153
+These are real testnet transactions. I published a simulated quote on Ethereum Sepolia.
 
 14
-00:01:02,550 --> 00:01:06,587
-Lasna checks the source and threshold, then requests a callback.
+00:00:59,153 --> 00:01:02,302
+The Lasna contract subscribes to that publisher’s quote events.
 
 15
-00:01:06,587 --> 00:01:11,507
-The recipient on Base Sepolia records the alert. Both steps run automatically.
+00:01:02,632 --> 00:01:04,489
+Reactive calls react() on Lasna.
 
 16
-00:01:11,837 --> 00:01:17,055
-To match the event, compare the source transaction hash and log index two.
+00:01:04,489 --> 00:01:09,306
+The contract checks the source, threshold and duplicates, then requests a callback.
 
 17
-00:01:17,055 --> 00:01:21,427
-The three UTC block times are 13:38:12, 13:38:12 and 13:38:14.
+00:01:09,306 --> 00:01:11,918
+Base Sepolia records the alert automatically.
 
 18
-00:01:21,757 --> 00:01:26,098
-The first and last block timestamps differ by two seconds in this run.
+00:01:12,248 --> 00:01:17,374
+To match the event, compare the source transaction hash and log index two.
 
 19
-00:01:26,098 --> 00:01:28,517
-Each receipt has its own explorer link.
+00:01:17,374 --> 00:01:21,668
+The three UTC block times are 13:38:12, 13:38:12 and 13:38:14.
 
 20
-00:01:29,277 --> 00:01:31,940
-An off-chain model prioritizes review.
+00:01:21,998 --> 00:01:26,263
+The first and last block timestamps differ by two seconds in this run.
 
 21
-00:01:31,940 --> 00:01:38,597
-It needs earlier pair history and contemporaneous independent dollar references for both coins.
+00:01:26,263 --> 00:01:28,640
+Each receipt has its own explorer link.
 
 22
-00:01:38,927 --> 00:01:45,271
-The public run had no dollar references. The alert was retained and the score withheld.
+00:01:29,400 --> 00:01:32,016
+An off-chain model prioritizes review.
 
 23
-00:01:45,271 --> 00:01:47,386
-That is the observed outcome.
+00:01:32,016 --> 00:01:38,556
+It needs earlier pair history and contemporaneous independent dollar references for both coins.
 
 24
-00:01:47,716 --> 00:01:54,085
-For the two alternatives I keep the on-chain alert fixed and switch labeled synthetic evidence.
+00:01:38,886 --> 00:01:45,119
+The public run had no dollar references. The alert was retained and the score withheld.
 
 25
-00:01:54,085 --> 00:01:59,985
-Corroborating dollar weakness escalates review. Near-par references support observation.
+00:01:45,119 --> 00:01:47,196
+That is the observed outcome.
 
 26
-00:02:00,745 --> 00:02:04,855
-The tool records alerts and moves zero stablecoin principal.
+00:01:47,526 --> 00:01:53,783
+For the two alternatives I keep the on-chain alert fixed and switch labeled synthetic evidence.
 
 27
-00:02:04,855 --> 00:02:10,129
-Repeating a source log sends one callback. Redelivering it records one alert.
+00:01:53,783 --> 00:01:59,580
+Corroborating dollar weakness escalates review. Near-par references support observation.
 
 28
-00:02:10,459 --> 00:02:14,448
-The newer contracts cap both individual and lifetime service payments.
+00:02:00,340 --> 00:02:04,377
+The tool records alerts and moves zero stablecoin principal.
 
 29
-00:02:14,448 --> 00:02:19,064
-An empty balance or budget stops new work. Top-ups do not reset the lifetime cap.
+00:02:04,377 --> 00:02:09,559
+Repeating a source log sends one callback. Redelivering it records one alert.
 
 30
-00:02:19,394 --> 00:02:24,865
-All fifteen local tests passed, including valid runs, rejection, replay and recovery.
+00:02:09,889 --> 00:02:13,808
+The newer contracts cap both individual and lifetime service payments.
 
 31
-00:02:24,865 --> 00:02:28,791
-The public receipts shown earlier predate the added fee caps.
+00:02:13,808 --> 00:02:18,343
+An empty balance or budget stops new work. Top-ups do not reset the lifetime cap.
 
 32
-00:02:29,551 --> 00:02:31,511
-Back to the treasury desk.
+00:02:18,673 --> 00:02:24,047
+All fifteen local tests passed, including valid runs, rejection, replay and recovery.
 
 33
-00:02:31,511 --> 00:02:38,901
-At 0.9930 the team can first verify the three receipts, then identify the missing market evidence.
+00:02:24,047 --> 00:02:27,904
+The public receipts shown earlier predate the added fee caps.
 
 34
-00:02:39,231 --> 00:02:44,884
-Next I want to connect independent market feeds and measure how many alerts warrant a human review.
+00:02:28,664 --> 00:02:34,205
+Community volunteers can read all three receipts without connecting a wallet or paying a fee.
 
 35
-00:02:44,884 --> 00:02:49,280
-The repository contains the code, receipts and reproduction steps. Thank you.
+00:02:34,205 --> 00:02:38,435
+Bilingual captions and a transcript let people check at their own pace.
 
 36
-00:02:50,760 --> 00:02:52,832
-This is a prerecorded simulated Q&A.
+00:02:38,765 --> 00:02:44,868
+Our design goals are wider participation and transparent accountability, aligned with SDGs 10 and 16.
 
 37
-00:02:52,832 --> 00:02:56,804
-First question: how can a judge verify that the destination executed?
+00:02:44,868 --> 00:02:49,280
+Next we will test how many community members can verify an alert unaided.
 
 38
-00:02:57,134 --> 00:03:03,077
-Open the Base Sepolia receipt and find the recipient’s PriceDeviation event.
+00:02:50,760 --> 00:02:52,718
+This is a prerecorded simulated Q&A.
 
 39
-00:03:03,077 --> 00:03:09,099
-Match its source transaction hash and log index two to the event ID on Lasna.
+00:02:52,718 --> 00:02:56,471
+First question: how can a judge verify that the destination executed?
 
 40
-00:03:09,429 --> 00:03:11,639
-This verifies that the alert was recorded.
+00:02:56,801 --> 00:03:02,417
+Open the Base Sepolia receipt and find the recipient’s PriceDeviation event.
 
 41
-00:03:11,639 --> 00:03:15,848
-Two seconds is the difference between the endpoint block timestamps in this run.
+00:03:02,417 --> 00:03:08,107
+Match its source transaction hash and log index two to the event ID on Lasna.
 
 42
-00:03:16,608 --> 00:03:19,797
-Second question: what work does Reactive actually do?
+00:03:08,437 --> 00:03:10,525
+This verifies that the alert was recorded.
 
 43
-00:03:20,127 --> 00:03:27,984
-It subscribes to the designated contract, checks source, threshold and event identity, then requests the cross-chain callback.
+00:03:10,525 --> 00:03:14,502
+Two seconds is the difference between the endpoint block timestamps in this run.
 
 44
-00:03:27,984 --> 00:03:32,786
-Otherwise the team would operate its own listener, relay and replay controls.
+00:03:15,262 --> 00:03:20,061
+Second question: if we have price oracles, what does Reactive add?
 
 45
-00:03:33,116 --> 00:03:35,676
-I signed two quotes during the public test.
+00:03:20,391 --> 00:03:22,819
+Price oracles can supply dollar references.
 
 46
-00:03:35,676 --> 00:03:41,334
-Once the threshold was crossed, the relay and target write needed no further signature from me.
+00:03:22,819 --> 00:03:29,367
+Our contract subscribes to a specific quote event and requests a cross-chain callback when the threshold is crossed.
 
 47
-00:03:42,094 --> 00:03:47,438
-Third question: does one pool quote establish a depeg?
+00:03:29,367 --> 00:03:31,400
+Anyone can match the three receipts.
 
 48
-00:03:47,768 --> 00:03:50,810
-One pool quote warrants investigation.
+00:03:31,730 --> 00:03:36,597
+The simulated quote triggered a real callback. Live oracle feeds are a next step.
 
 49
-00:03:50,810 --> 00:03:56,734
-The model also needs history and independent dollar prices for both coins.
+00:03:36,597 --> 00:03:41,586
+Without dollar references, the review tool retained the alert and withheld a score.
 
 50
-00:03:56,734 --> 00:04:01,857
-The public run kept the alert and identified the missing inputs.
+00:03:42,346 --> 00:03:48,840
+Third question: when volunteers see one pool quote fall, can they conclude that a stablecoin lost its peg?
 
 51
-00:04:02,187 --> 00:04:10,175
-Holding the same alert fixed, we can change the two dollar references and test whether the recommendation changes.
+00:03:49,170 --> 00:03:52,045
+One pool quote warrants investigation.
 
 52
-00:04:10,935 --> 00:04:16,288
-Final question: what if a callback fails or an event arrives twice?
+00:03:52,045 --> 00:03:57,642
+The model also needs history and independent dollar prices for both coins.
 
 53
-00:04:16,618 --> 00:04:20,949
-A failed call leaves the destination count unchanged.
+00:03:57,642 --> 00:04:02,484
+The public run kept the alert and identified the missing inputs.
 
 54
-00:04:20,949 --> 00:04:26,505
-Inspect the proxy, target event, balance, debt and remaining budget.
+00:04:02,814 --> 00:04:11,700
+Volunteers can flag the missing prices and use the same alert with two synthetic inputs to check when the model escalates review.
 
 55
-00:04:26,505 --> 00:04:30,508
-Authorized redelivery can record that event once.
+00:04:12,460 --> 00:04:17,519
+Final question: what if a callback fails or an event arrives twice?
 
 56
-00:04:30,838 --> 00:04:34,723
-You can rerun all fifteen tests from the repository.
+00:04:17,848 --> 00:04:21,940
+A failed call leaves the destination count unchanged.
 
 57
-00:04:34,723 --> 00:04:39,280
+00:04:21,940 --> 00:04:27,190
+Inspect the proxy, target event, balance, debt and remaining budget.
+
+58
+00:04:27,190 --> 00:04:30,974
+Authorized redelivery can record that event once.
+
+59
+00:04:31,304 --> 00:04:34,974
+You can rerun all fifteen tests from the repository.
+
+60
+00:04:34,974 --> 00:04:39,280
 Please collect additional questions for my written follow-up.

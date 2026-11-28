@@ -1,10 +1,14 @@
-# Stablecoin Alerts · Demo Day
+# Reactive PegPulse
 
-**[播放完整预录视频（4 分 40 秒）](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Stablecoin-Alerts-Demo-Day.mp4)**
+**One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
 
-张露瑶（Luyao “Sunshine” Zhang），昆山杜克大学。Reactive Builder Camp 营内展示，2026 年 11 月 29 日。视频将 **2 分 50 秒项目展示**与 **1 分 50 秒预录模拟问答**连在一起。普通话旁白配中英双语画面字幕，下载视频后可离线连续播放。
+Sunshine · Sunshine Swarm Superintelligence (3S) Lab
 
-**训练营提交材料**　[演示幻灯片 PDF](Stablecoin-Alerts-Demo-Day.pdf) · [可编辑 PowerPoint，含双语讲者备注](Stablecoin-Alerts-Demo-Day.pptx) · [预录演示截图](demo-screenshot.jpg)
+**[播放 Demo Day 完整预录（4 分 40 秒）](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Reactive-PegPulse-Demo-Day.mp4)**
+
+Reactive Omni Buildathon 的 **Reactive Meets AI** 赛道项目。Ethereum Sepolia 发布模拟报价，Reactive Lasna 判断是否越过阈值，Base Sepolia 写入告警。任何人都能打开区块浏览器逐笔核对。2026 年 11 月 29 日的营内演示使用普通话旁白和中英字幕，02:50 自动进入预录模拟问答。
+
+**训练营提交材料**　[演示幻灯片 PDF](Reactive-PegPulse-Demo-Day.pdf) · [可编辑 PowerPoint，含双语讲者备注](Reactive-PegPulse-Demo-Day.pptx) · [预录演示截图](demo-screenshot.jpg)
 
 ![演示视频中核对 Ethereum Sepolia、Reactive Lasna 和 Base Sepolia 三笔回执的画面](demo-screenshot.jpg)
 
@@ -14,16 +18,24 @@
 
 | 视频时间 | 内容 | 评委可以核对什么 |
 | --- | --- | --- |
-| 00:00 | DAO 财库面对一条 0.9930 报价 | 只记录预警，再分配人工复核时间 |
-| 00:25 | Wanim 动画演示三种报价 | 0.9990 和边界 0.9950 继续观察，0.9930 请求回调 |
-| 00:52 | 三份公开测试网回执 | 源报价、Lasna 执行、Base 回调对应同一事件 |
-| 01:29 | 复核器切换输入证据 | 公网缺证时暂缓评分，合成对照展示另外两个决定 |
+| 00:00 | 社区志愿者面对 0.9930 的报价 | 先确认告警上链，再检查市场证据 |
+| 00:28 | Wanim 演示三种报价 | 0.9990 和边界 0.9950 继续观察，0.9930 请求回调 |
+| 00:54 | 三份公开测试网回执 | 源报价、Lasna 执行、Base 回调对应同一日志 |
+| 01:29 | 复核器切换价格证据 | 公网运行暂缓评分，两组合成输入展示另外两个决定 |
 | 02:00 | 防重复与费用保护 | 新版合约 15 项本地 Foundry 测试通过 |
-| 02:29 | 下一步 | 接入独立报价并评估人工复核队列的误报率 |
-| **02:50** | **预录模拟问答开始** | **Execution**　怎样证明目标链写入告警？ |
-| 03:16 | Integration | 哪两步由 Reactive 和跨链回调自动执行？ |
-| 03:41 | Usefulness | 单池报价下降够不够认定稳定币脱锚？ |
-| 04:10 | Craft | 回调失败、重复事件和预算耗尽如何处理？ |
+| 02:28 | 谁能核验？ | 只读回执无需钱包，双语稿和可下载材料方便独立复核 |
+| **02:50** | **预录模拟问答开始** | **Execution**　如何核对目标链真正写入？ |
+| 03:15 | Integration | 已有价格预言机，Reactive 还做什么？ |
+| 03:42 | Usefulness | 一个池子的报价足以证明脱锚吗？ |
+| 04:12 | Craft | 回调重放、失败和预算耗尽如何处理？ |
+
+### 有了价格预言机，Reactive 做什么？
+
+价格预言机可提供两种币的独立美元参考价。PegPulse 订阅的是一条具体报价事件。0.9930 越界时，Lasna 的 `react()` 请求 Base 写入告警，三笔回执可用源交易哈希与日志序号 2 对上。公开测试使用模拟报价并产生真实回调。由于缺少同期参考价，AI 复核流程保留告警、暂缓评分。现场模拟问答会解释这个区别。[实现与对照](../README.md#reactive-怎样补充价格预言机)
+
+### 社区成员怎样参与核验
+
+学生、小型 DAO 财库和社区志愿者都能用手机浏览器读三笔回执，免登录、免签名，也无需支付 gas。双语字幕和可下载的文字稿方便逐项核查。公开原始日志以及 AI 暂缓评分的理由，对应 SDG 10.2 的包容参与和 SDG 16.6 的透明问责。两者是设计方向。下一步计划邀请社区成员独立匹配同一事件，记录完成率、用时和遇到的困难。[联合国目标 10.2](https://sdgs.un.org/goals/goal10) · [联合国目标 16.6](https://sdgs.un.org/goals/goal16)
 
 ### 登记与制作材料
 

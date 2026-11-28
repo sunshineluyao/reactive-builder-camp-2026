@@ -1,4 +1,4 @@
-Stablecoin Alerts ｜ 防误触发、防重复、设上限
+Reactive PegPulse ｜ 防误触发、防重复、设上限
 
 Foundry 测试代码
 https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/tests/StablecoinGuards.t.sol

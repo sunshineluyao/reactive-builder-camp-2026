@@ -1,14 +1,32 @@
-# Stablecoin Alerts with Verifiable Cross-Chain Evidence
+# Reactive PegPulse
+
+**One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
+
+Sunshine · Sunshine Swarm Superintelligence (3S) Lab
 
 **Reactive Meets AI（赛道 3） · 稳定币价差告警与证据核验**
 
-DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是否值得人工复核？Stablecoin Alerts 先用三条链留下同一条预警的交易证据，再由链下程序核对同期价格，为复核队列分流。本项目用测试合约发布模拟报价。
+DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是否值得人工复核？Reactive PegPulse 先用三条链留下同一条预警的交易证据，再由链下程序核对同期价格，为复核队列分流。本项目用测试合约发布模拟报价。
 
 **[观看公开测试网录屏 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [三笔原始回执](evidence/public-run.json) · [下载流程图 PNG](architecture.png) · [英文解说与中文字幕](video/README.md)
 
-[11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Stablecoin-Alerts-Demo-Day.pptx)
+[11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Reactive-PegPulse-Demo-Day.pptx)
 
-**For judges.** Stablecoin Alerts follows a simulated USDC/USDT quote through Ethereum Sepolia, Reactive Lasna and Base Sepolia. A deviation above 50 basis points creates a traceable alert. Given recent pair history and independent dollar references, an off-chain neural network recommends escalation or continued observation. The public run retained the alert and withheld its score because no reference packet was supplied. The video replays the same verified event with labeled synthetic inputs to demonstrate both model decisions.
+**For judges.** Reactive PegPulse follows a simulated USDC/USDT quote through Ethereum Sepolia, Reactive Lasna and Base Sepolia. A deviation above 50 basis points creates a traceable alert. Given recent pair history and independent dollar references, an off-chain neural network recommends escalation or continued observation. The public run retained the alert and withheld its score because no reference packet was supplied. The video replays the same verified event with labeled synthetic inputs to demonstrate both model decisions.
+
+小型社区财库可以用浏览器查源交易、Reactive 执行和目标回调，无需钱包和 gas。通过公开可复核的证据和双语材料，项目以包容参与和透明问责为设计方向。[联合国目标 10.2](https://sdgs.un.org/goals/goal10) · [联合国目标 16.6](https://sdgs.un.org/goals/goal16)
+
+## Reactive 怎样补充价格预言机
+
+当 1 USDC 只能换 0.9930 USDT 时，社区需要核对两件事。第一，这个池子的偏离是否触发了告警？第二，独立美元报价是否也出现异常？原型用测试合约发布模拟报价。下面按证据说明哪一步已经跑通。
+
+| 角色 | 回答的问题 | PegPulse 的做法与本次结果 |
+| --- | --- | --- |
+| 价格预言机，例如 Chainlink Price Feeds | 两种资产各自的美元参考价是多少？ | 模型预留 USDC/USD、USDT/USD、来源和时间戳。实时预言机适配器是后续工作。公网运行缺少这些输入。 |
+| Reactive Omni 合约 | 哪条源日志应当在另一条链产生动作？ | 在 Lasna 订阅指定发布合约的 `PriceObserved`。`react()` 校验来源、阈值和重复记录，再向 Base 请求回调。0.9990 留在源链，0.9930 触发真实回调。 |
+| 社区复核与链下 AI | 哪条目标告警对应这笔报价，证据足够升级调查吗？ | 以源链 ID、源交易哈希和日志索引 2 匹配三笔回执。美元报价和历史缺失时保留告警、暂缓评分。两组合成对照展示升级和观察。 |
+
+相对只读取喂价的应用，项目增加了可以追溯到具体日志的跨链响应，以及可以检查理由的复核决定。Chainlink CRE 也能用链上事件驱动工作流，CCIP 支持跨链消息。该原型验证的是前述流程在 Reactive 上的实现。这次两秒是单个事件的首尾区块时间差。价格准确度、成本和响应延迟的跨平台比较仍待同条件实测。[Reactive 合约与回调](https://dev.reactive.network/reactive-contracts) · [Chainlink Price Feeds](https://docs.chain.link/data-feeds/price-feeds) · [Chainlink CRE](https://docs.chain.link/cre) · [Chainlink CCIP](https://docs.chain.link/ccip) · [三份公开回执](evidence/public-run.json)
 
 ## 公开部署与三笔运行交易
 

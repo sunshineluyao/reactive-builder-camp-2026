@@ -13,7 +13,7 @@ import fitz
 import numpy as np
 from PIL import Image, ImageFont
 
-from layout import make_spec
+from layout import make_spec, TITLE, TEAM
 
 HERE=Path(__file__).resolve().parent
 OUT=HERE.parent
@@ -110,7 +110,7 @@ def build(work,pdf,target):
     starts=[c["slideStart"] for c in first]
     assert len(first)==10 and starts[6]==170
     end_times=starts[1:]+[TOTAL]
-    chapters=[";FFMETADATA1\ntitle=Stablecoin Alerts - Reactive Demo Day\n"]
+    chapters=[f";FFMETADATA1\ntitle={TITLE}\nartist=Sunshine\ncomment={TEAM} · Reactive Meets AI · Prerecorded presentation and simulated Q&A\n"]
     for c,end in zip(first,end_times):
         name=("模拟问答 / " if c["part"]=="qa" else "")+c["name"]
         chapters.append(f"[CHAPTER]\nTIMEBASE=1/1000\nSTART={round(c['slideStart']*1000)}\nEND={round(end*1000)}\ntitle={name}\n")

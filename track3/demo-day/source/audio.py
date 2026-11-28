@@ -22,7 +22,8 @@ def ff(*args):
 def speakable(text):
     substitutions = {"0.9930":"零点九九三零","0.9950":"零点九九五零","0.9990":"零点九九九零",
                      "DAO":"去中心化组织","USDC":"U S D C","USDT":"U S D T",
-                     "Base Sepolia":"贝斯测试网","PriceDeviation":"价格偏离","Reactive":"瑞艾克提夫"}
+                     "Base Sepolia":"贝斯测试网","PriceDeviation":"价格偏离","Reactive":"瑞艾克提夫",
+                     "PegPulse":"Peg Pulse","3S Lab":"Three Ess Lab","react()":"瑞艾克特函数"}
     for source,target in substitutions.items(): text = text.replace(source,target)
     return text
 

@@ -1,11 +1,11 @@
 01 项目名称
-Stablecoin Alerts（稳定币跨链告警与 AI 复核）
+Reactive PegPulse｜一条报价，三链共证，人人可验。
 
 02 团队代表姓名或群昵称
-张露瑶（Sunshine Zhang）
+Sunshine（Sunshine Swarm Superintelligence (3S) Lab）
 
 03 项目简介
-Stablecoin Alerts 用 Reactive Lasna 监听 Ethereum Sepolia 上的 USDC/USDT 模拟报价，偏离平价超过 0.5% 时自动在 Base Sepolia 记录告警，演示将核对同一事件的三笔交易并展示 AI 如何辅助人工复核。11 月 29 日我将在另一场学术会议现场作报告，无法实时出席，已将项目演示和模拟问答录成一个视频（02:50 进入问答），烦请主持人代播，谢谢！
+Reactive PegPulse 用 Reactive Lasna 监听 Ethereum Sepolia 的模拟报价，偏离平价超过 0.5% 时自动在 Base Sepolia 记录告警，任何人可核验三笔回执，AI 在缺少独立美元参考价时暂缓评分。11 月 29 日我将在另一场会议现场作报告，无法实时出席，已将项目演示和模拟问答录成一个视频（02:50 进入问答），烦请主持人代播，谢谢！
 
 04 项目链接
-https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Stablecoin-Alerts-Demo-Day.mp4
+https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Reactive-PegPulse-Demo-Day.mp4
