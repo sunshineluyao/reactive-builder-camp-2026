@@ -4,7 +4,7 @@
 
 <picture>
   <source media="(max-width: 860px)" srcset="track3/visual/hero/mobile.svg">
-  <img src="track3/visual/hero/desktop.svg" width="100%" alt="The 0.9990 USDC/USDT control stayed on Ethereum Sepolia. The 0.9930 test quote crossed the 50 basis point threshold, Reactive Lasna requested a callback, and Base Sepolia recorded one alert. The off-chain AI withheld its score because matching USD quotes were missing.">
+  <img src="track3/visual/hero/desktop.svg" width="100%" alt="The 0.9990 USDC/USDT control stayed on Ethereum Sepolia. The 0.9930 test quote crossed the 50 basis point threshold, Reactive Lasna requested a callback, and Base Sepolia recorded one alert. The original run withheld its score. An observed market replay recommended continued observation.">
 </picture>
 
 **One quote. Three chains. Anyone can verify.**
@@ -13,11 +13,11 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Builder Camp 2
 
 When a simulated USDC/USDT quote moves more than 0.5% from parity, a contract on Reactive Lasna requests a callback and Base Sepolia records an alert. A community treasury can trace the alert back to Ethereum Sepolia. An off-chain model uses independent dollar prices and recent pair history to decide whether the alert warrants human review.
 
-**[Watch the public testnet demo · 2 min 30 sec](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · **[Verify the three contracts and transactions or reproduce the run](track3/README.en.md)** · [Raw receipts](track3/evidence/public-run.json) · [Submission links](assignments/hackathon-submission.en.txt)
+**[Open the wallet-free alert reviewer](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=en)** · [Watch the 2:30 competition film](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [Three contracts and transactions](track3/README.en.md) · [Market evidence and evaluation](track3/evidence/market/README.md) · [Submission links](assignments/hackathon-submission.en.txt)
 
 [Demo Day presentation and simulated Q&A · one 4 min 40 sec recording](track3/demo-day/README.en.md) · [Download the slides](track3/demo-day/Reactive-PegPulse-Demo-Day.en.pptx) · [English transcript](track3/demo-day/script.en.md)
 
-On November 27, 2026, Sunshine signed six testnet transactions. The 0.9990 control quote stayed on the source chain. The 0.9930 quote triggered one alert on Base. The public run had no matching dollar-price evidence, so the model withheld its score. The recording replays that event with two labeled synthetic inputs to show how the recommendation changes.
+On November 27, 2026, Sunshine signed six testnet transactions. The 0.9990 control quote stayed on the source chain. The 0.9930 quote triggered one alert on Base. The original run withheld its score. When replayed with independently archived Bitstamp, Coinbase and Binance prices from before the event, the frozen model recommended **continue observing**. On 208 historical crossings with complete follow-up, the model referred 200 cases, including 10 short-lived moves. It assigned three persistent moves to observation and withheld judgment on one more.
 
 [Follow the quote into human review](track3/README.en.md#from-quote-to-human-review) · [Portrait cover for phones](track3/visual/hero/mobile.svg)
 

@@ -1,6 +1,6 @@
 <svg aria-labelledby="title description" lang="zh-CN" xmlns="http://www.w3.org/2000/svg" width="1280" height="646" viewBox="0 0 1280 646" role="img">
   <title id="title">Reactive PegPulse · 哪笔报价触发了告警？</title>
-  <desc id="description">Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，0.9930 超过 50 个基点的阈值。Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 2。因缺少同期美元参考价，链下 AI 暂缓评分。</desc>
+  <desc id="description">Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，0.9930 超过 50 个基点的阈值。Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 2。签名时暂缓评分，事后的真实行情回放建议继续观察。</desc>
   <defs>
     <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="65%">
       <stop offset="0%" stop-color="#080915" />
@@ -173,8 +173,8 @@
   <text x="915" y="485" fill="#c4c3df" font-size="22" font-weight="400" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">源日志序号 2</text>
   <rect x="48" y="540" width="1184" height="77" fill="#050916" rx="18" opacity=".6" />
   <rect x="48" y="536" width="1184" height="77" fill="url(#review)" rx="18" stroke="#42536b" stroke-width="1.6" />
-  <text x="74" y="569" fill="#c4c3df" font-size="22" font-weight="700" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">链下 AI 复核</text>
-  <text x="73" y="598" fill="#f8f5ff" font-size="26" font-weight="650" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">暂缓评分</text>
+  <text x="74" y="569" fill="#c4c3df" font-size="22" font-weight="700" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">真实行情回放</text>
+  <text x="73" y="598" fill="#f8f5ff" font-size="26" font-weight="650" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">继续观察</text>
   <path d="M372 553 V596" stroke="#43536d" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-  <text x="400" y="584" fill="#f8f5ff" font-size="24" font-weight="400" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">缺少对应时点的 USDC/USD 和 USDT/USD 参考价。</text>
+  <text x="400" y="584" fill="#f8f5ff" font-size="24" font-weight="400" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">签名时暂缓评分，事后用真实行情复核。</text>
 </svg>

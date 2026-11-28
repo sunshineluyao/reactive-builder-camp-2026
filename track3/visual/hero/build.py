@@ -229,10 +229,10 @@ def desktop(svg, trigger, log_index):
     text(svg, 915, 485, f"Source log #{log_index}", 22, MUTED, mono=True)
 
     panel(svg, 48, 536, 1184, 77, "review", "#42536b")
-    text(svg, 74, 569, "OFF-CHAIN AI REVIEW", 22, MUTED, 700, space=1.1)
-    text(svg, 73, 598, "Scoring deferred", 26, weight=650, space=-0.4)
+    text(svg, 74, 569, "MARKET REPLAY", 22, MUTED, 700, space=1.1)
+    text(svg, 73, 598, "Continue observing", 26, weight=650, space=-0.4)
     path(svg, "M372 553 V596", "#43536d")
-    text(svg, 400, 584, "Matching USDC/USD and USDT/USD quotes were missing.", 24, PAPER)
+    text(svg, 400, 584, "Signed run withheld its score. Archived prices support observation.", 24, PAPER)
 
 
 def phone(svg, trigger, log_index):
@@ -269,9 +269,9 @@ def phone(svg, trigger, log_index):
     receipt_mark(svg, 367, 589)
 
     panel(svg, 24, 691, 392, 91, "review", "#42536b")
-    tag(svg, 43, 717, "OFF-CHAIN AI REVIEW", MUTED, 20)
-    text(svg, 43, 747, "Scoring deferred", 26, weight=650, space=-0.5)
-    text(svg, 43, 771, "Missing both USD reference prices.", 20, MUTED)
+    tag(svg, 43, 717, "MARKET REPLAY", MUTED, 20)
+    text(svg, 43, 747, "Continue observing", 26, weight=650, space=-0.5)
+    text(svg, 43, 771, "Original run withheld its score.", 20, MUTED)
 
 
 def chinese_cover(svg, trigger, log_index):
@@ -287,18 +287,18 @@ def chinese_cover(svg, trigger, log_index):
         "50 bp cutoff": "50 基点阈值", "10 bp": "10 基点",
         f"{abs(trigger - PARITY)} bp": f"{abs(trigger - PARITY)} 基点",
         "Record one alert": "写入一条告警", f"Source log #{log_index}": f"源日志序号 {log_index}",
-        "OFF-CHAIN AI REVIEW": "链下 AI 复核", "Scoring deferred": "暂缓评分",
-        "Matching USDC/USD and USDT/USD quotes were missing.": "缺少对应时点的 USDC/USD 和 USDT/USD 参考价。",
+        "MARKET REPLAY": "真实行情回放", "Continue observing": "继续观察",
+        "Signed run withheld its score. Archived prices support observation.": "签名时暂缓评分，事后用真实行情复核。",
         "Simulated USDC/USDT quotes": "USDC/USDT 模拟报价",
         "Call back only above 50 bp": "超出 50 基点才请求回调",
         f"One alert for {price}": f"{price} 触发一条告警",
         f"PriceDeviation  ·  source log #{log_index}": f"PriceDeviation · 源日志 {log_index}",
-        "Missing both USD reference prices.": "缺少两项美元参考价。",
+        "Original run withheld its score.": "原始运行暂缓评分。",
     }
     svg.set("lang", "zh-CN")
     svg.find("title").text = "Reactive PegPulse · 哪笔报价触发了告警？"
     svg.find("desc").text = (f"Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，{price} 超过 50 个基点的阈值。"
-                             f"Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 {log_index}。因缺少同期美元参考价，链下 AI 暂缓评分。")
+                             f"Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 {log_index}。签名时暂缓评分，事后的真实行情回放建议继续观察。")
     for elem in svg.iter():
         if elem.text in labels:
             elem.text = labels[elem.text]
@@ -308,6 +308,9 @@ def chinese_cover(svg, trigger, log_index):
 
 def main():
     run = json.loads((TRACK / "evidence/public-run.json").read_text(encoding="utf-8"))
+    replay = json.loads((TRACK / "evidence/market/public-assessment.json").read_text())
+    if replay["alert"]["evidenceId"] != run["alert"]["evidenceId"] or replay["marketDecision"]["decision"] != "observe" or not replay["marketDecision"]["inferenceRan"]:
+        raise ValueError("Review the cover against the observed market decision.")
     trigger = run["alert"]["priceBps"]
     reference = run["receipts"]["reactive"]
     log_index = int(reference["refEventIndex"], 16)
@@ -321,7 +324,7 @@ def main():
                    f"{CONTROL / PARITY:.4f} stayed below the 50 basis point threshold. "
                    f"{trigger / PARITY:.4f} crossed it. Reactive Lasna requested a callback. "
                    f"Base Sepolia recorded one alert linked to source log {log_index}. Off-chain AI "
-                   "scoring was deferred because matching USD price evidence was missing.")
+                   "withheld scoring at signing. An observed market replay recommended continued observation.")
     for filename, width, height, draw in (("desktop.svg", 1280, 646, desktop),
                                           ("mobile.svg", 440, 798, phone)):
         svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg", width=str(width),

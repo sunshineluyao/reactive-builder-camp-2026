@@ -1,6 +1,6 @@
 <svg aria-labelledby="title description" lang="en" xmlns="http://www.w3.org/2000/svg" width="1280" height="646" viewBox="0 0 1280 646" role="img">
   <title id="title">Reactive PegPulse — Which quote triggered the alert?</title>
-  <desc id="description">Two simulated USDC/USDT quotes were published on Ethereum Sepolia. 0.9990 stayed below the 50 basis point threshold. 0.9930 crossed it. Reactive Lasna requested a callback. Base Sepolia recorded one alert linked to source log 2. Off-chain AI scoring was deferred because matching USD price evidence was missing.</desc>
+  <desc id="description">Two simulated USDC/USDT quotes were published on Ethereum Sepolia. 0.9990 stayed below the 50 basis point threshold. 0.9930 crossed it. Reactive Lasna requested a callback. Base Sepolia recorded one alert linked to source log 2. Off-chain AI withheld scoring at signing. An observed market replay recommended continued observation.</desc>
   <defs>
     <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="65%">
       <stop offset="0%" stop-color="#080915" />
@@ -173,8 +173,8 @@
   <text x="915" y="485" fill="#c4c3df" font-size="22" font-weight="400" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="0">Source log #2</text>
   <rect x="48" y="540" width="1184" height="77" fill="#050916" rx="18" opacity=".6" />
   <rect x="48" y="536" width="1184" height="77" fill="url(#review)" rx="18" stroke="#42536b" stroke-width="1.6" />
-  <text x="74" y="569" fill="#c4c3df" font-size="22" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.1">OFF-CHAIN AI REVIEW</text>
-  <text x="73" y="598" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.4">Scoring deferred</text>
+  <text x="74" y="569" fill="#c4c3df" font-size="22" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.1">MARKET REPLAY</text>
+  <text x="73" y="598" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.4">Continue observing</text>
   <path d="M372 553 V596" stroke="#43536d" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-  <text x="400" y="584" fill="#f8f5ff" font-size="24" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Matching USDC/USD and USDT/USD quotes were missing.</text>
+  <text x="400" y="584" fill="#f8f5ff" font-size="24" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Signed run withheld its score. Archived prices support observation.</text>
 </svg>

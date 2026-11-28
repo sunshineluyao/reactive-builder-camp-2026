@@ -1,10 +1,34 @@
 Reactive PegPulse
 One quote. Three chains. Anyone can verify.
-One quote. Three chains. Anyone can verify.
 Sunshine · Sunshine Swarm Superintelligence (3S) Lab
+Reactive Meets AI · Reactive Lasna testnet (5318007)
 
-Project repository
+Public repository
 https://github.com/sunshineluyao/reactive-builder-camp-2026
 
-Public testnet demo (2 min 30 sec, English narration, Chinese captions)
-https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4
+Competition film · 2 min 30 sec
+https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4
+
+Wallet-free reviewer
+https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=en
+
+Ethereum Sepolia · QuoteSource (11155111)
+0x738f50d330f3dab04e88c3e30127d2a749b10940
+https://sepolia.etherscan.io/address/0x738f50d330f3dab04e88c3e30127d2a749b10940
+0xd97a9579a96a20c9868dd7f759079975e2ff1603eb903e42d3fd5ddfbbcc6604
+https://sepolia.etherscan.io/tx/0xd97a9579a96a20c9868dd7f759079975e2ff1603eb903e42d3fd5ddfbbcc6604
+
+Reactive Lasna · ReactiveAlert (5318007)
+0x738f50d330f3dab04e88c3e30127d2a749b10940
+https://lasna.reactscan.net/address/0x738f50d330f3dab04e88c3e30127d2a749b10940
+0x63639779506a135ff8cba06c4d8aff5230d029aed5dc781f8f902868f54e8d27
+https://lasna.reactscan.net/tx/0x63639779506a135ff8cba06c4d8aff5230d029aed5dc781f8f902868f54e8d27
+
+Base Sepolia · AlertSink (84532)
+0xdd5f43ab0c047014cd3ba70ddb9004f8c2f5e12e
+https://sepolia.basescan.org/address/0xdd5f43ab0c047014cd3ba70ddb9004f8c2f5e12e
+0x5e2a48caaf7ab64dd3f25c4f4b804cf30d09aabc6f885efb44033b91ce3ce602
+https://sepolia.basescan.org/tx/0x5e2a48caaf7ab64dd3f25c4f4b804cf30d09aabc6f885efb44033b91ce3ce602
+
+Observed market replay and historical comparison
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/e3793927f18683f811bf17db4ec07589045ea14d/track3/evidence/market/README.md

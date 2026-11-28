@@ -14,7 +14,7 @@ If one USDC buys only 0.9930 USDT in a pool, should a DAO treasury investigate? 
 
 [November 29 Demo Day presentation and simulated Q&A · 4 min 40 sec](demo-day/README.en.md) · [Editable slides with bilingual speaker notes](demo-day/Reactive-PegPulse-Demo-Day.en.pptx)
 
-**For judges.** Follow the three receipts for the 0.9930 test quote. At signing, the AI lacked a market packet. In the retrospective replay, 15 Binance closes and two USD prices that closed before the event support **continue observing**. A seven-window historical comparison shows how many alerts the model forwarded and how often persistent moves were missed. [Market prices, review task and comparison](evidence/market/README.md)
+**[Open the wallet-free reviewer](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=en)**. Follow the three receipts for the 0.9930 test quote. At signing, the AI lacked a market packet. In the retrospective replay, 15 Binance closes and two USD prices that closed before the event support **continue observing**. A seven-window historical comparison shows how many alerts the model forwarded and how often persistent moves were missed. [Market prices, review task and comparison](evidence/market/README.md)
 
 Run `python3 scripts/market_evidence.py --live` from this directory to verify all three networks, fetch the markets for the event and run inference. No signing wallet is needed.
 

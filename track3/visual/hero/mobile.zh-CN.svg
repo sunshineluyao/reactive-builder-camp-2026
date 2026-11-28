@@ -1,6 +1,6 @@
 <svg aria-labelledby="title description" lang="zh-CN" xmlns="http://www.w3.org/2000/svg" width="440" height="798" viewBox="0 0 440 798" role="img">
   <title id="title">Reactive PegPulse · 哪笔报价触发了告警？</title>
-  <desc id="description">Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，0.9930 超过 50 个基点的阈值。Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 2。因缺少同期美元参考价，链下 AI 暂缓评分。</desc>
+  <desc id="description">Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，0.9930 超过 50 个基点的阈值。Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 2。签名时暂缓评分，事后的真实行情回放建议继续观察。</desc>
   <defs>
     <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="65%">
       <stop offset="0%" stop-color="#080915" />
@@ -161,7 +161,7 @@
   </g>
   <rect x="24" y="695" width="392" height="91" fill="#050916" rx="18" opacity=".6" />
   <rect x="24" y="691" width="392" height="91" fill="url(#review)" rx="18" stroke="#42536b" stroke-width="1.6" />
-  <text x="43" y="717" fill="#c4c3df" font-size="20" font-weight="700" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">链下 AI 复核</text>
-  <text x="43" y="747" fill="#f8f5ff" font-size="26" font-weight="650" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">暂缓评分</text>
-  <text x="43" y="771" fill="#c4c3df" font-size="20" font-weight="400" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">缺少两项美元参考价。</text>
+  <text x="43" y="717" fill="#c4c3df" font-size="20" font-weight="700" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">真实行情回放</text>
+  <text x="43" y="747" fill="#f8f5ff" font-size="26" font-weight="650" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">继续观察</text>
+  <text x="43" y="771" fill="#c4c3df" font-size="20" font-weight="400" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif" text-anchor="start" letter-spacing="0">原始运行暂缓评分。</text>
 </svg>

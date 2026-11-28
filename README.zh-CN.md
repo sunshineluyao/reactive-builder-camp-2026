@@ -4,7 +4,7 @@
 
 <picture>
   <source media="(max-width: 860px)" srcset="track3/visual/hero/mobile.zh-CN.svg">
-  <img src="track3/visual/hero/desktop.zh-CN.svg" width="100%" alt="两笔 USDC/USDT 模拟报价中，0.9990 留在源链。0.9930 偏离平价 70 个基点，超过 50 个基点的阈值，Reactive Lasna 请求回调，Base Sepolia 写入一条告警。链下 AI 因缺少匹配的美元报价证据而暂缓评分。">
+  <img src="track3/visual/hero/desktop.zh-CN.svg" width="100%" alt="两笔 USDC/USDT 模拟报价中，0.9990 留在源链。0.9930 偏离平价 70 个基点，超过 50 个基点的阈值，Reactive Lasna 请求回调，Base Sepolia 写入一条告警。签名时暂缓评分。用同期真实行情回放后，模型建议继续观察。">
 </picture>
 
 **One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
@@ -13,11 +13,11 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Builder Camp 2
 
 当 USDC/USDT 模拟报价偏离 1:1 超过 0.5% 时，Ethereum Sepolia 提供报价证据，Reactive Lasna 请求跨链回调，Base Sepolia 记录告警。赛道 3 的链下模型根据可核对的美元报价和价格走势决定是否升级人工复核。
 
-**[公开测试网演示视频 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · **[三个合约地址、三笔交易与复现说明](track3/README.md)** · [原始回执 JSON](track3/evidence/public-run.json) · [复制训练营提交链接](assignments/hackathon-submission.txt)
+**[免钱包复核这条告警](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=zh)** · [观看 2 分 30 秒参赛录像](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [三个合约与三笔交易](track3/README.md) · [真实行情与对照结果](track3/evidence/market/README.zh-CN.md) · [提交链接](assignments/hackathon-submission.txt)
 
 [11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](track3/demo-day/README.md) · [含双语备注的 PowerPoint](track3/demo-day/Reactive-PegPulse-Demo-Day.pptx) · [中文讲稿](track3/demo-day/script.md)
 
-2026 年 11 月 27 日完成六次测试网签名。0.9990 的对照报价只产生源链记录。0.9930 的测试报价触发了 Lasna 的回调请求，Base Sepolia 记下一条预警。公开运行缺少同期美元证据，复核程序暂缓评分。录屏还演示了模型在合成价格证据齐全时给出的两种建议。
+2026 年 11 月 27 日完成六次测试网签名。0.9990 的对照报价只产生源链记录。0.9930 的测试报价触发了 Lasna 的回调请求，Base Sepolia 记下一条预警。签名时没有行情，模型暂缓评分。事后用事件前已收盘的 Bitstamp、Coinbase 和币安行情重放，冻结模型建议**继续观察**。对 208 次后续记录完整的历史越界，模型升级了 200 次，其中 10 次随后仅短暂偏离。3 次持续偏离被分为观察，另 1 次暂缓判断。
 
 [从报价到人工复核的完整流程图](track3/README.md#从报价到人工复核) · [手机竖版封面](track3/visual/hero/mobile.zh-CN.svg)
 
