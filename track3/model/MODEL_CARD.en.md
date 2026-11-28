@@ -34,7 +34,7 @@ One test keeps the event and all three out-of-band history points fixed. Changin
 
 Seed 72517 initializes the network. Training minimizes binary cross-entropy for 70 epochs on 1,200 synthetic samples covering four regimes: both dollar prices near parity, mainly USDC moving, mainly USDT moving, or both moving. The labeling rule escalates at a maximum USD deviation of at least 85 bp. It also escalates at 38 bp or more if the directional reference ratio deviates by at least 26 bp and persistence is at least 0.4. Runtime inference uses learned weights.
 
-On 400 held-out synthetic samples from the same distribution with a separate seed, the frozen model agreed with the labeling rule 383 times (95.75%). This measures agreement with the synthetic rule. Real-market alert quality and transfer to other markets remain unmeasured.
+On 400 held-out synthetic samples from the same distribution with a separate seed, the frozen model agreed with the labeling rule 383 times (95.75%). This measures agreement with the synthetic rule. In a separate seven-window comparison of historical market prices, the model referred 200 of 208 crossings. The written training policy referred 202 on the same inputs. Real treasury outcomes and generalization to other markets remain unmeasured. [Market comparison, misses and abstentions](../evidence/market/README.md)
 
 From `track3/`, use Python 3 and Node.js. Tests compare preprocessing, decisions, features and scores in the two implementations on fixture and randomized inputs. Retraining checks both weight files byte for byte.
 

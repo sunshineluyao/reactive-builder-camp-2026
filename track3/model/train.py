@@ -22,6 +22,10 @@ def encoded(values):
     return [min(1.0, max(0.0, value / scale)) for value, scale in zip(values, SCALES)]
 
 
+def reference_policy(usd_deviation, aligned, persistence):
+    return usd_deviation >= 85 or (usd_deviation >= 38 and aligned >= 26 and persistence >= 0.4)
+
+
 def synthetic_rows(count, seed):
     """Sample correlated but varied observations, including independent USD evidence."""
     rng = random.Random(seed)
@@ -43,9 +47,7 @@ def synthetic_rows(count, seed):
         usd_pair = 10000 * ((10000 + usdc) / (10000 + usdt) - 1)
         aligned = max(0.0, direction * usd_pair)
         # A documented annotation policy supplies training targets in lieu of market labels.
-        label = int(usd_deviation >= 85 or (
-            usd_deviation >= 38 and aligned >= 26 and persistence >= 0.4
-        ))
+        label = int(reference_policy(usd_deviation, aligned, persistence))
         rows.append((encoded([abs(pair_move), usd_deviation, aligned, persistence]), label))
     return rows
 

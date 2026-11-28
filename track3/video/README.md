@@ -6,14 +6,15 @@
 
 **[Watch the 2:30 narrated recording](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [Download MP4](https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/track3/video/public/demo.mp4) · [English subtitles](public/demo.en.srt) · [中文字幕](public/demo.zh.srt)
 
-The review screen verifies one signed Ethereum Sepolia quote, the Lasna execution, and the Base Sepolia callback against public RPCs. The quote is simulated. In the original public run the alert had no independent market data packet, so the review service withheld its score. The next chapter uses the same event with labeled synthetic reference data to demonstrate the neural network's decisions. [Contracts and transaction links](../README.en.md) · [Public receipts](../evidence/public-run.json)
+The film opens on the three actual testnet transactions. It shows what was known at signing, replays the same event with prices from three exchanges, then compares the frozen model with two simpler review policies. [Raw receipts](../evidence/public-run.json) · [Observed prices and comparison](../evidence/market/README.md)
 
-| Time | What the reviewer sees |
-| --- | --- |
-| 00:07 | A 0.9990 control stays in the band. A 0.9930 quote exceeds the 50-basis-point threshold. |
-| 00:36 | Three public receipts identify one source event. The reviewer opens each transaction's details. |
-| 01:19 | The public alert has no market evidence packet. Labeled synthetic replays show escalation, continued observation and a withheld score. |
-| 02:13 | The source, evidence and model files needed to reproduce the run. |
+| Start | On screen |
+|---|---|
+| 00:00 | Sepolia quote, Lasna execution and Base callback for one simulated quote. |
+| 00:45 | The original alert is retained and the model withholds its score. |
+| 01:00 | Archived prices from three venues and the resulting decision to continue observation. |
+| 01:34 | Referrals, missed persistent moves and abstentions across 208 comparable crossings. |
+| 02:05 | A judge completes the treasury review task on the public page. |
 
 [![Public testnet review showing the matched transaction receipts](public/stills/02-public-receipts-ai-decision.webp)](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)
 
@@ -63,16 +64,12 @@ The renderer writes the full-length README GIF, the Wanim chapter GIF, and an M4
 python3 video/render.py /tmp/stablecoin-media --media-only
 ```
 
-The default encoder uses FFmpeg's `slt` text-to-speech voice. The published cut uses Piper's `en_US-ljspeech-medium` voice and `piper-tts==1.3.0`. To use that voice, download the two files below into the same directory, install `piper-tts==1.3.0`, and pass `--voice-model /path/to/en_US-ljspeech-medium.onnx` to `render.py`. The model card identifies the underlying speech recordings as public domain. [Voice model](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx) · [Voice configuration](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx.json) · [Model card](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD)
+The default encoder uses FFmpeg's `slt` text-to-speech voice. The original local cut used Piper's `en_US-ljspeech-medium` voice and `piper-tts==1.3.0`. To use that voice, download the two files below into the same directory, install `piper-tts==1.3.0`, and pass `--voice-model /path/to/en_US-ljspeech-medium.onnx` to `render.py`. The model card identifies the underlying speech recordings as public domain. [Voice model](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx) · [Voice configuration](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx.json) · [Model card](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD)
 
-Rebuild the submitted public recording from the `track3/` directory. Prepare the same dependencies listed above. The review scene checks the three canonical blocks and the two synthetic inference outcomes before the film can render.
+The current competition cut uses Python, Playwright/Chromium, Pillow, Piper and FFmpeg. Playwright operates the real reviewer and captures the receipt details, evidence switches and task feedback. Cards draw from the checked-in evidence and model outputs. Piper's Lessac English voice narrates the film. FFmpeg aligns speech and Chinese captions, exports English and Chinese subtitle files, and encodes 150 seconds of H.264/AAC. The older `capture.py --public-manifest` and `render.py --public` workflow reproduces the earlier teaching cut. [Bilingual script](judges-cues.json) · [Frame design](judges-frame.html) · [Capture and encode](make_judges_cut.py) · [Lessac voice model card](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/lessac/medium/MODEL_CARD)
 
 ```bash
-mkdir -p /tmp/stablecoin-public-cut
-python3 video/capture.py /tmp/stablecoin-public-film --public-manifest evidence/public-run.json
-python3 video/render.py /tmp/stablecoin-public-film --public --out /tmp/stablecoin-public-cut/demo.mp4
+python3 scripts/market_evidence.py
+python3 scripts/market_benchmark.py
+python3 video/make_judges_cut.py --work /tmp/pegpulse-film --browser /path/to/chromium --voice /path/to/en_US-lessac-medium.onnx
 ```
-
-Behind a browser network proxy, add `--host-rpc` to the capture command to forward read-only queries over the host's HTTPS connection. `ORIGIN_RPC`, `REACTIVE_RPC` and `DESTINATION_RPC` can select endpoints in this mode. The recorded public cut used `DESTINATION_RPC=https://base-sepolia-rpc.publicnode.com`. The viewer checks the chain IDs, receipts and canonical blocks through the same verification code. Use `--chrome /path/to/chrome` for an existing compatible Chromium and `--cache /path/to/cache` for verified Wanim packages.
-
-`narration.json` contains the bilingual script. `cards.html` contains the opening and closing titles. `capture.py` operates the on-screen controls. `render.py` aligns the spoken cues, burns in Chinese captions, combines the screen recordings and exports H.264/AAC video, two subtitle files and two stills.

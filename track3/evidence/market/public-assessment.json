@@ -1,0 +1,36 @@
+{
+  "alert": {
+    "evidenceId": "0x38b66270063a8a1180e269f0b633a2e3ed599d9e4f1fd370994c1f4ed38ac554",
+    "priceBps": 9930,
+    "observedAt": 1795786692
+  },
+  "eventTimeUtc": "2026-11-27T13:38:12Z",
+  "mode": "retrospective-market-replay",
+  "originalDecision": {
+    "decision": "insufficient",
+    "code": "context_mismatch",
+    "score": null,
+    "features": null,
+    "inferenceRan": false,
+    "modelVersion": "sc-triage-mlp-v1"
+  },
+  "marketDecision": {
+    "decision": "observe",
+    "code": "model_decision",
+    "score": 9.195191562778733e-08,
+    "features": {
+      "pairDeviationBps": 70,
+      "usdDeviationBps": 12.8,
+      "alignedUsdPairBps": 0.0,
+      "persistence": 0.0
+    },
+    "inferenceRan": true,
+    "modelVersion": "sc-triage-mlp-v1"
+  },
+  "modelWeightsSha256": "f27e8f8fe8d285f5ab5121f01570d1a188b6421fb70470a715987f413ab2ec80",
+  "sourceResponseSha256": {
+    "USDC/USD": "e2dee9943b272ab38b7b6b295675d01589199b7ae65b9ba8bb28fc90d473ad46",
+    "USDT/USD": "d70e8904330b34f96f8421ace23e31876b256b4ca2a1adef74f10a1a3ac39df0",
+    "USDC/USDT": "b72e0d7a2910f515ce0c4a630d0ae2a8ceb3798e7c47fcfb4aa4e2711edada63"
+  }
+}

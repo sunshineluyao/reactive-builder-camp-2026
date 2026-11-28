@@ -14,7 +14,9 @@ DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是�
 
 [11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Reactive-PegPulse-Demo-Day.pptx)
 
-**给评委。** 公开运行在 Base 写入告警。由于没有同期市场参考数据，AI 暂缓评分。演示固定同一条已核验事件，分别输入两组标明为合成的市场数据，展示升级复核与继续观察。
+**给评委。** 先追踪 0.9930 测试报价的三笔回执。签名时没有独立行情，模型当场暂缓评分。事后调取事件前已收盘的两项美元报价和 15 条币安分钟线，同一模型给出**继续观察**。七个固定时段的历史对照同时报告减少的转介和漏过的持续偏离。[市场行情、财库任务与对照结果](evidence/market/README.zh-CN.md)
+
+在本目录运行 `python3 scripts/market_evidence.py --live`，即可实时复核三链、读取事件对应行情并运行模型，无需签名钱包。
 
 小型社区财库可以用浏览器查源交易、Reactive 执行和目标回调，无需钱包和 gas。通过公开可复核的证据和双语材料，项目以包容参与和透明问责为设计方向。[联合国目标 10.2](https://sdgs.un.org/goals/goal10) · [联合国目标 16.6](https://sdgs.un.org/goals/goal16)
 
@@ -65,7 +67,7 @@ flowchart TD
     class N,A held
 ```
 
-本次运行在“证据不足”处分支结束。录屏随后保留同一条链上预警，切换有明确标记的合成报价，演示模型怎样给出两种复核建议。[下载流程图 PNG](architecture.png) · [可缩放的 SVG](architecture.svg)
+原始运行因证据不足而暂缓评分。正式参赛录像用同期交易所行情复核同一条链上告警。浏览器另保留两组合成情景供对照。[下载流程图 PNG](architecture.png) · [可缩放的 SVG](architecture.svg)
 
 ## 架构与触发条件
 
@@ -123,7 +125,7 @@ python3 scripts/verify_receipts.py evidence/public-run.json --destination-rpc ht
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-验证成功时，终端显示 `Public testnet | receipts and canonical blocks match the selected RPCs`，报价为 `9930`，三条日志序号依次为 `2 / 2 / 0`。打开 <http://localhost:8080/review/?source=public&lang=zh> 查看三份回执和本次“证据不足”的结果。点击 **Corroborating evidence** 和 **Pool-only movement**，可以用同一事件重放两个有完整输入的模型决定。页面标明合成数据来源。
+验证成功时，终端显示 `Public testnet | receipts and canonical blocks match the selected RPCs`，报价为 `9930`，三条日志序号依次为 `2 / 2 / 0`。打开 <http://localhost:8080/review/?source=public&lang=zh> 查看三份回执和本次“证据不足”的结果。点击 **模拟 · 外部价格印证** 和 **模拟 · 仅池内偏离**，可以用同一事件重放两个有完整输入的模型决定。页面标明合成数据来源。
 
 离线复核保存的原始日志可运行 `python3 scripts/verify_receipts.py evidence/public-run.json --offline`。下节命令可复现[当前合约的三链本地回执](evidence/guarded-local-run.json)。早期演练的视频保留了[录制时的本地回执](evidence/local-run.json)。同一服务还提供[视频播放器](http://localhost:8080/video/?lang=zh)和[部署工作台](http://localhost:8080/site/?lang=zh)。交互式阈值动画的离线运行方法见[动画说明](visual/README.zh-CN.md)。
 
@@ -175,14 +177,15 @@ python3 scripts/verify_receipts.py /tmp/stablecoin-public-run.json --destination
 | 同一条 0.9930 预警 | 市场证据 | 运行结果 |
 | --- | --- | --- |
 | 本次公开运行 | 未附对应时点的外部证据包 | 证据不足，`inferenceRan: false`，`score: null` |
-| 视频中的合成场景 A | USDC/USD 为 0.9904，USDT/USD 为 1.0001，近期报价连续越界 | 模型执行并建议升级人工复核 |
-| 视频中的合成场景 B | USDC/USD 为 0.9999，USDT/USD 为 1.0001，近期报价在区间内 | 模型执行并建议继续观察 |
+| 真实行情回放 | Bitstamp USDC/USD 0.999870、Coinbase USDT/USD 0.998720 及币安 15 条收盘价 | 模型运行并建议继续观察 |
+| 合成对照 A | USDC/USD 为 0.9904，USDT/USD 为 1.0001，近期报价连续越界 | 模型执行并建议升级人工复核 |
+| 合成对照 B | USDC/USD 为 0.9999，USDT/USD 为 1.0001，近期报价在区间内 | 模型执行并建议继续观察 |
 
 冻结的神经网络有四个输入特征和六个隐藏单元。针对同一个已验证的 0.9930 事件，固定走势与链上证据，仅改变两种稳定币对美元的参考价，就可以把模型结果从「升级复核」变为「继续观察」。若缺少、过期或错配证据，输入校验返回「证据不足」。决策用于人工复核排序。页面上的美元示例均标为合成数据。真实报价可以按相同 JSON 格式导入，当前版本的数据接入方式为文件导入。[模型卡、训练数据生成方式和输入规范](model/MODEL_CARD.md)
 
 ## AI 辅助开发与核验说明
 
-AI 编程助手参与了 Solidity 实现、部署界面、回执校验、训练与推理代码、测试、文档、动画和视频脚本。用例与阈值沿用仓库的 Day 1 与 Day 6 项目方向卡。验证包括固定编译器重建部署字节码、在三条独立 EVM 执行业务交易与边界用例、重新训练复现权重、交叉比较 Python 和浏览器推理、以及用被修改的回执检验校验器是否能拒绝错误记录。视频拍摄实际交互页面并使用合成旁白。项目作者通过 MetaMask 签署了部署、绑定和两次报价共六笔交易，并导出了部署记录。核验器逐笔检查链 ID、合约、事件、区块和交易位置。公开演示录制前另查三网 RPC，再对同一事件重放合成参考数据。[项目方向卡](../assignments/d6-project-direction.md) · [视频制作文件](video/README.zh-CN.md)
+AI 编程助手参与了 Solidity 实现、部署界面、回执校验、训练与推理代码、测试、文档、动画和视频脚本。用例与阈值沿用仓库的 Day 1 与 Day 6 项目方向卡。验证包括固定编译器重建部署字节码、在三条独立 EVM 执行业务交易与边界用例、重新训练复现权重、交叉比较 Python 和浏览器推理、以及用被修改的回执检验校验器是否能拒绝错误记录。视频拍摄实际交互页面并使用合成旁白。项目作者通过 MetaMask 签署了部署、绑定和两次报价共六笔交易，并导出了部署记录。核验器逐笔检查链 ID、合约、事件、区块和交易位置。正式参赛录像制作前重新核验了三链 RPC，并复算真实行情及历史对照。[项目方向卡](../assignments/d6-project-direction.md) · [视频制作文件](video/README.zh-CN.md)
 
 ## 许可证与提交要求
 

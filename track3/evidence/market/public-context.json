@@ -1,0 +1,95 @@
+{
+  "schema": "stablecoin-evidence/v1",
+  "alertId": "0x38b66270063a8a1180e269f0b633a2e3ed599d9e4f1fd370994c1f4ed38ac554",
+  "pair": "USDC/USDT",
+  "provenance": "observed",
+  "references": {
+    "USDC/USD": {
+      "observedAt": 1795786680,
+      "usdMicros": 999870,
+      "source": "https://www.bitstamp.net/api/v2/ohlc/usdcusd/?step=60&limit=15&end=1795786620"
+    },
+    "USDT/USD": {
+      "observedAt": 1795786680,
+      "usdMicros": 998720,
+      "source": "https://api.exchange.coinbase.com/products/USDT-USD/candles?start=2026-11-27T13:23:00Z&end=2026-11-27T13:37:00Z&granularity=60"
+    }
+  },
+  "history": [
+    {
+      "observedAt": 1795785840,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795785900,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795785960,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786020,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786080,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786140,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786200,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786260,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786320,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786380,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786440,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786500,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786560,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786620,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    },
+    {
+      "observedAt": 1795786680,
+      "priceBps": 10011,
+      "source": "https://data-api.binance.vision/api/v3/klines?symbol=USDCUSDT&interval=1m&startTime=1795785780000&endTime=1795786679999&limit=15"
+    }
+  ]
+}

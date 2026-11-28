@@ -6,14 +6,15 @@
 
 **[观看有声演示（2 分 30 秒）](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [下载 MP4](https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/track3/video/public/demo.mp4) · [英文字幕](public/demo.en.srt) · [中文字幕](public/demo.zh.srt)
 
-复核界面通过公开 RPC 验证 Ethereum Sepolia 的已签名报价、Lasna 的执行和 Base Sepolia 的回调。报价来自测试合约。公开运行缺少独立市场数据，模型暂缓评分。下一段固定同一事件，使用明确标注的合成参考数据演示模型怎样决定复核优先级。[合约与交易链接](../README.md) · [公开回执](../evidence/public-run.json)
+比赛录像从三笔真实测试网回执开始，随后展示签名时的证据不足、事后用三个交易所的历史行情运行模型，以及与两条简单规则的历史对照。[原始回执](../evidence/public-run.json) · [市场输入与结果](../evidence/market/README.zh-CN.md)
 
-| 时间 | 画面内容 |
-| --- | --- |
-| 00:07 | 0.9990 在观察区间内，0.9930 越过 50 个基点的门槛。 |
-| 00:36 | 打开三笔公开交易，核对它们对应同一条源事件。 |
-| 01:19 | 公开告警缺少市场证据。切换标明为合成的数据，比较升级复核、继续观察和暂缓评分。 |
-| 02:13 | 找到复现所需的源码、证据与模型文件。 |
+| 片段 | 画面与证据 |
+|---|---|
+| 00:00 | 同一条模拟报价在 Sepolia、Lasna 和 Base 的三笔交易。 |
+| 00:45 | 没有独立行情，原始运行保留告警、暂缓评分。 |
+| 01:00 | 三个市场的历史价格及同一模型实际给出的「继续观察」。 |
+| 01:34 | 在 208 次可比较越界中衡量转介、漏报和暂缓判断。 |
+| 02:05 | 评委在核验页完成财库任务。 |
 
 [![公开测试网复核界面核对三笔交易回执](public/stills/02-public-receipts-ai-decision.webp)](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)
 
@@ -65,14 +66,10 @@ python3 video/render.py /tmp/stablecoin-media --media-only
 
 默认编码器使用 FFmpeg 的 `slt` 合成语音。发布版使用 Piper 的 `en_US-ljspeech-medium` 与 `piper-tts==1.3.0`。将下面两个模型文件下载到同一目录，安装指定版本并给 `render.py` 添加 `--voice-model /path/to/en_US-ljspeech-medium.onnx`。模型卡说明底层语音录音属于公有领域。[语音模型](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx) · [配置](https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ljspeech/medium/en_US-ljspeech-medium.onnx.json) · [模型卡](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD)
 
-在 `track3/` 下重制公开测试网版本。依赖与上文相同。录制程序会先核验三个规范区块和两种合成输入的推断结果，再继续渲染。
+正式比赛版本使用 Python、Playwright/Chromium、Pillow、Piper 和 FFmpeg。Playwright 运行真实核验页、选择案例、展开回执并截图。证据画面来自公开 JSON 和冻结模型。Piper 的 Lessac 英文合成音负责旁白，FFmpeg 对齐音频和中英字幕，生成 150 秒 H.264/AAC 文件。`capture.py --public-manifest` 和 `render.py --public` 可重现此前的教学剪辑。[双语稿](judges-cues.json) · [画面模板](judges-frame.html) · [画面与编码程序](make_judges_cut.py) · [Lessac 语音模型信息](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/lessac/medium/MODEL_CARD)
 
 ```bash
-mkdir -p /tmp/stablecoin-public-cut
-python3 video/capture.py /tmp/stablecoin-public-film --public-manifest evidence/public-run.json
-python3 video/render.py /tmp/stablecoin-public-film --public --out /tmp/stablecoin-public-cut/demo.mp4
+python3 scripts/market_evidence.py
+python3 scripts/market_benchmark.py
+python3 video/make_judges_cut.py --work /tmp/pegpulse-film --browser /path/to/chromium --voice /path/to/en_US-lessac-medium.onnx
 ```
-
-浏览器需要网络代理时，可给采集命令添加 `--host-rpc`，通过主机 HTTPS 转发只读查询。用 `ORIGIN_RPC`、`REACTIVE_RPC` 和 `DESTINATION_RPC` 选择节点。本次录像使用 `DESTINATION_RPC=https://base-sepolia-rpc.publicnode.com`。查看器沿用同一套逻辑核对链 ID、回执和规范区块。用 `--chrome /path/to/chrome` 指定已有浏览器，用 `--cache /path/to/cache` 指定已校验的软件包目录。
-
-`narration.json` 保存双语讲稿。`cards.html` 保存片头片尾。`capture.py` 操作可见控件。`render.py` 对齐旁白、嵌入中文字幕，并输出 H.264/AAC 视频、两份字幕及两张截图。

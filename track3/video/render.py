@@ -21,7 +21,8 @@ def duration(path):
 
 
 def piper_voice(path):
-    from onnxruntime import InferenceSession, SessionOptions
+    from onnxruntime import InferenceSession, SessionOptions, disable_telemetry_events
+    disable_telemetry_events()
     from piper import PiperVoice
     from piper.config import PiperConfig
     options = SessionOptions()

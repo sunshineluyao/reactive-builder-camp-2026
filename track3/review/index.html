@@ -16,15 +16,15 @@
 </head>
 <body>
   <header class="masthead"><div class="frame mast-inner">
-    <a class="brand" href="./" aria-label="Alert review home"><span class="monogram" aria-hidden="true">R</span><span>Reactive <span class="brand-sub">/ Alert review</span></span></a>
-    <a class="navlink" href="../site/">Deployment console</a>
+    <a class="brand" href="index.html" aria-label="Alert review home"><span class="monogram" aria-hidden="true">R</span><span>Reactive PegPulse</span></a>
+    <a class="navlink" href="../site/index.html">Deployment console</a>
 <nav data-language-switch aria-label="Language / 语言"><a href="?lang=en" data-language="en" lang="en" hreflang="en">English</a><span aria-hidden="true">/</span><a href="?lang=zh" data-language="zh" lang="zh-CN" hreflang="zh-CN">简体中文</a></nav>  </div></header>
   <main class="frame">
     <header class="page-head">
       <div><p class="eyebrow">USDC / USDT</p><h1>Stablecoin alert review</h1></div>
-      <div class="top-actions"><label class="file-button">Load evidence JSON<input type="file" accept=".json,application/json" id="manifest-input"></label></div>
+      <div class="top-actions"><a class="file-button" id="film-link" href="../video/public/demo.mp4">Watch the 2:30 demo</a> <label class="file-button">Load evidence JSON<input type="file" accept=".json,application/json" id="manifest-input"></label></div>
     </header>
-    <section class="run-notice" role="status" aria-live="polite"><span class="signal" aria-hidden="true"></span><div><strong id="mode">Checking evidence</strong><p id="verification">Loading the three transaction receipts.</p><button type="button" id="snapshot" hidden>Inspect saved receipts offline</button></div></section>
+    <section class="run-notice" role="status" aria-live="polite"><span class="signal" aria-hidden="true"></span><div><strong id="mode">Checking evidence</strong><p id="verification">Loading the three transaction receipts.</p><button type="button" id="snapshot" hidden>Inspect saved receipts offline</button><button id="live-check" type="button" class="scenario" hidden>Recheck live chain inclusion</button><p id="live-progress" role="status"></p></div></section>
     <div class="metrics" aria-label="Verified alert figures">
       <div><span class="metric-label">Pair quote</span><strong id="price">—</strong><small>USDT per USDC</small></div>
       <div><span class="metric-label">Distance from parity</span><strong id="distance">—</strong><small>Trigger above 0.50%</small></div>
@@ -40,15 +40,18 @@
         <header class="section-head"><p class="eyebrow">Off-chain triage</p><h2 id="decision-title">Review decision</h2><p>Keep the alert fixed and change its reference evidence.</p></header>
         <div class="context-switch"><div class="field-title">Reference context</div>
           <div class="scenario-group" role="group" aria-label="Evidence scenarios">
-            <button class="scenario" type="button" data-kind="corroborated" aria-pressed="true" disabled>Corroborating evidence</button>
-            <button class="scenario" type="button" data-kind="pool-only" aria-pressed="false" disabled>Pool-only movement</button>
-            <button class="scenario" type="button" data-kind="missing" aria-pressed="false" disabled>Missing USD reference</button>
+            <button class="scenario" type="button" data-kind="market" aria-pressed="false" hidden>Archived exchange prices</button>
+            <button class="scenario" type="button" data-kind="absent" aria-pressed="false" hidden>Evidence at signing</button>
+            <button class="scenario" type="button" data-kind="corroborated" aria-pressed="true" disabled>Synthetic · corroborated</button>
+            <button class="scenario" type="button" data-kind="pool-only" aria-pressed="false" disabled>Synthetic · pool only</button>
+            <button class="scenario" type="button" data-kind="missing" aria-pressed="false" disabled>Synthetic · missing price</button>
           </div>
           <button type="button" id="return-context" class="return-context" hidden>Return to alert evidence</button>
           <span id="source-kind" class="caption">References load after receipt validation.</span>
         </div>
         <div class="result" id="result-box" aria-live="polite"><div class="result-head"><span class="field-title" id="result-type">Queue decision</span><span class="score" id="score"></span></div><h3 id="decision-label">Awaiting receipts</h3><p id="reason"></p></div>
         <div class="input-panel"><div class="field-title">Model inputs</div><dl id="features" class="features"></dl></div>
+        <div id="market-links" class="market-links" hidden></div>
         <details class="model-detail"><summary>Inspect or import model evidence</summary>
           <p>Reference packets contain an alert ID, timestamped USD quotes, source citations and pair history.</p>
           <div class="detail-tools"><label class="file-button secondary">Import context JSON<input type="file" id="context-input" accept=".json,application/json" disabled></label><a href="../model/context-example.json">Example packet</a></div>
@@ -56,6 +59,13 @@
         </details>
       </section>
     </div>
+    <section class="review-task" aria-labelledby="task-heading">
+      <div><p class="eyebrow">Treasury reviewer</p><h2 id="task-heading">Would you page the treasury?</h2>
+      <p>Open the Base receipt, compare the two dollar prices and choose what you would do with this alert.</p></div>
+      <div class="task-tools"><button class="scenario" type="button" data-answer="observe" aria-pressed="false">Keep monitoring</button>
+      <button class="scenario" type="button" data-answer="escalate" aria-pressed="false">Escalate now</button>
+      <p id="task-feedback" role="status"></p><a id="comparison-link" href="https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/evidence/market/README.md">Historical comparison and reproducible results</a></div>
+    </section>
     <footer><span>Reactive Builder Camp · Track 3</span><button type="button" id="print">Print review</button></footer>
   </main>
 </body>

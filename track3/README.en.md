@@ -14,7 +14,9 @@ If one USDC buys only 0.9930 USDT in a pool, should a DAO treasury investigate? 
 
 [November 29 Demo Day presentation and simulated Q&A · 4 min 40 sec](demo-day/README.en.md) · [Editable slides with bilingual speaker notes](demo-day/Reactive-PegPulse-Demo-Day.en.pptx)
 
-**For judges.** The public run produced a Base alert and withheld the AI score because no reference packet was supplied. The video keeps the verified event fixed and replays two labeled synthetic market scenarios. One warrants escalation and the other stays under observation.
+**For judges.** Follow the three receipts for the 0.9930 test quote. At signing, the AI lacked a market packet. In the retrospective replay, 15 Binance closes and two USD prices that closed before the event support **continue observing**. A seven-window historical comparison shows how many alerts the model forwarded and how often persistent moves were missed. [Market prices, review task and comparison](evidence/market/README.md)
+
+Run `python3 scripts/market_evidence.py --live` from this directory to verify all three networks, fetch the markets for the event and run inference. No signing wallet is needed.
 
 Members of small community treasuries can inspect the source transaction, Reactive execution and destination callback in a browser without a wallet or gas. Accessible participation and transparent decisions are design goals. [UN target 10.2](https://sdgs.un.org/goals/goal10) · [UN target 16.6](https://sdgs.un.org/goals/goal16)
 
@@ -24,9 +26,9 @@ A 0.9930 quote raises two questions. Did this pool’s deviation actually trigge
 
 | Component | Question | Implementation and observed result |
 | --- | --- | --- |
-| A price oracle such as Chainlink Price Feeds | What is each asset worth in dollars? | The model accepts sourced, timestamped USDC/USD and USDT/USD references. A live oracle adapter is future work. The public run lacked these inputs. |
+| A price oracle such as Chainlink Price Feeds | What is each asset worth in dollars? | The model accepts sourced, timestamped USDC/USD and USDT/USD references. The read-only runner acquires archived market data directly. A Chainlink adapter is future work. |
 | Reactive Omni contract | Which source log warrants an action on another chain? | Lasna subscribes to the specified publisher’s `PriceObserved`. Its `react()` checks the source, threshold and event identity before requesting the Base callback. The 0.9990 control stayed on the source chain. The 0.9930 quote triggered a real callback. |
-| Community reviewers and off-chain AI | Which alert belongs to the quote, and does it warrant investigation? | Match the three receipts by source chain ID, transaction hash and log index 2. Missing USD references and history leave the alert visible with its score withheld. Two synthetic controls demonstrate escalation and observation. |
+| Community reviewers and off-chain AI | Which alert belongs to the quote, and does it warrant investigation? | Match the three receipts by source chain ID, transaction hash and log index 2. Missing USD references and history leave the alert visible with its score withheld. The observed replay recommends continued observation. Two synthetic controls exercise the alternate outcomes. |
 
 PegPulse adds a cross-chain response traceable to a particular log and a review recommendation with inspectable inputs. Chainlink CRE also supports event-driven workflows, and CCIP supports cross-chain messaging. This prototype demonstrates the Reactive implementation. The two seconds reported here are the endpoint block-time difference for one event. A comparison of price accuracy, cost or latency across systems would require matched runs. [Reactive contracts and callbacks](https://dev.reactive.network/reactive-contracts) · [Chainlink Price Feeds](https://docs.chain.link/data-feeds/price-feeds) · [Chainlink CRE](https://docs.chain.link/cre) · [Chainlink CCIP](https://docs.chain.link/ccip) · [Raw receipts](evidence/public-run.json)
 
@@ -65,7 +67,7 @@ flowchart TD
     class N,A held
 ```
 
-The public run ended with insufficient evidence. The recording then keeps that on-chain alert and supplies clearly labeled synthetic quotes to show the two possible recommendations. [Download the flowchart](architecture.en.png) · [Scalable SVG](architecture.en.svg)
+The original run withheld the score. The competition film revisits the same on-chain alert with observed exchange prices. In the browser you can also select two labeled synthetic controls. [Download the flowchart](architecture.en.png) · [Scalable SVG](architecture.en.svg)
 
 ## Architecture and trigger rule
 
@@ -123,7 +125,7 @@ python3 scripts/verify_receipts.py evidence/public-run.json --destination-rpc ht
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-After successful verification, the terminal prints `Public testnet | receipts and canonical blocks match the selected RPCs`, price `9930`, and log indices `2 / 2 / 0`. Open <http://localhost:8080/review/?source=public&lang=en> to see all three receipts and the insufficient-evidence decision. Select **Corroborating evidence** and **Pool-only movement** to replay two complete sets of model inputs against the same event. The page labels both as synthetic.
+After successful verification, the terminal prints `Public testnet | receipts and canonical blocks match the selected RPCs`, price `9930`, and log indices `2 / 2 / 0`. Open <http://localhost:8080/review/?source=public&lang=en> to see all three receipts and the insufficient-evidence decision. Select **Synthetic · corroborated** and **Synthetic · pool only** to replay two complete sets of model inputs against the same event. The page labels both as synthetic.
 
 Verify saved raw logs offline with `python3 scripts/verify_receipts.py evidence/public-run.json --offline`. The next section reproduces the [current local three-chain receipts](evidence/guarded-local-run.json). The earlier video retains its [original local receipts](evidence/local-run.json). The same server hosts the [video player](http://localhost:8080/video/?lang=en) and [deployment console](http://localhost:8080/site/?lang=en). For the offline threshold animation, see the [animation guide](visual/README.md).
 
@@ -175,14 +177,15 @@ First verify the three receipts. Valid market evidence includes USDC/USDT histor
 | Same 0.9930 alert | Market evidence | Runtime decision |
 | --- | --- | --- |
 | Public run | No contemporary external evidence packet | Insufficient evidence, `inferenceRan: false`, `score: null` |
-| Synthetic scenario A in the video | USDC/USD 0.9904, USDT/USD 1.0001, recent pair quotes repeatedly crossed the boundary | Model ran and recommended escalation |
-| Synthetic scenario B in the video | USDC/USD 0.9999, USDT/USD 1.0001, recent quotes inside the band | Model ran and recommended observation |
+| Archived market replay | Bitstamp USDC/USD 0.999870, Coinbase USDT/USD 0.998720, 15 Binance closes | Model ran and recommended observation |
+| Synthetic control A | USDC/USD 0.9904, USDT/USD 1.0001, recent pair quotes repeatedly crossed the boundary | Model ran and recommended escalation |
+| Synthetic control B | USDC/USD 0.9999, USDT/USD 1.0001, recent quotes inside the band | Model ran and recommended observation |
 
 The frozen network has four features and six hidden units. Holding the verified event and prior trend fixed while changing only the two dollar prices can move the decision from escalation to observation. The validator withholds a decision on missing, stale or mismatched inputs. The score prioritizes human review. The interface labels synthetic scenarios and accepts observed quotes by importing a JSON packet. [Model card, training procedure and input specification](model/MODEL_CARD.en.md)
 
 ## AI-assisted development and verification
 
-An AI coding assistant contributed Solidity, the console, receipt validation, training and inference code, tests, documentation, animation and video scripts. The use case and threshold come from the Day 1 and Day 6 project cards. Verification included rebuilding bytecode with the pinned compiler, executing transactions and boundary cases on three EVMs, retraining the weights, comparing Python and browser inference, and checking that tampered receipts were rejected. The video captures the working interface with synthetic narration. Sunshine signed the deployments, receiver binding and two quotes in MetaMask and exported the deployment record. The verifier checks networks, contracts, logs, blocks and transaction positions. Before recording, all three RPCs were consulted again and synthetic reference data were replayed on the same event. [Project direction](../assignments/d6-project-direction.en.md) · [Video production files](video/README.md)
+An AI coding assistant contributed Solidity, the console, receipt validation, training and inference code, tests, documentation, animation and video scripts. The use case and threshold come from the Day 1 and Day 6 project cards. Verification included rebuilding bytecode with the pinned compiler, executing transactions and boundary cases on three EVMs, retraining the weights, comparing Python and browser inference, and checking that tampered receipts were rejected. The video captures the working interface with synthetic narration. Sunshine signed the deployments, receiver binding and two quotes in MetaMask and exported the deployment record. The verifier checks networks, contracts, logs, blocks and transaction positions. Before recording, the live runner rechecked all three RPCs and scored the matching market packet. The benchmark was reproduced from archived provider responses. [Project direction](../assignments/d6-project-direction.en.md) · [Video production files](video/README.md)
 
 ## License and submission
 
