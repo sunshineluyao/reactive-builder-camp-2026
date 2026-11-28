@@ -1,5 +1,7 @@
 # Reactive PegPulse · 主持人讲稿
 
+[English](script.en.md) · **简体中文**
+
 One quote. Three chains. Anyone can verify.　一条报价，三链共证，人人可验。
 
 Sunshine · Sunshine Swarm Superintelligence (3S) Lab

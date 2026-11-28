@@ -1,5 +1,7 @@
 # D3 必做 · 第一次部署，监控 Sepolia 上的代币转账
 
+[English](d3-sepolia-transfer-monitor.en.md) · **简体中文**
+
 2026 年 11 月 21 日在 Lasna 部署了 `BoundedTransferMonitor` 并预充 `0.025 lREACT`。Ethereum Sepolia 上一笔公开的 25 LINK 测试代币转账成功触发 `react()`。Lasna 回执同时记录了计数事件与系统退订事件，核验时 `count() = 1`、`subscribed() = false`，欠款为 0。
 
 - [可直接粘贴的提交文本](d3-sepolia-transfer-monitor-submission.txt)

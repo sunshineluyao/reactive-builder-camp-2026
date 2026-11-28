@@ -1,0 +1,37 @@
+Experiment A | Stop after two Cron100 callbacks
+
+The Lasna scheduler subscribes to Cron100. It requested a Base Sepolia callback on each of two distinct Cron100 blocks, then stopped and unsubscribed. The receiver recorded each sequence number, source Cron block and execution timestamp. Both callbacks succeeded 107 seconds apart.
+
+1. Contract addresses
+
+Lasna scheduler BoundedCron
+0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b
+https://lasna.reactscan.net/address/0x201E13106fDf34Fb8FEc9174D4e3DFd95b63CC2b
+
+Base Sepolia receiver CronReceiver
+0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21
+https://sepolia.basescan.org/address/0x1F6C0517c73b8E36fEfe298dBb099a5377D9AE21
+
+2. Transactions for both triggers
+
+First trigger, Lasna Cron block 8797900
+Lasna execution
+https://lasna.reactscan.net/tx/0xcf027168df6970bbf14de08b5f3231f2007ef2da8254d7452480cec1de52f52c
+Successful Base Sepolia callback
+https://sepolia.basescan.org/tx/0x5e81250cfe684865fb933836223078ce9d18add2f83d71b4fa9f0dbdd255e02f
+
+Second trigger, Lasna Cron block 8798000
+Lasna execution
+https://lasna.reactscan.net/tx/0x18357019ea70c69ad627fbb2f7980459b2c013eff35540acc8a3abdd0872feb6
+Successful Base Sepolia callback
+https://sepolia.basescan.org/tx/0x71358f482aeaeade2d6de0dee2d57c386de71f702d879949dfebc5a83fc6716e
+
+3. Safeguards
+
+The contract allows one attempt per new Cron100 block. Failures count. It stops after two attempts and unsubscribes, or stops early below 0.1 lREACT. If unsubscription fails, it remains stopped and its deployer may retry stop() on Lasna. Each callback is limited to 300,000 gas. The Base receiver checks the official proxy and authorized Lasna contract, records each sequence once and stores block.timestamp.
+
+On-chain evidence and contracts
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d5-cron100.en.md
+
+Browser walkthrough and funding flow
+https://github.com/sunshineluyao/reactive-builder-camp-2026/tree/main/experiments/cron100

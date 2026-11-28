@@ -1,0 +1,61 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:07.080
+A treasury analyst sees a stablecoin pair move. Which alerts deserve a closer look?
+
+2
+00:00:07.200 --> 00:00:15.980
+Here we use simulated quotes. The price tells us how many units of USDT buy one unit of USDC.
+
+3
+00:00:16.100 --> 00:00:26.180
+At zero point nine nine nine, the gap is one tenth of one percent. Exactly half a percent is also inside the band.
+
+4
+00:00:26.300 --> 00:00:36.180
+At zero point nine nine three, the gap reaches seven tenths of a percent. That crosses the threshold for a review.
+
+5
+00:00:36.300 --> 00:00:47.280
+Now open the public testnet run. These three receipts follow a single quote from Ethereum Sepolia, through Reactive Lasna, to Base Sepolia.
+
+6
+00:00:47.400 --> 00:00:58.580
+Start with the origin receipt. The quote event identifies the price and the observation time. Its transaction hash and log index identify this specific event.
+
+7
+00:00:58.700 --> 00:01:09.380
+Next, the reactive contract checks the price and requests a callback. Following the source event lets a reviewer match the second transaction to the first.
+
+8
+00:01:09.500 --> 00:01:18.880
+Base Sepolia recorded this alert. Its block timestamp was two seconds after the source block. Both receipts identify the same quote.
+
+9
+00:01:19.000 --> 00:01:29.880
+This public run had no dollar reference packet, so the system withheld its score. We now replay the same alert with synthetic price history and dollar quotes.
+
+10
+00:01:30.000 --> 00:01:39.680
+With corroborating references, the prototype scores the evidence for escalation. Its output becomes the suggested action for a human reviewer.
+
+11
+00:01:39.800 --> 00:01:50.880
+Keep the same on-chain alert and switch the context. If both dollar references stay close to one, the model can recommend continued observation.
+
+12
+00:01:51.000 --> 00:02:02.280
+Remove one required dollar quote. The evidence check returns insufficient evidence and withholds the score until a matching reference is supplied.
+
+13
+00:02:02.400 --> 00:02:13.180
+These demonstration contexts are synthetic. They exercise the review workflow and the learned model. A real stablecoin incident requires independent market evidence.
+
+14
+00:02:13.300 --> 00:02:21.480
+The repository contains the contracts, runnable tests, frozen model weights, and the evidence used in this demonstration.
+
+15
+00:02:21.600 --> 00:02:29.780
+Open the project readme to reproduce the run and inspect each receipt before accepting a review decision.

@@ -1,5 +1,7 @@
 # 场景小实验 · 两次 Cron100 回调后停止
 
+[English](d5-cron100.en.md) · **简体中文**
+
 选择 **A. 定时执行**。Lasna 上的 `BoundedCron` 订阅 `Cron100`，在两个新的 Cron 区块各请求一次回调。Base Sepolia 上的 `CronReceiver` 记录运行序号、源 Cron 区块号和 `block.timestamp`。
 
 ## 链上提交凭证

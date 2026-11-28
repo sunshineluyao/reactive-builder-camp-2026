@@ -1,5 +1,7 @@
 # Sepolia 转账监控 · 浏览器复现
 
+[English](README.en.md) · **简体中文**
+
 在 Lasna 部署监控合约，观察 Ethereum Sepolia 的公开测试 LINK 转账。满足金额条件的第一笔转账会写入计数和源交易哈希，随后自动取消订阅。
 
 - [实测交易与 Mermaid 工作流](../../assignments/d3-sepolia-transfer-monitor.md)

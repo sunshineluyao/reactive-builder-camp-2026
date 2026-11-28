@@ -1,10 +1,12 @@
 # Stablecoin Alerts walkthrough
 
+**English** · [简体中文](README.zh-CN.md)
+
 ## Hackathon submission · public testnets
 
 **[Watch the 2:30 narrated recording](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [Download MP4](https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/track3/video/public/demo.mp4) · [English subtitles](public/demo.en.srt) · [中文字幕](public/demo.zh.srt)
 
-The review screen verifies one signed Ethereum Sepolia quote, the Lasna execution, and the Base Sepolia callback against public RPCs. The quote is simulated. In the original public run the alert had no independent market data packet, so the review service withheld its score. The next chapter uses the same event with labeled synthetic reference data to demonstrate the neural network's decisions. [Contracts and transaction links](../README.md) · [Public receipts](../evidence/public-run.json)
+The review screen verifies one signed Ethereum Sepolia quote, the Lasna execution, and the Base Sepolia callback against public RPCs. The quote is simulated. In the original public run the alert had no independent market data packet, so the review service withheld its score. The next chapter uses the same event with labeled synthetic reference data to demonstrate the neural network's decisions. [Contracts and transaction links](../README.en.md) · [Public receipts](../evidence/public-run.json)
 
 | Time | What the reviewer sees |
 | --- | --- |

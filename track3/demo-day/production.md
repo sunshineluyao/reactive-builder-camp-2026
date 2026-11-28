@@ -1,5 +1,7 @@
 # 怎样制作一场可以复核的科学动画演示
 
+[English](production.en.md) · **简体中文**
+
 本片由 Sunshine 代表 Sunshine Swarm Superintelligence (3S) Lab 展示。项目名为 **Reactive PegPulse**，英文标语为 **One quote. Three chains. Anyone can verify.**，中文标语为 **一条报价，三链共证，人人可验。**
 
 这次制作围绕一个可以当场判断的问题展开。模拟报价从 0.9990 走到 0.9950，再走到 0.9930，哪一步会触发告警？先用动画解释规则，再切到程序的实际输出。字幕、讲稿、幻灯片和主持人的时间表使用同一组数字。最后把展示和模拟问答编入一个文件。
@@ -88,6 +90,13 @@ python source/layout.py "$WORK/Reactive-PegPulse-Demo-Day.pptx"
 soffice --headless --convert-to pdf --outdir "$WORK/pdf" "$WORK/Reactive-PegPulse-Demo-Day.pptx"
 python source/film.py "$WORK" "$WORK/pdf/Reactive-PegPulse-Demo-Day.pdf" "$WORK/Reactive-PegPulse-Demo-Day.mp4"
 ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -show_chapters "$WORK/Reactive-PegPulse-Demo-Day.mp4"
+```
+
+如需重制英文幻灯片，请在 `track3/demo-day/` 下执行以下命令。中英两版共享布局、回执链接、数值和双语讲者备注，预录视频使用中文版投影片。
+
+```sh
+python source/layout.py --lang en "$WORK/Reactive-PegPulse-Demo-Day.en.pptx"
+soffice --headless --convert-to pdf --outdir "$WORK/pdf" "$WORK/Reactive-PegPulse-Demo-Day.en.pptx"
 ```
 
 如需指定浏览器，可为 `capture.py` 增加 `--chrome /path/to/chrome-headless-shell`。公网 RPC 可按脚本说明用 `ORIGIN_RPC`、`REACTIVE_RPC` 和 `DESTINATION_RPC` 切换。音频程序会写出双语 SRT，视频程序会写出本目录的演示截图。要让离线 PowerPoint 使用重录截图，将采集目录的 `chart-2.png`、`trace.png`、`model-insufficient.png` 依次复制到 `media/wanim-still.png`、`media/trace.png`、`media/decision.png`，再导出幻灯片。重新合成语音和使用不同浏览器、编码器或字体版本时，画面与语音的字节可能不同。固定的节目时长、报价分类和三种复核状态可逐项核验。

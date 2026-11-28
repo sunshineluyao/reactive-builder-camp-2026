@@ -1,5 +1,7 @@
 # The 0.5% price trigger
 
+**English** · [简体中文](README.zh-CN.md)
+
 This Wanim scene illustrates the USDC/USDT price gate in `ReactiveAlert.react()`. The green band covers 0.9950 through 1.0050 USDT per USDC, including both endpoints. The chart uses simulated quotes and the readout describes what the price gate would do. The separate receipt evidence demonstrates an actual callback.
 
 ![Wanim threshold chapter. Simulated quotes of 0.9990 and 0.9950 stay within the band. A quote of 0.9930 triggers a callback request.](../video/demo.threshold.gif)
@@ -22,13 +24,13 @@ From the `track3` folder, run this command with Python 3.9 or later.
 python3 visual/serve.py --port 8767
 ```
 
-Open **http://127.0.0.1:8767/?offline=1**. Select one of the three examples or use the slider to change its price. The first run downloads the official Wanim 0.1.3 and numpy-ts 1.7.0 npm archives and checks their SHA-512 integrity. Subsequent runs use the cache and run without an Internet connection. To use another cache directory, pass `--cache PATH`. Only the loopback interface is exposed.
+Open **http://127.0.0.1:8767/?offline=1&lang=en**. Select one of the three examples or use the slider to change its price. The first run downloads the official Wanim 0.1.3 and numpy-ts 1.7.0 npm archives and checks their SHA-512 integrity. Subsequent runs use the cache and run without an Internet connection. To use another cache directory, pass `--cache PATH`. Only the loopback interface is exposed.
 
 ## Record the opening
 
-Open **http://127.0.0.1:8767/?offline=1&mode=film** at 1280 × 720. Film mode starts when the Wanim canvas is ready. Capture the top 16:9 frame. **Replay three quotes** restarts the sequence. The first move begins at 3.6 seconds and the second at 7.9 seconds. Each move takes 0.65 seconds. The sequence ends at 12.5 seconds and holds the last frame.
+Open **http://127.0.0.1:8767/?offline=1&mode=film&lang=en** at 1280 × 720. Film mode starts when the Wanim canvas is ready. Capture the top 16:9 frame. **Replay three quotes** restarts the sequence. The first move begins at 3.6 seconds and the second at 7.9 seconds. Each move takes 0.65 seconds. The sequence ends at 12.5 seconds and holds the last frame.
 
-视频解说可用这句：“0.999 偏离 10 个基点，继续观察。0.995 恰好偏离 0.5%，仍在观察区间。0.993 偏离 70 个基点，越过阈值，触发回调请求。”
+Suggested narration: “0.999 is ten basis points from parity, so we observe. At 0.995 the deviation is exactly 0.5%, still inside the band. At 0.993 the deviation is seventy basis points, so the contract requests a callback.”
 
 For automated capture, wait for `#stage[data-ready="true"]`, click `#play-film`, then capture `#stage`. The chart is drawn by Wanim from Python. The surrounding HTML supplies accessible controls, bilingual decision captions and units.
 
@@ -45,7 +47,7 @@ The standalone Python source also runs in the Wanim Playground. Paste `threshold
 
 ## How the README cover is made
 
-The cover plots the two published test quotes on one basis-point scale. A hollow circle marks the control and a filled diamond follows the triggering quote into the Base receipt. The vertical line sits at 50 bp. Lasna requests a callback only when the absolute deviation exceeds that line. The off-chain review below the plot gives the outcome recorded for this run. [Control transaction and threshold rule](../README.md#架构与触发条件) · [Public run and review decision](../evidence/public-run.json)
+The cover plots the two published test quotes on one basis-point scale. A hollow circle marks the control and a filled diamond follows the triggering quote into the Base receipt. The vertical line sits at 50 bp. Lasna requests a callback only when the absolute deviation exceeds that line. The off-chain review below the plot gives the outcome recorded for this run. [Control transaction and threshold rule](../README.en.md#architecture-and-trigger-rule) · [Public run and review decision](../evidence/public-run.json)
 
 The Python standard library builds both native SVG compositions. The generator reads the triggering price, source log index and review status from the public run. The phone version stacks the stages and labels the same observations on the same scale. Run these commands from the repository root.
 

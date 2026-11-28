@@ -1,0 +1,19 @@
+First deployment | Monitor Sepolia token transfers
+
+1. Lasna monitor contract address
+https://lasna.reactscan.net/address/0x86f87a011E240F5480495553c75bc0ca6F6628B6
+
+2. Lasna transaction that invoked react()
+https://lasna.reactscan.net/tx/0x6cde9b2ea78204a1aed76970acbb1a37fcc702bf1f56c3479f644b43ed9913aa
+
+Subscription filter
+Count positive ERC-20 Transfer events from Ethereum Sepolia (11155111) test LINK at 0x779877A7B0D9E8603169DdbD7836e478b4624789. Unsubscribe after one qualifying transfer.
+
+Recorded result
+An Ethereum Sepolia transfer of 25 test LINK triggered react(). The monitor counted one transfer and unsubscribed.
+
+Corresponding Ethereum Sepolia source transaction
+https://sepolia.etherscan.io/tx/0x750bf3a2a4fc7c4f8a6e672401e63887e43402e09722d09cecc34f653defe2d0
+
+GitHub evidence and Mermaid workflow
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d3-sepolia-transfer-monitor.en.md

@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="./language-switch.css">
+  <script defer src="strings.js"></script>
+  <script defer src="./locale.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
@@ -22,7 +25,7 @@
     <section id="stage" aria-labelledby="heading" data-ready="false" data-signal="observe">
       <header>
         <div class="identity"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span> USDC / USDT</div>
-        <span class="simulation"><i aria-hidden="true"></i> Simulated quotes <span lang="zh">/ 模拟报价</span></span>
+        <span class="simulation"><i aria-hidden="true"></i> Simulated quotes <span data-parallel-caption lang="zh">/ 模拟报价</span></span>
       </header>
       <div class="headline">
         <h1 id="heading">The <em>0.5%</em> price trigger</h1>
@@ -50,7 +53,7 @@
             <span class="decision-label">Absolute deviation</span>
             <strong id="deviation">10 bp <span>/ 0.10%</span></strong>
             <h2><i class="status-dot" aria-hidden="true"></i><span id="action">Observe</span></h2>
-            <p><span id="reason">The quote is inside the band.</span><span id="reason-zh" lang="zh">报价在观察区间内。</span></p>
+            <p><span id="reason">The quote is inside the band.</span><span id="reason-zh" data-parallel-caption lang="zh">报价在观察区间内。</span></p>
           </div>
         </section>
       </div>
@@ -66,6 +69,7 @@
       <label for="quote-slider">Adjust quote <output id="slider-output" for="quote-slider">0.9990</output></label>
       <input id="quote-slider" type="range" min="9900" max="10100" step="1" value="9990" aria-valuetext="0.9990 USDT per USDC" disabled>
     </section>
+    <nav data-language-switch aria-label="Language / 语言"><a href="?lang=en" data-language="en" lang="en" hreflang="en">English</a><span aria-hidden="true">/</span><a href="?lang=zh" data-language="zh" lang="zh-CN" hreflang="zh-CN">简体中文</a></nav>
     <p class="sr" id="announcement" role="status"></p>
   </main>
 </body>

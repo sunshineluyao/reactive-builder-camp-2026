@@ -1,5 +1,7 @@
 # Reactive Builder Camp
 
+[English](handbook.en.md) · **简体中文**
+
 ## 学员实操手册
 
 **2026 年 11 月 16–29 日共学 · 结营后冲刺 Buildathon**

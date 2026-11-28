@@ -1,6 +1,7 @@
 """Make the editable slide specification, or export it with the open-source PowerPoint writer."""
 import argparse
 import json
+import re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -24,7 +25,7 @@ MINT, TEAL, MUTED, LAV, SLATE = "#ABE8CA", "#176455", "#526374", "#DAC7FF", "#C9
 FONT, NUM = "Noto Sans CJK SC", "DejaVu Sans"
 
 
-def make_spec():
+def make_spec(language="zh"):
     scenes = json.loads((HERE/"story.json").read_text())
     scenes = scenes["talk"]+scenes["qa"]
     slides=[]
@@ -139,6 +140,25 @@ def make_spec():
         txt(437,400,740,89,detail.replace("；","。"),25,SLATE)
         txt(438,544,650,50,link,23,MINT,True,link=url)
         footer("预设问题由数字分身朗读。现场追问可由主持人记录，讲者会后书面回复。",True)
+    if language == "en":
+        labels = json.loads((HERE / "slides.en.json").read_text())
+        def localize(value):
+            return labels[value] if re.search(r"[\u3400-\u9fff]", value) else value
+        def english_links(value):
+            return (value.replace(PROJECT_URL, SRC + "README.en.md")
+                    .replace("model/MODEL_CARD.md", "model/MODEL_CARD.en.md")
+                    .replace("README.md#出问题怎么办", "README.en.md#failure-and-recovery"))
+        for slide in slides:
+            slide["notes"] = english_links(slide["notes"])
+            for item in slide["items"]:
+                if item["kind"] == "text":
+                    item["text"] = localize(item["text"])
+                    if item.get("link"):
+                        item["link"] = english_links(item["link"])
+                elif item["kind"] == "image":
+                    item["alt"] = localize(item["alt"])
+                else:
+                    item["values"] = [[localize(cell) for cell in row] for row in item["values"]]
     return slides
 
 
@@ -206,7 +226,8 @@ def write_pptx(slides,out):
 
 
 if __name__=="__main__":
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument("output",type=Path);a=p.parse_args()
-    slides=make_spec()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument("output",type=Path)
+    p.add_argument("--lang", choices=("en", "zh"), default="zh");a=p.parse_args()
+    slides=make_spec(a.lang)
     if a.output.suffix==".json":a.output.write_text(json.dumps(slides,ensure_ascii=False)+"\n")
     else:write_pptx(slides,a.output)

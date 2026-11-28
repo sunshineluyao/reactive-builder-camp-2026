@@ -1,5 +1,7 @@
 # Three starting compositions
 
+**English** · [简体中文](layout-recipes.zh-CN.md)
+
 | Reader's question | Composition | Detail that makes it credible |
 | --- | --- | --- |
 | What changes when a rule fires? | Show two observed inputs on a common scale. Label the decision boundary and put the recorded outcome at the end. | Units, boundary inclusion or exclusion, and a receipt, specimen or log readers can inspect. |

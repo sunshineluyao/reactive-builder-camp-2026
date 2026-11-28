@@ -1,0 +1,11 @@
+01 Project name
+Reactive PegPulse | One quote. Three chains. Anyone can verify.
+
+02 Team representative or group nickname
+Sunshine (Sunshine Swarm Superintelligence (3S) Lab)
+
+03 Project description
+Reactive PegPulse listens to simulated Ethereum Sepolia quotes on Reactive Lasna. A deviation above 0.5% triggers a Base Sepolia alert. Anyone can check the three receipts, and our off-chain AI withholds its score when independent USD prices are missing. I will be presenting in person at another conference on November 29 and cannot attend live. I have prerecorded the presentation and simulated Q&A in one video. Please play it during our slot. The Q&A begins at 02:50. Thank you!
+
+04 Project link
+https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/demo-day/Reactive-PegPulse-Demo-Day.mp4

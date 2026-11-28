@@ -5,6 +5,8 @@ description: Create, redesign, or audit the lead figure in a GitHub repository's
 
 # Design GitHub README heroes
 
+**English** · [简体中文](SKILL.zh-CN.md)
+
 Give a first-time reader one question, one visual answer and a way to verify it.
 
 ## Decide what earns the first screen

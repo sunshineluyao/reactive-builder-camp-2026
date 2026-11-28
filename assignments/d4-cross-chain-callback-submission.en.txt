@@ -1,0 +1,24 @@
+Required exercise | A cross-chain callback in three steps
+
+Base Sepolia → Lasna → Base Sepolia. The source emitted Ping(500), Lasna executed react(), and the receiver emitted Handled. All three transactions match one source event. The destination reported count() = 1 and lastValue() = 500.
+
+1. Source event (Base Sepolia)
+https://sepolia.basescan.org/tx/0xd762648adca1999553c18986bb08588c35269f372f7910976e4aedc37710e9db
+
+2. Reactive execution (Lasna)
+https://lasna.reactscan.net/tx/0xcc498be24f04699e4af51def4561b61f90454c96ba4d59e92e80a9b6356e3de0
+
+3. Destination callback (Base Sepolia)
+https://sepolia.basescan.org/tx/0xc665874798405beee6a879354ce874c3fa182748dfdf89b561f6f658c9f8e2a4
+
+Failed test transaction (Base Sepolia)
+https://sepolia.basescan.org/tx/0x4fa54872e9d6f55c1cfa3f13c444078a62668f8dbcc630e65272bfe7be9fd7f1
+
+Reason
+A direct call to onEvent has the test wallet as msg.sender. onlyServiceProvider accepts the official Base Sepolia callback proxy, so the contract reverted with NotAuthorized.
+
+Screenshot of the failed test
+https://raw.githubusercontent.com/sunshineluyao/reactive-builder-camp-2026/main/assignments/d4-wallet-revert.jpg
+
+GitHub evidence and Mermaid workflow
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/assignments/d4-cross-chain-callback.en.md

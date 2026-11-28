@@ -1,5 +1,9 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Stablecoin Alerts · Testnet Console</title><link rel="stylesheet" href="console.css"><script src="../review/receipts.js?v=2" defer></script><script src="../model/weights.js" defer></script><script src="../model/runtime.js" defer></script><script src="console.js?v=4" defer></script></head>
-<body><header><a href="./" class="brand"><span class="mark" aria-hidden="true">∿</span> Stablecoin Alerts</a><span class="network">TESTNET · 测试网</span></header>
+<!doctype html><html lang="zh-CN"><head>
+  <link rel="stylesheet" href="../visual/language-switch.css">
+  <script defer src="strings.js"></script>
+  <script defer src="../review/proof-strings.js"></script>
+  <script defer src="../visual/locale.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Stablecoin Alerts · Testnet Console</title><link rel="stylesheet" href="console.css"><script src="../review/receipts.js?v=2" defer></script><script src="../model/weights.js" defer></script><script src="../model/runtime.js" defer></script><script src="console.js?v=4" defer></script></head>
+<body><header><a href="./" class="brand"><span class="mark" aria-hidden="true">∿</span> Stablecoin Alerts</a><span class="network">TESTNET · 测试网</span><nav data-language-switch aria-label="Language / 语言"><a href="?lang=en" data-language="en" lang="en" hreflang="en">English</a><span aria-hidden="true">/</span><a href="?lang=zh" data-language="zh" lang="zh-CN" hreflang="zh-CN">简体中文</a></nav></header>
 <main><section class="intro"><div><p class="eyebrow">REACTIVE MEETS AI</p><h1>部署稳定币预警</h1><p>用测试网报价启动跨链告警，然后将三笔交易交给 AI 复核。每笔交易由你在自己的 MetaMask 里确认。</p></div><aside><strong>USDC / USDT</strong><span>模拟报价 · 触发条件</span><b>偏离 1:1 超过 0.5%</b></aside></section>
 <div class="wallet"><div><span>签名钱包</span><strong id="accountText">尚未连接</strong></div><button id="connect" disabled>连接 MetaMask</button></div>
 <div class="grid"><section class="work"><h2>部署与运行</h2><p class="hint">账户和进度只保存在当前浏览器。每笔签名会显示目标测试网、用途和金额，另付该网测试 gas。</p><ol id="steps"></ol>

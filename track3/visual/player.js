@@ -1,5 +1,7 @@
 "use strict";
 
+const {text: localize} = window.PegPulseLocale;
+
 const query = new URLSearchParams(location.search);
 const stage = document.querySelector("#stage");
 const canvas = document.querySelector("#wanim-canvas");
@@ -32,14 +34,14 @@ function onQuote({key, value}) {
   document.querySelector("#sample-index").textContent = String(sample + 1);
   document.querySelector("#quote-value").textContent = quote;
   document.querySelector("#deviation").replaceChildren(
-    document.createTextNode(deviation + " bp "),
+    document.createTextNode(localize(deviation + " bp ")),
     Object.assign(document.createElement("span"), {textContent: "/ " + (deviation / 100).toFixed(2) + "%"})
   );
-  document.querySelector("#action").textContent = decision;
-  document.querySelector("#reason").textContent = reason;
+  document.querySelector("#action").textContent = localize(decision);
+  document.querySelector("#reason").textContent = localize(reason);
   document.querySelector("#slider-output").textContent = quote;
   slider.value = String(units);
-  slider.setAttribute("aria-valuetext", quote + " USDT per USDC");
+  slider.setAttribute("aria-valuetext", localize(quote + " USDT per USDC"));
   for (let i = 0; i < presets.length; i += 1) {
     presets[i].setAttribute("aria-pressed", String(i === sample && units === examples[i]));
   }
@@ -63,7 +65,7 @@ function selectQuote(sample, units, progress = 1) {
 function announce() {
   const value = document.querySelector("#quote-value").textContent;
   const action = document.querySelector("#action").textContent;
-  document.querySelector("#announcement").textContent = value + " USDT per USDC. " + action + ".";
+  document.querySelector("#announcement").textContent = localize(value + " USDT per USDC. " + action + ".");
 }
 
 function stopSequence() {
@@ -150,7 +152,7 @@ async function run() {
 run().catch((error) => {
   stopSequence();
   stage.dataset.ready = "error";
-  loading.textContent = "Wanim could not load. Retry the page or use the local player in visual/README.md.";
+  loading.textContent = localize("Wanim could not load. Retry the page or use the local player in visual/README.md.");
   loading.hidden = false;
   playButton.disabled = true;
   slider.disabled = true;

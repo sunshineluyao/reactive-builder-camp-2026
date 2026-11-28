@@ -1,5 +1,7 @@
 # D4 必做 · 跨链回调三步走
 
+[English](README.en.md) · **简体中文**
+
 用 **Base Sepolia → Lasna → Base Sepolia** 完成。Base Sepolia 同时作为源链和目标链，钱包只需切换两张测试网。源链用自己部署的 CampOrigin 发出 Ping 事件。Lasna 的 CampReactive 收到事件后执行 react()，目标端 CampCallback 记录结果。D5 的 Cron100 材料可以复用钱包和领币设置，这次单独保留 Ping 链路和钱包直调被拒的凭证。
 
 ~~~mermaid

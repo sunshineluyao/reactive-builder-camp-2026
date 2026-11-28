@@ -1,0 +1,6 @@
+[data-language-switch] { display:inline-flex; flex-wrap:nowrap; align-items:center; gap:.45em; font:600 .88rem/1.4 system-ui,sans-serif; white-space:nowrap; }
+[data-language-switch] a { color:inherit; padding:.18em .1em; text-underline-offset:.22em; }
+[data-language-switch] [aria-current=page] { text-decoration:none; font-weight:800; }
+[data-language-switch] a:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+.controls + [data-language-switch] { margin:1rem 0; color:#ebf5ef; }
+body.film [data-language-switch] { display:none; }

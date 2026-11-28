@@ -168,10 +168,11 @@ if (typeof module !== 'undefined') module.exports = {planStep, confirmTransactio
 if (typeof window !== 'undefined') window.addEventListener('DOMContentLoaded', startConsole);
 
 async function startConsole() {
+  const {text, url} = window.PegPulseLocale;
   const $ = id => document.getElementById(id);
   let contracts, provider, account = '', records = [], running = false, scanGeneration = 0;
   let found = {reactive: '', destination: ''}, verifiedProof = null;
-  const status = (msg, bad = false) => { $('status').textContent = msg; $('status').classList.toggle('bad', bad); };
+  const status = (msg, bad = false) => { $('status').textContent = text(msg); $('status').classList.toggle('bad', bad); };
   const key = () => 'reactive-camp-console-v1/' + lower(account);
   const known = new Map();
   window.addEventListener('eip6963:announceProvider', ev => {
@@ -193,23 +194,23 @@ async function startConsole() {
     render();
   }
   function render() {
-    $('accountText').textContent = account || '尚未连接';
+    $('accountText').textContent = account || text('尚未连接');
     $('connect').disabled = running || !contracts;
-    $('connect').textContent = account ? '检查钱包连接' : '连接 MetaMask';
+    $('connect').textContent = text(account ? '检查钱包连接' : '连接 MetaMask');
     $('steps').replaceChildren();
     steps.forEach(([chain, title, cost], i) => {
       const net = networks[chain], r = records[i];
       const row = document.createElement('li'), info = document.createElement('div'), name = document.createElement('b');
-      name.textContent = title; info.append(name);
-      const desc = document.createElement('small'); desc.textContent = net.name + ' · ' + cost; info.append(desc);
+      name.textContent = text(title); info.append(name);
+      const desc = document.createElement('small'); desc.textContent = net.name + ' · ' + text(cost); info.append(desc);
       if (r?.hash) {
         const link = document.createElement('a'); link.href = net.explorer + '/tx/' + r.hash;
-        link.target = '_blank'; link.rel = 'noopener'; link.textContent = '查看交易 ↗'; info.append(link);
+        link.target = '_blank'; link.rel = 'noopener'; link.textContent = text('查看交易 ↗'); info.append(link);
       }
       const btn = document.createElement('button');
       const done = r?.state === 'confirmed';
       const check = i >= 4 ? '核验链上回执' : '检查回执';
-      btn.textContent = done ? '已确认' : r?.state === 'pending' ? check : r?.state === 'failed' ? '重新签名' : '签名';
+      btn.textContent = text(done ? '已确认' : r?.state === 'pending' ? check : r?.state === 'failed' ? '重新签名' : '签名');
       btn.disabled = !contracts || !account || running || done || (i > 0 && records[i - 1]?.state !== 'confirmed');
       btn.addEventListener('click', () => guardedStep(i, r?.state === 'pending' ? r : null)); row.append(info, btn); $('steps').append(row);
     });
@@ -390,7 +391,7 @@ async function startConsole() {
   for (const [id,name] of [['reactiveHash','reactive'],['destHash','destination']]) $(id).oninput = () => {verifiedProof=null;found[name]=parseHash($(id).value);save();render();};
   $('locate').onclick = () => locate();
   $('download').onclick = () => download('public-run.json',manifest());
-  $('review').onclick = () => {localStorage.setItem('reactive-track3-review',JSON.stringify(manifest()));location.href='../review/?source=wallet';};
+  $('review').onclick = () => {localStorage.setItem('reactive-track3-review',JSON.stringify(manifest()));location.href=url('../review/?source=wallet');};
   try {
     const resp = await fetch('contracts.json', {cache:'no-store'}); if (!resp.ok) throw new Error('无法读取 contracts.json。');
     contracts = (await resp.json()).contracts; render(); status('合约字节码已加载。连接 MetaMask 即可开始。');

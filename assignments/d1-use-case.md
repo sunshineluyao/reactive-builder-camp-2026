@@ -1,5 +1,7 @@
 # 用例拆解卡 · 稳定币价差的跨链预警
 
+[English](d1-use-case.en.md) · **简体中文**
+
 > 正式提交链接见 [D1 用例拆解卡](../notes/d1-use-case.md)。
 
 我想给 Base 上的稳定币风险仪表板添加一条预警。Ethereum 上的 USDC/USDT 报价偏离 1:1 超过设定阈值时，仪表板可以从 Base 上读到告警，并追溯到原始交易。
@@ -30,4 +32,3 @@ flowchart LR
     R -->|是 · 跨链回调| B["Base · 发出 PriceDeviation 告警"]
     R -->|否| W["等待下一笔 Swap"]
 ```
-

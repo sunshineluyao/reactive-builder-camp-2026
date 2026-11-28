@@ -1,5 +1,7 @@
 # Reactive PegPulse
 
+[English](README.en.md) · **简体中文**
+
 **One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
 
 Sunshine · Sunshine Swarm Superintelligence (3S) Lab
@@ -11,6 +13,8 @@ Reactive Omni Buildathon 的 **Reactive Meets AI** 赛道项目。Ethereum Sepol
 **训练营提交材料**　[演示幻灯片 PDF](Reactive-PegPulse-Demo-Day.pdf) · [可编辑 PowerPoint，含双语讲者备注](Reactive-PegPulse-Demo-Day.pptx) · [预录演示截图](demo-screenshot.jpg)
 
 ![演示视频中核对 Ethereum Sepolia、Reactive Lasna 和 Base Sepolia 三笔回执的画面](demo-screenshot.jpg)
+
+中英文幻灯片的十个场景一一对应，PowerPoint 均含双语讲者备注。两版共用同一条视频，普通话旁白配中英字幕。
 
 ### 主持人播放说明
 

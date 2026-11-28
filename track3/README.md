@@ -1,5 +1,7 @@
 # Reactive PegPulse
 
+[English](README.en.md) · **简体中文**
+
 **One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
 
 Sunshine · Sunshine Swarm Superintelligence (3S) Lab
@@ -8,11 +10,11 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab
 
 DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是否值得人工复核？Reactive PegPulse 先用三条链留下同一条预警的交易证据，再由链下程序核对同期价格，为复核队列分流。本项目用测试合约发布模拟报价。
 
-**[观看公开测试网录屏 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [三笔原始回执](evidence/public-run.json) · [下载流程图 PNG](architecture.png) · [英文解说与中文字幕](video/README.md)
+**[观看公开测试网录屏 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [三笔原始回执](evidence/public-run.json) · [下载流程图 PNG](architecture.png) · [英文解说与中文字幕](video/README.zh-CN.md)
 
 [11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Reactive-PegPulse-Demo-Day.pptx)
 
-**For judges.** Reactive PegPulse follows a simulated USDC/USDT quote through Ethereum Sepolia, Reactive Lasna and Base Sepolia. A deviation above 50 basis points creates a traceable alert. Given recent pair history and independent dollar references, an off-chain neural network recommends escalation or continued observation. The public run retained the alert and withheld its score because no reference packet was supplied. The video replays the same verified event with labeled synthetic inputs to demonstrate both model decisions.
+**给评委。** 公开运行在 Base 写入告警。由于没有同期市场参考数据，AI 暂缓评分。演示固定同一条已核验事件，分别输入两组标明为合成的市场数据，展示升级复核与继续观察。
 
 小型社区财库可以用浏览器查源交易、Reactive 执行和目标回调，无需钱包和 gas。通过公开可复核的证据和双语材料，项目以包容参与和透明问责为设计方向。[联合国目标 10.2](https://sdgs.un.org/goals/goal10) · [联合国目标 16.6](https://sdgs.un.org/goals/goal16)
 
@@ -121,9 +123,9 @@ python3 scripts/verify_receipts.py evidence/public-run.json --destination-rpc ht
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-验证成功时，终端显示 `Public testnet | receipts and canonical blocks match the selected RPCs`，报价为 `9930`，三条日志序号依次为 `2 / 2 / 0`。打开 <http://localhost:8080/review/?source=public> 查看三份回执和本次“证据不足”的结果。点击 **Corroborating evidence** 和 **Pool-only movement**，可以用同一事件重放两个有完整输入的模型决定。页面标明合成数据来源。
+验证成功时，终端显示 `Public testnet | receipts and canonical blocks match the selected RPCs`，报价为 `9930`，三条日志序号依次为 `2 / 2 / 0`。打开 <http://localhost:8080/review/?source=public&lang=zh> 查看三份回执和本次“证据不足”的结果。点击 **Corroborating evidence** 和 **Pool-only movement**，可以用同一事件重放两个有完整输入的模型决定。页面标明合成数据来源。
 
-离线复核保存的原始日志可运行 `python3 scripts/verify_receipts.py evidence/public-run.json --offline`。下节命令可复现[当前合约的三链本地回执](evidence/guarded-local-run.json)。早期演练的视频保留了[录制时的本地回执](evidence/local-run.json)。同一服务还提供[视频播放器](http://localhost:8080/video/)和[部署工作台](http://localhost:8080/site/)。交互式阈值动画的离线运行方法见[动画说明](visual/README.md)。
+离线复核保存的原始日志可运行 `python3 scripts/verify_receipts.py evidence/public-run.json --offline`。下节命令可复现[当前合约的三链本地回执](evidence/guarded-local-run.json)。早期演练的视频保留了[录制时的本地回执](evidence/local-run.json)。同一服务还提供[视频播放器](http://localhost:8080/video/?lang=zh)和[部署工作台](http://localhost:8080/site/?lang=zh)。交互式阈值动画的离线运行方法见[动画说明](visual/README.zh-CN.md)。
 
 ## 从零运行三个 EVM
 
@@ -141,7 +143,7 @@ node --test tests/wallet.test.js
 
 ## 部署到公开测试网
 
-按上面的步骤启动本地服务，在装有 MetaMask 的浏览器打开 <http://localhost:8080/site/>。选择同一测试账户，准备 Ethereum Sepolia ETH、Lasna lREACT、Base Sepolia ETH。每一步都由钱包显示签名请求。费用储备另加相应网络测试 gas。
+按上面的步骤启动本地服务，在装有 MetaMask 的浏览器打开 <http://localhost:8080/site/?lang=zh>。选择同一测试账户，准备 Ethereum Sepolia ETH、Lasna lREACT、Base Sepolia ETH。每一步都由钱包显示签名请求。费用储备另加相应网络测试 gas。
 
 | 顺序 | 网络 | 钱包动作 |
 | --- | --- | --- |
@@ -180,7 +182,7 @@ python3 scripts/verify_receipts.py /tmp/stablecoin-public-run.json --destination
 
 ## AI 辅助开发与核验说明
 
-AI 编程助手参与了 Solidity 实现、部署界面、回执校验、训练与推理代码、测试、文档、动画和视频脚本。用例与阈值沿用仓库的 Day 1 与 Day 6 项目方向卡。验证包括固定编译器重建部署字节码、在三条独立 EVM 执行业务交易与边界用例、重新训练复现权重、交叉比较 Python 和浏览器推理、以及用被修改的回执检验校验器是否能拒绝错误记录。视频拍摄实际交互页面并使用合成旁白。项目作者通过 MetaMask 签署了部署、绑定和两次报价共六笔交易，并导出了部署记录。核验器逐笔检查链 ID、合约、事件、区块和交易位置。公开演示录制前另查三网 RPC，再对同一事件重放合成参考数据。[项目方向卡](../assignments/d6-project-direction.md) · [视频制作文件](video/)
+AI 编程助手参与了 Solidity 实现、部署界面、回执校验、训练与推理代码、测试、文档、动画和视频脚本。用例与阈值沿用仓库的 Day 1 与 Day 6 项目方向卡。验证包括固定编译器重建部署字节码、在三条独立 EVM 执行业务交易与边界用例、重新训练复现权重、交叉比较 Python 和浏览器推理、以及用被修改的回执检验校验器是否能拒绝错误记录。视频拍摄实际交互页面并使用合成旁白。项目作者通过 MetaMask 签署了部署、绑定和两次报价共六笔交易，并导出了部署记录。核验器逐笔检查链 ID、合约、事件、区块和交易位置。公开演示录制前另查三网 RPC，再对同一事件重放合成参考数据。[项目方向卡](../assignments/d6-project-direction.md) · [视频制作文件](video/README.zh-CN.md)
 
 ## 许可证与提交要求
 

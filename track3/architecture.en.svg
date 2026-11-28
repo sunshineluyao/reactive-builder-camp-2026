@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="756" viewBox="0 0 1240 756" role="img" aria-labelledby="title desc" lang="en">
+<title id="title">Two test quotes, one cross-chain alert</title>
+<desc id="desc">Ethereum Sepolia published two simulated quotes. Only 0.9930 crossed the threshold on Reactive Lasna. Base Sepolia recorded one alert. The reviewer checks three receipts, pair history and two USD references. The public run lacked market evidence and withheld its score. With valid evidence the model can recommend escalation or continued observation.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 8 4 0 8 2 4Z" fill="#477769"/></marker>
+  <marker id="mutedArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 8 4 0 8 2 4Z" fill="#7d887e"/></marker>
+  <style>
+    text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#153b36}
+    .k{font-family:"DejaVu Sans",sans-serif;font-size:15px;letter-spacing:2.1px;fill:#326150;font-weight:700}
+    .title{font-size:39px;font-weight:700}.lead{font-size:21px;fill:#405b54}
+    .section{font-size:20px;fill:#346653;font-weight:700}
+    .net{font-family:"DejaVu Sans",sans-serif;font-size:17px;fill:#386a5c;font-weight:700}
+    .node{font-size:22px;font-weight:700}.body{font-size:16px;fill:#3d5753}.mono{font-family:"DejaVu Sans Mono",monospace;font-size:17px;fill:#3d5753}
+    .edge{font-size:16px;fill:#345c50;font-weight:700}.small{font-size:16px;fill:#4a6059}
+    .card{fill:#eef7f2;stroke:#81a696;stroke-width:1.5}.paper{fill:#f6f9fa;stroke:#9aadb2;stroke-width:1.5}
+    .actual{fill:#fff2d7;stroke:#a27c30;stroke-width:1.5}.out{fill:#eff3fb;stroke:#8aa6c0;stroke-width:1.5}
+    .line{fill:none;stroke:#477769;stroke-width:2.6;stroke-linejoin:round;marker-end:url(#arrow)}
+    .stop{fill:none;stroke:#7d887e;stroke-width:2.1;stroke-dasharray:5 4;marker-end:url(#mutedArrow)}
+  </style>
+</defs>
+<rect width="1240" height="756" fill="#fffcf7"/>
+<path d="M38 135H1202 M38 424H1202 M38 695H1202" stroke="#cedbd0" stroke-width="1.5"/>
+<text x="40" y="36" class="k">STABLECOIN ALERTS  /  REACTIVE MEETS AI</text>
+<text x="38" y="84" class="title">Two test quotes, one cross-chain alert</text>
+<text x="40" y="117" class="lead">USDT per USDC, with parity at 1.0000. An absolute deviation above 0.5% triggers a callback.</text>
+<text x="40" y="170" class="section">On-chain trigger</text>
+<rect x="40" y="194" width="310" height="132" rx="11" class="card"/>
+<text x="60" y="222" class="net">Ethereum Sepolia</text><text x="60" y="259" class="node">Publish two test quotes</text>
+<text x="60" y="286" class="body">0.9990 control · 0.9930 trigger</text><text x="60" y="311" class="mono">QuoteSource</text>
+<path d="M350 259H449" class="line"/><text x="400" y="246" text-anchor="middle" class="edge">Quote log</text>
+<rect x="454" y="194" width="316" height="132" rx="11" class="card"/>
+<text x="474" y="222" class="net">Reactive Lasna</text><text x="474" y="259" class="node">Above 50 basis points?</text>
+<text x="474" y="286" class="body">Check each subscribed event</text><text x="474" y="311" class="mono">ReactiveAlert.react()</text>
+<path d="M770 259H878" class="line"/><text x="823" y="246" text-anchor="middle" class="edge">0.9930</text><text x="823" y="284" text-anchor="middle" class="small">70 bp</text>
+<rect x="883" y="194" width="317" height="132" rx="11" class="card"/>
+<text x="903" y="222" class="net">Base Sepolia</text><text x="903" y="259" class="node">Record one alert</text>
+<text x="903" y="286" class="body">Link the source transaction and log</text><text x="903" y="311" class="mono">AlertSink.record()</text>
+<path d="M612 326V352" class="stop"/>
+<rect x="420" y="357" width="385" height="44" rx="8" fill="#f1f2eb" stroke="#b4c0af"/>
+<text x="612" y="385" text-anchor="middle" class="body">0.9990 · 10 bp · source record only</text>
+<path d="M1041 326V484" class="line"/>
+<rect x="1053" y="366" width="114" height="31" fill="#fffcf7"/><text x="1061" y="388" class="edge">Receipts</text>
+<text x="40" y="463" class="section">Off-chain review priority</text>
+<rect x="883" y="488" width="317" height="145" rx="11" class="paper"/>
+<text x="903" y="527" class="node">Verify three receipts</text><text x="903" y="562" class="body">Match the source hash, log index,</text><text x="903" y="590" class="body">price and observation time</text>
+<path d="M883 560H775" class="line"/><text x="829" y="548" text-anchor="middle" class="edge">One alert</text>
+<rect x="454" y="488" width="316" height="145" rx="11" class="paper"/>
+<text x="474" y="527" class="node">Enough valid evidence?</text><text x="474" y="561" class="body">Recent USDC/USDT history</text><text x="474" y="590" class="body">USDC/USD and USDT/USD</text>
+<path d="M454 558H412V517H365" class="line"/><path d="M454 566H412V626H365" class="line"/>
+<rect x="40" y="478" width="320" height="82" rx="10" class="actual"/>
+<text x="59" y="510" class="node">Public run: inputs missing</text><text x="59" y="538" class="body">Keep alert · withhold score</text>
+<rect x="40" y="584" width="320" height="82" rx="10" class="out"/>
+<text x="59" y="616" class="node">Model scores valid inputs</text><text x="59" y="644" class="body">Escalate or keep observing</text>
+<text x="40" y="731" class="small">2026-11-27 · Public testnet run</text>
+<text x="1200" y="731" text-anchor="end" class="small">Origin 13:38:12 UTC  →  Lasna 13:38:12  →  Base 13:38:14</text>
+</svg>

@@ -1,5 +1,7 @@
 # 项目方向卡 · 稳定币跨链告警与证据核验
 
+[English](d6-project-direction.en.md) · **简体中文**
+
 **Stablecoin Risk Alerts with Verifiable Cross-Chain Evidence**
 
 ## 1. 一句话用例

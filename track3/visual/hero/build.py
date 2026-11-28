@@ -1,4 +1,4 @@
-"""Rebuild the two README covers. Run with Python 3 from any directory."""
+"""Rebuild the desktop and phone README covers in both languages. Run with Python 3 from any directory."""
 
 import json
 from pathlib import Path
@@ -274,6 +274,38 @@ def phone(svg, trigger, log_index):
     text(svg, 43, 771, "Missing both USD reference prices.", 20, MUTED)
 
 
+def chinese_cover(svg, trigger, log_index):
+    """Localize the same scale, marks and run-specific result."""
+    price = f"{trigger / PARITY:.4f}"
+    labels = {
+        "PUBLIC TESTNET": "公开测试网", "27 NOV 2026": "2026.11.27",
+        "Which quote triggered ": "哪笔报价触发了", "the alert?": "告警？",
+        "Which quote": "哪笔报价", "triggered ": "触发了",
+        "Two simulated USDC/USDT quotes, measured against a 1:1 peg.": "对照两笔 USDC/USDT 模拟报价与 1:1 平价的距离。",
+        "Publish quotes": "发布报价", "Request a callback": "请求跨链回调",
+        "Only above 50 basis points from parity.": "偏离平价超过 50 个基点时触发。",
+        "50 bp cutoff": "50 基点阈值", "10 bp": "10 基点",
+        f"{abs(trigger - PARITY)} bp": f"{abs(trigger - PARITY)} 基点",
+        "Record one alert": "写入一条告警", f"Source log #{log_index}": f"源日志序号 {log_index}",
+        "OFF-CHAIN AI REVIEW": "链下 AI 复核", "Scoring deferred": "暂缓评分",
+        "Matching USDC/USD and USDT/USD quotes were missing.": "缺少对应时点的 USDC/USD 和 USDT/USD 参考价。",
+        "Simulated USDC/USDT quotes": "USDC/USDT 模拟报价",
+        "Call back only above 50 bp": "超出 50 基点才请求回调",
+        f"One alert for {price}": f"{price} 触发一条告警",
+        f"PriceDeviation  ·  source log #{log_index}": f"PriceDeviation · 源日志 {log_index}",
+        "Missing both USD reference prices.": "缺少两项美元参考价。",
+    }
+    svg.set("lang", "zh-CN")
+    svg.find("title").text = "Reactive PegPulse · 哪笔报价触发了告警？"
+    svg.find("desc").text = (f"Ethereum Sepolia 发布两笔模拟报价。0.9990 处于观察区间，{price} 超过 50 个基点的阈值。"
+                             f"Reactive Lasna 请求回调，Base Sepolia 写入一条告警，对应源日志 {log_index}。因缺少同期美元参考价，链下 AI 暂缓评分。")
+    for elem in svg.iter():
+        if elem.text in labels:
+            elem.text = labels[elem.text]
+            elem.set("font-family", "'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif")
+            elem.set("letter-spacing", "0")
+
+
 def main():
     run = json.loads((TRACK / "evidence/public-run.json").read_text(encoding="utf-8"))
     trigger = run["alert"]["priceBps"]
@@ -300,6 +332,9 @@ def main():
         draw(svg, trigger, log_index)
         ET.indent(svg, space="  ")
         (HERE / filename).write_text(ET.tostring(svg, encoding="unicode") + "\n", encoding="utf-8")
+        chinese_cover(svg, trigger, log_index)
+        (HERE / filename.replace(".svg", ".zh-CN.svg")).write_text(
+            ET.tostring(svg, encoding="unicode") + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 'use strict';
 (() => {
+  const {text, lang} = window.PegPulseLocale;
   const proof = window.ReceiptProof;
   const ai = window.StablecoinAI;
   const $ = id => document.getElementById(id);
@@ -22,12 +23,12 @@
   function element(tag, cls, value) {
     const node = document.createElement(tag);
     if (cls) node.className = cls;
-    if (value !== undefined) node.textContent = value;
+    if (value !== undefined) node.textContent = text(value);
     return node;
   }
   function status(title, detail, state) {
-    $('mode').textContent = title;
-    $('verification').textContent = detail;
+    $('mode').textContent = text(title);
+    $('verification').textContent = text(detail);
     document.querySelector('.run-notice').dataset.state = state;
   }
   function reset() {
@@ -36,18 +37,18 @@
     currentMode = null;
     importedPacket = null;
     $('return-context').hidden = true;
-    $('result-type').textContent = 'Queue decision';
+    $('result-type').textContent = text('Queue decision');
     $('snapshot').hidden = true;
     $('legs').replaceChildren(element('li','empty','Awaiting matched receipts.'));
     for (const id of ['price','distance','count']) $(id).textContent = '—';
-    $('queue').textContent = 'Awaiting evidence';
-    $('evidence-id').textContent = 'Awaiting matched receipts';
-    $('decision-label').textContent = 'Awaiting receipts';
+    $('queue').textContent = text('Awaiting evidence');
+    $('evidence-id').textContent = text('Awaiting matched receipts');
+    $('decision-label').textContent = text('Awaiting receipts');
     $('reason').textContent = '';
     $('score').textContent = '';
     $('features').replaceChildren();
-    $('source-kind').textContent = 'References load after receipt validation.';
-    $('context-data').textContent = 'Awaiting model inputs';
+    $('source-kind').textContent = text('References load after receipt validation.');
+    $('context-data').textContent = text('Awaiting model inputs');
     $('context-error').textContent = '';
     $('context-input').disabled = true;
     delete $('result-box').dataset.decision;
@@ -101,17 +102,17 @@
     const output = ai.assess(alert,evidence);
     const syntheticReplay = ['corroborated','pool-only','missing'].includes(kind);
     $('return-context').hidden = !(syntheticReplay && (currentMode !== 'local' || importedPacket));
-    $('return-context').textContent = importedPacket ? 'Return to imported context' : 'Return to alert evidence';
-    $('result-type').textContent = syntheticReplay && currentMode !== 'local' ? 'Replay decision · synthetic context' : 'Queue decision';
-    $('source-kind').textContent = kind === 'absent'
+    $('return-context').textContent = text(importedPacket ? 'Return to imported context' : 'Return to alert evidence');
+    $('result-type').textContent = text(syntheticReplay && currentMode !== 'local' ? 'Replay decision · synthetic context' : 'Queue decision');
+    $('source-kind').textContent = text(kind === 'absent'
       ? 'No external reference packet supplied. Import one to assess the observed alert or select a synthetic replay.'
       : kind === 'import' ? 'Imported packet · author declares ' + output.provenance + ' inputs.'
-      : 'Synthetic reference packet · illustrative USD quotes and pair history.';
+      : 'Synthetic reference packet · illustrative USD quotes and pair history.');
     $('context-error').textContent = '';
     $('result-box').dataset.decision = output.decision;
-    $('decision-label').textContent = output.label;
-    $('reason').textContent = output.reason;
-    $('score').textContent = Number.isFinite(output.score) ? 'Model score ' + output.score.toFixed(3) : 'Score withheld';
+    $('decision-label').textContent = lang === 'zh' ? output.labelZh : output.label;
+    $('reason').textContent = lang === 'zh' ? output.reasonZh : output.reason;
+    $('score').textContent = text(Number.isFinite(output.score) ? 'Model score ' + output.score.toFixed(3) : 'Score withheld');
     const history = Array.isArray(evidence?.history) ? evidence.history : [];
     $('features').replaceChildren(
       row('Receipt quote', (alert.priceBps / 10000).toFixed(4) + ' USDT'),
@@ -131,12 +132,12 @@
     $('price').textContent = (a.priceBps / 10000).toFixed(4);
     $('distance').textContent = (Math.abs(a.priceBps - 10000) / 100).toFixed(2) + '%';
     $('count').textContent = '3 / 3';
-    $('queue').textContent = '1 unique alert';
+    $('queue').textContent = text('1 unique alert');
     $('evidence-id').textContent = a.evidenceId;
     $('legs').replaceChildren(...proof.roles.map((role,i) => legNode(role,i,mode,result.legs[role])));
     if (!ai || typeof ai.assess !== 'function' || typeof ai.demoContext !== 'function') {
-      $('decision-label').textContent = 'Model unavailable';
-      $('reason').textContent = 'The model weights or runtime could not be loaded.';
+      $('decision-label').textContent = text('Model unavailable');
+      $('reason').textContent = text('The model weights or runtime could not be loaded.');
       return;
     }
     for (const btn of scenarios) btn.disabled = false;
@@ -208,7 +209,7 @@
         assess('import',packet);
       }
     } catch (error) {
-      if (epoch === current) $('context-error').textContent = 'Context import failed. ' + error.message;
+      if (epoch === current) $('context-error').textContent = text('Context import failed. ' + error.message);
     }
   });
   for (const btn of scenarios) btn.addEventListener('click',() => assess(btn.dataset.kind));

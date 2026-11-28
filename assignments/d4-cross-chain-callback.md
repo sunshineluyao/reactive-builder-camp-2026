@@ -1,5 +1,7 @@
 # D4 必做 · 跨链回调三步走
 
+[English](d4-cross-chain-callback.en.md) · **简体中文**
+
 2026 年 11 月 21 日用实验专用钱包完成 **Base Sepolia → Lasna → Base Sepolia**。三笔成功回执指向同一次 `ping(500)`。目标合约读到 `lastValue() = 500`、`count() = 1`，其 `lastOriginTxHash()` 与源交易哈希一致。
 
 - [可直接粘贴的提交文本](d4-cross-chain-callback-submission.txt)
