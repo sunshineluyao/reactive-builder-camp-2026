@@ -42,3 +42,16 @@ Serve this folder as static files. Open `index.html` over HTTP or HTTPS. The pub
 ```
 
 The standalone Python source also runs in the Wanim Playground. Paste `threshold.py`, press **Run**, and drag the slider to adjust the third quote. The page player and the standalone scene share the plotting and decision functions. [Wanim Playground](https://wanim.org/playground/) · [Official embedding guide](https://wanim.org/docs/usage/)
+
+## How the README cover is made
+
+The cover plots the two published test quotes on one basis-point scale. A hollow circle marks the control and a filled diamond follows the triggering quote into the Base receipt. The vertical line sits at 50 bp. Lasna requests a callback only when the absolute deviation exceeds that line. The off-chain review below the plot gives the outcome recorded for this run. [Control transaction and threshold rule](../README.md#架构与触发条件) · [Public run and review decision](../evidence/public-run.json)
+
+The Python standard library builds both native SVG compositions. The generator reads the triggering price, source log index and review status from the public run. The phone version stacks the stages and labels the same observations on the same scale. Run these commands from the repository root.
+
+```sh
+python3 track3/visual/hero/build.py
+python3 .agents/skills/design-github-readme-heroes/scripts/check_hero.py track3/visual/hero/desktop.svg --mobile track3/visual/hero/mobile.svg --breakpoint 860 --out /tmp/pegpulse-hero --export-wide track3/visual/hero/cover.png
+```
+
+The second command uses Playwright and Chromium to render both sizes against light and dark README backgrounds and check the text geometry. Install its dependencies with `python3 -m pip install playwright` and `python3 -m playwright install chromium`, or use `--browser` with an existing working Chromium executable. The root README embeds the SVGs directly. [Editable generator](hero/build.py) · [Desktop cover](hero/desktop.svg) · [Phone cover](hero/mobile.svg) · [PNG for slides](hero/cover.png) · [Reusable cover design guide](../../.agents/skills/design-github-readme-heroes/SKILL.md)

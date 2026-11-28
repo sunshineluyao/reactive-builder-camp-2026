@@ -1,10 +1,13 @@
-# Reactive Builder Camp 2026
+# Reactive PegPulse
 
-## Reactive PegPulse
+<picture>
+  <source media="(max-width: 860px)" srcset="track3/visual/hero/mobile.svg">
+  <img src="track3/visual/hero/desktop.svg" width="100%" alt="两笔 USDC/USDT 模拟报价中，0.9990 留在源链。0.9930 偏离平价 70 个基点，超过 50 个基点的阈值，Reactive Lasna 请求回调，Base Sepolia 写入一条告警。链下 AI 因缺少匹配的美元报价证据而暂缓评分。">
+</picture>
 
 **One quote. Three chains. Anyone can verify.**　一条报价，三链共证，人人可验。
 
-Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Meets AI（赛道 3）
+Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Builder Camp 2026 · Reactive Meets AI（赛道 3）
 
 当 USDC/USDT 模拟报价偏离 1:1 超过 0.5% 时，Ethereum Sepolia 提供报价证据，Reactive Lasna 请求跨链回调，Base Sepolia 记录告警。赛道 3 的链下模型根据可核对的美元报价和价格走势决定是否升级人工复核。
 
@@ -14,7 +17,7 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Meets AI（赛
 
 2026 年 11 月 27 日完成六次测试网签名。0.9990 的对照报价只产生源链记录。0.9930 的测试报价触发了 Lasna 的回调请求，Base Sepolia 记下一条预警。公开运行缺少同期美元证据，复核程序暂缓评分。录屏还演示了模型在合成价格证据齐全时给出的两种建议。
 
-[![两次模拟报价经过 Lasna 的阈值判断，0.9930 在 Base 触发预警。链下系统核对回执和市场证据后决定复核优先级。](track3/architecture.png)](track3/README.md#从报价到人工复核)
+[从报价到人工复核的完整流程图](track3/README.md#从报价到人工复核) · [手机竖版封面](track3/visual/hero/mobile.svg)
 
 <details>
 <summary>查看本地三链演练动画（2 分 30 秒，中文字幕）</summary>

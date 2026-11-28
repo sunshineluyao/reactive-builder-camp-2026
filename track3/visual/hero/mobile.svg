@@ -1,0 +1,167 @@
+<svg aria-labelledby="title description" lang="en" xmlns="http://www.w3.org/2000/svg" width="440" height="798" viewBox="0 0 440 798" role="img">
+  <title id="title">Reactive PegPulse — Which quote triggered the alert?</title>
+  <desc id="description">Two simulated USDC/USDT quotes were published on Ethereum Sepolia. 0.9990 stayed below the 50 basis point threshold. 0.9930 crossed it. Reactive Lasna requested a callback. Base Sepolia recorded one alert linked to source log 2. Off-chain AI scoring was deferred because matching USD price evidence was missing.</desc>
+  <defs>
+    <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#080915" />
+      <stop offset="51%" stop-color="#180c2b" />
+      <stop offset="100%" stop-color="#071e26" />
+    </linearGradient>
+    <linearGradient id="origin" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#10313a" />
+      <stop offset="100%" stop-color="#101225" />
+    </linearGradient>
+    <linearGradient id="gate" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#34214f" />
+      <stop offset="100%" stop-color="#19112e" />
+    </linearGradient>
+    <linearGradient id="sink" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#342736" />
+      <stop offset="100%" stop-color="#191629" />
+    </linearGradient>
+    <linearGradient id="review" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#151a2a" />
+      <stop offset="100%" stop-color="#151629" />
+    </linearGradient>
+    <linearGradient id="metal" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#52e6d7" />
+      <stop offset="37%" stop-color="#225966" />
+      <stop offset="74%" stop-color="#262249" />
+      <stop offset="100%" stop-color="#b193ff" />
+    </linearGradient>
+    <linearGradient id="coin" x1="0%" y1="0%" x2="100%" y2="65%">
+      <stop offset="0%" stop-color="#24515a" />
+      <stop offset="49%" stop-color="#0e2938" />
+      <stop offset="100%" stop-color="#261c43" />
+    </linearGradient>
+    <linearGradient id="spectrum" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#48efda" />
+      <stop offset="51%" stop-color="#c298ff" />
+      <stop offset="100%" stop-color="#ffca69" />
+    </linearGradient>
+    <radialGradient id="orchid-light">
+      <stop offset="0%" stop-color="#8748ff" stop-opacity=".29" />
+      <stop offset="100%" stop-color="#8748ff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="teal-light">
+      <stop offset="0%" stop-color="#17cbb9" stop-opacity=".11" />
+      <stop offset="100%" stop-color="#17cbb9" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="gold-light">
+      <stop offset="0%" stop-color="#ffb939" stop-opacity=".28" />
+      <stop offset="100%" stop-color="#ffb939" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0 H0 V34" stroke="#ab8bd2" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".12" />
+    </pattern>
+    <pattern id="tail-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#c298ff" stroke-width="0.75" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".28" />
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="440" height="798" fill="url(#field)" />
+  <ellipse cx="378.4" cy="167.57999999999998" rx="193.6" ry="383.03999999999996" fill="url(#orchid-light)" />
+  <ellipse cx="0" cy="383.03999999999996" rx="206.79999999999998" ry="478.79999999999995" fill="url(#teal-light)" />
+  <rect x="0" y="0" width="440" height="798" fill="url(#grid)" />
+  <g transform="rotate(-19 470 94)" opacity=".14">
+    <ellipse cx="470" cy="94" rx="144" ry="68" fill="none" stroke="#c298ff" stroke-width="1" />
+    <ellipse cx="470" cy="94" rx="162" ry="79" fill="none" stroke="#c298ff" stroke-width="1" />
+    <ellipse cx="470" cy="94" rx="180" ry="90" fill="none" stroke="#c298ff" stroke-width="1" />
+    <ellipse cx="470" cy="94" rx="198" ry="101" fill="none" stroke="#c298ff" stroke-width="1" />
+    <ellipse cx="470" cy="94" rx="216" ry="112" fill="none" stroke="#c298ff" stroke-width="1" />
+  </g>
+  <g transform="translate(24 21) scale(0.87)">
+    <circle cx="18" cy="18" r="17" fill="#102c37" stroke="#48efda" stroke-width="1.7" />
+    <path d="M2 19 H10 L14 12 L19 26 L24 10 L27 19 H34" stroke="#48efda" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="31" cy="6" r="3.7" fill="#ffca69" stroke="#102633" stroke-width="1.5" />
+  </g>
+  <text x="66" y="48" fill="#f8f5ff" font-size="27" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.7">
+    <tspan>Reactive </tspan>
+    <tspan fill="#48efda">PegPulse</tspan>
+  </text>
+  <g transform="translate(362 43) scale(0.49)">
+    <ellipse cx="7" cy="5" rx="133" ry="77" fill="url(#orchid-light)" />
+    <g transform="rotate(-22)">
+      <ellipse cx="0" cy="5" rx="104" ry="32" fill="none" stroke="#9a65ea" stroke-width="1.6" />
+      <ellipse cx="0" cy="5" rx="120" ry="39" fill="none" stroke="#9272ce" stroke-width="1" stroke-dasharray="2 7" opacity=".7" />
+    </g>
+    <g transform="rotate(-18)">
+      <ellipse cx="-10" cy="1" rx="47" ry="53" fill="#31264c" stroke="#ad7ef4" stroke-width="2" />
+      <ellipse cx="-15" cy="-3" rx="47" ry="53" fill="url(#metal)" stroke="#c7bcff" stroke-width="1.4" />
+      <ellipse cx="-20" cy="-6" rx="44" ry="52" fill="url(#coin)" stroke="#48efda" stroke-width="2.1" />
+      <ellipse cx="-20" cy="-6" rx="37" ry="44" fill="none" stroke="#509795" stroke-width="1.1" />
+      <path d="M-45 -29 Q-34 -49 -15 -49 M1 29 Q7 24 12 14" stroke="#48efda" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M-33 -11 H-6 M-33 1 H-6" stroke="#48efda" stroke-width="5.0" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <path d="M-96 40 C-62 55 9 33 73 -13" stroke="#c298ff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M43 3 Q62 -5 86 -24" stroke="#ffca69" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="-95" cy="40" r="5" fill="#102c37" stroke="#48efda" stroke-width="2.4" />
+    <circle cx="88" cy="-25" r="23" fill="url(#gold-light)" />
+    <path d="M88 -34 l9 9 l-9 9 l-9 -9 z" stroke="#ffca69" stroke-width="1.6" fill="#ffca69" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M93 -42 L98 -50 M102 -29 L111 -32" stroke="#ffca69" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <circle cx="31" cy="84" r="6" fill="none" stroke="#48efda" stroke-width="1.6" />
+  <circle cx="31" cy="84" r="2.3" fill="#48efda" />
+  <text x="47" y="90" fill="#48efda" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.0">PUBLIC TESTNET</text>
+  <text x="232" y="90" fill="#c4c3df" font-size="18" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">27 NOV 2026</text>
+  <text x="23" y="140" fill="#f8f5ff" font-size="42" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-1.5">Which quote</text>
+  <text x="23" y="183" fill="#f8f5ff" font-size="42" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-1.5">triggered <tspan fill="#ffe4ae">the alert?</tspan>
+  </text>
+  <rect x="25" y="202" width="64" height="3" fill="url(#spectrum)" rx="1.5" />
+  <rect x="24" y="233" width="392" height="116" fill="#050916" rx="18" opacity=".6" />
+  <rect x="24" y="229" width="392" height="116" fill="url(#origin)" rx="18" stroke="#298c88" stroke-width="1.6" />
+  <path d="M47 230 h90.2" stroke="#48efda" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
+  <text x="43" y="257" fill="#48efda" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">ETHEREUM SEPOLIA</text>
+  <text x="43" y="284" fill="#f8f5ff" font-size="20" font-weight="550" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Simulated USDC/USDT quotes</text>
+  <circle cx="53" cy="314" r="6" fill="#172c38" stroke="#48efda" stroke-width="2.7" />
+  <text x="69" y="324" fill="#f8f5ff" font-size="29" font-weight="650" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="-1.2">0.9990</text>
+  <path d="M240 308 l6 6 l-6 6 l-6 -6 z" stroke="#ffca69" stroke-width="1.6" fill="#ffca69" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="256" y="324" fill="#ffca69" font-size="29" font-weight="650" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="-1.2">0.9930</text>
+  <g transform="translate(220 345) rotate(90)">
+    <path d="M1 0 H17 m-6 -4 l6 4 l-6 4" stroke="#48efda" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <rect x="24" y="369" width="392" height="180" fill="#050916" rx="18" opacity=".6" />
+  <rect x="24" y="365" width="392" height="180" fill="url(#gate)" rx="18" stroke="#9565d4" stroke-width="1.6" />
+  <path d="M47 366 h90.2" stroke="#c298ff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
+  <text x="43" y="394" fill="#c298ff" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">REACTIVE LASNA</text>
+  <text x="42" y="427" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.7">Call back only above 50 bp</text>
+  <rect x="258.75" y="450" width="122.25" height="48" fill="#51365d" rx="5" opacity=".56" />
+  <rect x="258.75" y="450" width="122.25" height="48" fill="url(#tail-hatch)" rx="5" />
+  <path d="M55 479 H381" stroke="#a8b3d0" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M258.75 479 H340.25" stroke="#ffca69" stroke-width="2.7" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M55.0 481 v7" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M95.75 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M136.5 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M177.25 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M218.0 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M258.75 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M299.5 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M340.25 481 v5" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M381.0 481 v7" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M258.75 448 V500" stroke="#c298ff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4" />
+  <circle cx="95.75" cy="479" r="7" fill="#172c38" stroke="#48efda" stroke-width="2.7" />
+  <text x="95.75" y="466" fill="#48efda" font-size="19" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">10 bp</text>
+  <circle cx="340.25" cy="479" r="19" fill="url(#gold-light)" />
+  <path d="M340.25 472 l7 7 l-7 7 l-7 -7 z" stroke="#ffca69" stroke-width="1.6" fill="#ffca69" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="340.25" y="466" fill="#ffca69" font-size="19" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">70 bp</text>
+  <text x="55" y="521" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">0</text>
+  <text x="381" y="521" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">80</text>
+  <text x="258.75" y="521" fill="#c298ff" font-size="18" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">50 bp cutoff</text>
+  <g transform="translate(220 545) rotate(90)">
+    <path d="M1 0 H17 m-6 -4 l6 4 l-6 4" stroke="#c298ff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <rect x="24" y="569" width="392" height="106" fill="#050916" rx="18" opacity=".6" />
+  <rect x="24" y="565" width="392" height="106" fill="url(#sink)" rx="18" stroke="#af8950" stroke-width="1.6" />
+  <path d="M47 566 h90.2" stroke="#ffca69" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
+  <text x="43" y="595" fill="#ffca69" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">BASE SEPOLIA</text>
+  <text x="43" y="626" fill="#f8f5ff" font-size="27" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.6">One alert for 0.9930</text>
+  <text x="43" y="653" fill="#c4c3df" font-size="18" font-weight="400" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="0">PriceDeviation  ·  source log #2</text>
+  <g transform="translate(367 589)" fill="none">
+    <path d="M2 1 H27 V31 L23 28 L19 31 L15 28 L11 31 L7 28 L2 31 Z" stroke="#ffca69" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M7 10 L11 14 L20 7 M8 21 H21" stroke="#ffca69" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <rect x="24" y="695" width="392" height="91" fill="#050916" rx="18" opacity=".6" />
+  <rect x="24" y="691" width="392" height="91" fill="url(#review)" rx="18" stroke="#42536b" stroke-width="1.6" />
+  <text x="43" y="717" fill="#c4c3df" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">OFF-CHAIN AI REVIEW</text>
+  <text x="43" y="747" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.5">Scoring deferred</text>
+  <text x="43" y="770" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Missing USDC/USD and USDT/USD quotes.</text>
+</svg>

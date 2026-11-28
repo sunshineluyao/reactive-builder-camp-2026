@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design GitHub README Heroes"
+  short_description: "Design evidence-led README covers for desktop and mobile"
+  default_prompt: "Use $design-github-readme-heroes to create or improve the lead figure in my GitHub README."
