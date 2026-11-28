@@ -14,7 +14,7 @@ DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是�
 
 [11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Reactive-PegPulse-Demo-Day.pptx)
 
-**[打开免钱包复核页](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=zh)**。先追踪 0.9930 测试报价的三笔回执。签名时没有独立行情，模型当场暂缓评分。事后调取事件前已收盘的两项美元报价和 15 条币安分钟线，同一模型给出**继续观察**。七个固定时段的历史对照同时报告减少的转介和漏过的持续偏离。[市场行情、财库任务与对照结果](evidence/market/README.zh-CN.md)
+**[在 GitHub 直接复核告警](PROOF.zh-CN.md)**。先追踪 0.9930 测试报价的三笔回执。签名时没有独立行情，模型当场暂缓评分。事后调取事件前已收盘的两项美元报价和 15 条币安分钟线，同一模型给出**继续观察**。七个固定时段的历史对照同时报告减少的转介和漏过的持续偏离。[市场行情、财库任务与对照结果](evidence/market/README.zh-CN.md)
 
 在本目录运行 `python3 scripts/market_evidence.py --live`，即可实时复核三链、读取事件对应行情并运行模型，无需签名钱包。
 

@@ -13,7 +13,7 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Builder Camp 2
 
 When a simulated USDC/USDT quote moves more than 0.5% from parity, a contract on Reactive Lasna requests a callback and Base Sepolia records an alert. A community treasury can trace the alert back to Ethereum Sepolia. An off-chain model uses independent dollar prices and recent pair history to decide whether the alert warrants human review.
 
-**[Open the wallet-free alert reviewer](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=en)** · [Watch the 2:30 competition film](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [Three contracts and transactions](track3/README.en.md) · [Market evidence and evaluation](track3/evidence/market/README.md) · [Submission links](assignments/hackathon-submission.en.txt)
+**[Review the signed alert on GitHub](track3/PROOF.md)** · [Watch the 2:30 competition film](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [Three contracts and transactions](track3/README.en.md) · [Market evidence and evaluation](track3/evidence/market/README.md) · [Submission links](assignments/hackathon-submission.en.txt)
 
 [Demo Day presentation and simulated Q&A · one 4 min 40 sec recording](track3/demo-day/README.en.md) · [Download the slides](track3/demo-day/Reactive-PegPulse-Demo-Day.en.pptx) · [English transcript](track3/demo-day/script.en.md)
 

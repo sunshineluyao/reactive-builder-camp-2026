@@ -13,7 +13,7 @@ Sunshine · Sunshine Swarm Superintelligence (3S) Lab · Reactive Builder Camp 2
 
 当 USDC/USDT 模拟报价偏离 1:1 超过 0.5% 时，Ethereum Sepolia 提供报价证据，Reactive Lasna 请求跨链回调，Base Sepolia 记录告警。赛道 3 的链下模型根据可核对的美元报价和价格走势决定是否升级人工复核。
 
-**[免钱包复核这条告警](https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=zh)** · [观看 2 分 30 秒参赛录像](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [三个合约与三笔交易](track3/README.md) · [真实行情与对照结果](track3/evidence/market/README.zh-CN.md) · [提交链接](assignments/hackathon-submission.txt)
+**[免钱包复核这条告警](track3/PROOF.zh-CN.md)** · [观看 2 分 30 秒参赛录像](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4) · [三个合约与三笔交易](track3/README.md) · [真实行情与对照结果](track3/evidence/market/README.zh-CN.md) · [提交链接](assignments/hackathon-submission.txt)
 
 [11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](track3/demo-day/README.md) · [含双语备注的 PowerPoint](track3/demo-day/Reactive-PegPulse-Demo-Day.pptx) · [中文讲稿](track3/demo-day/script.md)
 

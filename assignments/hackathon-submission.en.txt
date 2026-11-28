@@ -9,7 +9,10 @@ https://github.com/sunshineluyao/reactive-builder-camp-2026
 Competition film · 2 min 30 sec
 https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@e3793927f18683f811bf17db4ec07589045ea14d/track3/video/public/demo.mp4
 
-Wallet-free reviewer
+Wallet-free GitHub proof page
+https://github.com/sunshineluyao/reactive-builder-camp-2026/blob/main/track3/PROOF.md
+
+Interactive reviewer
 https://rawcdn.githack.com/sunshineluyao/reactive-builder-camp-2026/e3793927f18683f811bf17db4ec07589045ea14d/track3/review/index.html?lang=en
 
 Ethereum Sepolia · QuoteSource (11155111)
