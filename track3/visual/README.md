@@ -51,7 +51,7 @@ The Python standard library builds both native SVG compositions. The generator r
 
 ```sh
 python3 track3/visual/hero/build.py
-python3 .agents/skills/design-github-readme-heroes/scripts/check_hero.py track3/visual/hero/desktop.svg --mobile track3/visual/hero/mobile.svg --breakpoint 860 --out /tmp/pegpulse-hero --export-wide track3/visual/hero/cover.png
+python3 .agents/skills/design-github-readme-heroes/scripts/check_hero.py track3/visual/hero/desktop.svg --mobile track3/visual/hero/mobile.svg --breakpoint 860 --wide-width 838 --phone-width 324 --out /tmp/pegpulse-hero --export-wide track3/visual/hero/cover.png
 ```
 
 The second command uses Playwright and Chromium to render both sizes against light and dark README backgrounds and check the text geometry. Install its dependencies with `python3 -m pip install playwright` and `python3 -m playwright install chromium`, or use `--browser` with an existing working Chromium executable. The root README embeds the SVGs directly. [Editable generator](hero/build.py) · [Desktop cover](hero/desktop.svg) · [Phone cover](hero/mobile.svg) · [PNG for slides](hero/cover.png) · [Reusable cover design guide](../../.agents/skills/design-github-readme-heroes/SKILL.md)

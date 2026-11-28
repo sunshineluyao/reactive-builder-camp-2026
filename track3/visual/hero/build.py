@@ -124,7 +124,7 @@ def panel(svg, x, y, w, h, gradient_id, stroke):
         path(svg, f"M{x+23} {y+1} h{w * .23:.1f}", color, 2.6, opacity=".92")
 
 
-def tag(svg, x, y, label, color, size=19):
+def tag(svg, x, y, label, color, size=22):
     text(svg, x, y, label, size, color, 700, space=1.35)
 
 
@@ -141,7 +141,7 @@ def scale_plot(svg, x, y, w, trigger, *, compact=False):
     right = x + w
     unit = w / 80
     threshold = x + unit * CUTOFF
-    size = 18 if compact else 19
+    size = 20 if compact else 22
     rect(svg, threshold, y - 29, right - threshold, 48, "#51365d", rx=5, opacity=".56")
     rect(svg, threshold, y - 29, right - threshold, 48, "url(#tail-hatch)", rx=5)
     path(svg, f"M{x} {y} H{right}", "#a8b3d0", 2.1)
@@ -181,11 +181,11 @@ def status_dot(svg, x, y):
 def desktop(svg, trigger, log_index):
     backdrop(svg, 1280, 646, False)
     brand(svg, 48, 67, False)
-    rect(svg, 840, 33, 392, 43, "#17162a", rx=21, stroke="#66547e")
-    status_dot(svg, 865, 54)
-    text(svg, 885, 61, "PUBLIC TESTNET", 19, MINT, 700, space=1.15)
-    path(svg, "M1084 44 V64", "#685975")
-    text(svg, 1100, 61, "27 NOV 2026", 19, MUTED, 600)
+    rect(svg, 800, 33, 432, 43, "#17162a", rx=21, stroke="#66547e")
+    status_dot(svg, 825, 54)
+    text(svg, 845, 62, "PUBLIC TESTNET", 22, MINT, 700, space=1.15)
+    path(svg, "M1063 44 V64", "#685975")
+    text(svg, 1080, 62, "27 NOV 2026", 22, MUTED, 600)
     peg_illustration(svg, 1105, 160, 1.10)
     el = text(svg, 46, 151, "Which quote triggered ", 61, weight=700, space=-2.3)
     node(el, "tspan", fill="#ffe4ae").text = "the alert?"
@@ -202,16 +202,16 @@ def desktop(svg, trigger, log_index):
     text(svg, 72, 326, "Publish quotes", 33, weight=650, space=-1.0)
     for quote, y, active in ((CONTROL, 378, False), (trigger, 431, True)):
         marker(svg, 84, y - 11, active, 7)
-        text(svg, 105, y, f"{quote / PARITY:.4f}", 39, GOLD if active else PAPER, 650,
+        text(svg, 100, y, f"{quote / PARITY:.4f}", 37, GOLD if active else PAPER, 650,
              mono=True, space=-1.6)
-        text(svg, 314, y - 3, f"{(quote - PARITY) / 100:+.2f}%".replace("-", "−"), 19,
+        text(svg, 319, y - 3, f"{(quote - PARITY) / 100:+.2f}%".replace("-", "−"), 22,
              MUTED, anchor="end")
     path(svg, "M74 454 H313", "#3e535f")
-    text(svg, 73, 485, "PriceObserved", 20, MUTED, mono=True)
+    text(svg, 73, 485, "PriceObserved", 22, MUTED, mono=True)
 
     tag(svg, 393, 283, "REACTIVE LASNA", VIOLET)
     text(svg, 392, 326, "Request a callback", 34, weight=650, space=-1.0)
-    text(svg, 393, 358, "Only above 50 basis points from parity.", 21, MUTED)
+    text(svg, 393, 358, "Only above 50 basis points from parity.", 22, MUTED)
     rect(svg, 389, 380, 450, 108, "#17132a", rx=10, stroke="#50346e")
     scale_plot(svg, 409, 428, 410, trigger)
 
@@ -221,15 +221,15 @@ def desktop(svg, trigger, log_index):
          "L910 420 V393 Q923 385 910 378 V355 Z", "#a67b42", 1.45, "#2b2130")
     path(svg, "M1143 351 V425", "#a48768", 1.25, stroke_dasharray="3 4")
     text(svg, 932, 385, f"{trigger / PARITY:.4f}", 38, GOLD, 650, mono=True, space=-1.6)
-    text(svg, 932, 413, "PriceDeviation", 20, PAPER, 500, mono=True)
+    text(svg, 932, 413, "PriceDeviation", 22, PAPER, 500, mono=True)
     node(svg, "circle", cx=1172, cy=388, r=21, fill="#3f3032", stroke=GOLD, stroke_width=1.8)
     node(svg, "circle", cx=1172, cy=388, r=16, fill="none", stroke="#ba954f", stroke_width=1)
     path(svg, "M1164 388 l6 6 11 -14", GOLD, 2.8)
     path(svg, "M916 454 H1205", "#534b59")
-    text(svg, 915, 485, f"Source log #{log_index}", 20, MUTED, mono=True)
+    text(svg, 915, 485, f"Source log #{log_index}", 22, MUTED, mono=True)
 
     panel(svg, 48, 536, 1184, 77, "review", "#42536b")
-    text(svg, 74, 569, "OFF-CHAIN AI REVIEW", 19, MUTED, 700, space=1.1)
+    text(svg, 74, 569, "OFF-CHAIN AI REVIEW", 22, MUTED, 700, space=1.1)
     text(svg, 73, 598, "Scoring deferred", 26, weight=650, space=-0.4)
     path(svg, "M372 553 V596", "#43536d")
     text(svg, 400, 584, "Matching USDC/USD and USDT/USD quotes were missing.", 24, PAPER)
@@ -240,15 +240,15 @@ def phone(svg, trigger, log_index):
     brand(svg, 24, 48, True)
     peg_illustration(svg, 362, 43, .49)
     status_dot(svg, 31, 84)
-    text(svg, 47, 90, "PUBLIC TESTNET", 18, MINT, 700, space=1.0)
-    text(svg, 232, 90, "27 NOV 2026", 18, MUTED, 600)
+    text(svg, 47, 90, "PUBLIC TESTNET", 20, MINT, 700, space=1.0)
+    text(svg, 250, 90, "27 NOV 2026", 20, MUTED, 600)
     text(svg, 23, 140, "Which quote", 42, weight=700, space=-1.5)
     el = text(svg, 23, 183, "triggered ", 42, weight=700, space=-1.5)
     node(el, "tspan", fill="#ffe4ae").text = "the alert?"
     rect(svg, 25, 202, 64, 3, "url(#spectrum)", rx=1.5)
 
     panel(svg, 24, 229, 392, 116, "origin", "#298c88")
-    tag(svg, 43, 257, "ETHEREUM SEPOLIA", MINT, 18)
+    tag(svg, 43, 257, "ETHEREUM SEPOLIA", MINT, 20)
     text(svg, 43, 284, "Simulated USDC/USDT quotes", 20, PAPER, 550)
     for x, quote, active in ((53, CONTROL, False), (240, trigger, True)):
         marker(svg, x, 314, active, 6)
@@ -257,21 +257,21 @@ def phone(svg, trigger, log_index):
     arrow(svg, 220, 345, MINT, down=True, length=20)
 
     panel(svg, 24, 365, 392, 180, "gate", "#9565d4")
-    tag(svg, 43, 394, "REACTIVE LASNA", VIOLET, 18)
+    tag(svg, 43, 394, "REACTIVE LASNA", VIOLET, 20)
     text(svg, 42, 427, "Call back only above 50 bp", 26, weight=650, space=-0.7)
     scale_plot(svg, 55, 479, 326, trigger, compact=True)
     arrow(svg, 220, 545, VIOLET, down=True, length=20)
 
     panel(svg, 24, 565, 392, 106, "sink", "#af8950")
-    tag(svg, 43, 595, "BASE SEPOLIA", GOLD, 18)
+    tag(svg, 43, 595, "BASE SEPOLIA", GOLD, 20)
     text(svg, 43, 626, f"One alert for {trigger / PARITY:.4f}", 27, weight=650, space=-0.6)
-    text(svg, 43, 653, f"PriceDeviation  ·  source log #{log_index}", 18, MUTED, mono=True)
+    text(svg, 43, 653, f"PriceDeviation  ·  source log #{log_index}", 20, MUTED, mono=True)
     receipt_mark(svg, 367, 589)
 
     panel(svg, 24, 691, 392, 91, "review", "#42536b")
-    tag(svg, 43, 717, "OFF-CHAIN AI REVIEW", MUTED, 18)
+    tag(svg, 43, 717, "OFF-CHAIN AI REVIEW", MUTED, 20)
     text(svg, 43, 747, "Scoring deferred", 26, weight=650, space=-0.5)
-    text(svg, 43, 770, "Missing USDC/USD and USDT/USD quotes.", 18, MUTED)
+    text(svg, 43, 771, "Missing both USD reference prices.", 20, MUTED)
 
 
 def main():

@@ -101,8 +101,8 @@
   </g>
   <circle cx="31" cy="84" r="6" fill="none" stroke="#48efda" stroke-width="1.6" />
   <circle cx="31" cy="84" r="2.3" fill="#48efda" />
-  <text x="47" y="90" fill="#48efda" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.0">PUBLIC TESTNET</text>
-  <text x="232" y="90" fill="#c4c3df" font-size="18" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">27 NOV 2026</text>
+  <text x="47" y="90" fill="#48efda" font-size="20" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.0">PUBLIC TESTNET</text>
+  <text x="250" y="90" fill="#c4c3df" font-size="20" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">27 NOV 2026</text>
   <text x="23" y="140" fill="#f8f5ff" font-size="42" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-1.5">Which quote</text>
   <text x="23" y="183" fill="#f8f5ff" font-size="42" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-1.5">triggered <tspan fill="#ffe4ae">the alert?</tspan>
   </text>
@@ -110,7 +110,7 @@
   <rect x="24" y="233" width="392" height="116" fill="#050916" rx="18" opacity=".6" />
   <rect x="24" y="229" width="392" height="116" fill="url(#origin)" rx="18" stroke="#298c88" stroke-width="1.6" />
   <path d="M47 230 h90.2" stroke="#48efda" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
-  <text x="43" y="257" fill="#48efda" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">ETHEREUM SEPOLIA</text>
+  <text x="43" y="257" fill="#48efda" font-size="20" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">ETHEREUM SEPOLIA</text>
   <text x="43" y="284" fill="#f8f5ff" font-size="20" font-weight="550" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Simulated USDC/USDT quotes</text>
   <circle cx="53" cy="314" r="6" fill="#172c38" stroke="#48efda" stroke-width="2.7" />
   <text x="69" y="324" fill="#f8f5ff" font-size="29" font-weight="650" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="-1.2">0.9990</text>
@@ -122,7 +122,7 @@
   <rect x="24" y="369" width="392" height="180" fill="#050916" rx="18" opacity=".6" />
   <rect x="24" y="365" width="392" height="180" fill="url(#gate)" rx="18" stroke="#9565d4" stroke-width="1.6" />
   <path d="M47 366 h90.2" stroke="#c298ff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
-  <text x="43" y="394" fill="#c298ff" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">REACTIVE LASNA</text>
+  <text x="43" y="394" fill="#c298ff" font-size="20" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">REACTIVE LASNA</text>
   <text x="42" y="427" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.7">Call back only above 50 bp</text>
   <rect x="258.75" y="450" width="122.25" height="48" fill="#51365d" rx="5" opacity=".56" />
   <rect x="258.75" y="450" width="122.25" height="48" fill="url(#tail-hatch)" rx="5" />
@@ -139,29 +139,29 @@
   <path d="M381.0 481 v7" stroke="#9baac7" stroke-width="1.25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
   <path d="M258.75 448 V500" stroke="#c298ff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4" />
   <circle cx="95.75" cy="479" r="7" fill="#172c38" stroke="#48efda" stroke-width="2.7" />
-  <text x="95.75" y="466" fill="#48efda" font-size="19" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">10 bp</text>
+  <text x="95.75" y="466" fill="#48efda" font-size="21" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">10 bp</text>
   <circle cx="340.25" cy="479" r="19" fill="url(#gold-light)" />
   <path d="M340.25 472 l7 7 l-7 7 l-7 -7 z" stroke="#ffca69" stroke-width="1.6" fill="#ffca69" stroke-linecap="round" stroke-linejoin="round" />
-  <text x="340.25" y="466" fill="#ffca69" font-size="19" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">70 bp</text>
-  <text x="55" y="521" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">0</text>
-  <text x="381" y="521" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">80</text>
-  <text x="258.75" y="521" fill="#c298ff" font-size="18" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">50 bp cutoff</text>
+  <text x="340.25" y="466" fill="#ffca69" font-size="21" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">70 bp</text>
+  <text x="55" y="521" fill="#c4c3df" font-size="20" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">0</text>
+  <text x="381" y="521" fill="#c4c3df" font-size="20" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">80</text>
+  <text x="258.75" y="521" fill="#c298ff" font-size="20" font-weight="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle" letter-spacing="0">50 bp cutoff</text>
   <g transform="translate(220 545) rotate(90)">
     <path d="M1 0 H17 m-6 -4 l6 4 l-6 4" stroke="#c298ff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
   </g>
   <rect x="24" y="569" width="392" height="106" fill="#050916" rx="18" opacity=".6" />
   <rect x="24" y="565" width="392" height="106" fill="url(#sink)" rx="18" stroke="#af8950" stroke-width="1.6" />
   <path d="M47 566 h90.2" stroke="#ffca69" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92" />
-  <text x="43" y="595" fill="#ffca69" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">BASE SEPOLIA</text>
+  <text x="43" y="595" fill="#ffca69" font-size="20" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">BASE SEPOLIA</text>
   <text x="43" y="626" fill="#f8f5ff" font-size="27" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.6">One alert for 0.9930</text>
-  <text x="43" y="653" fill="#c4c3df" font-size="18" font-weight="400" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="0">PriceDeviation  ·  source log #2</text>
+  <text x="43" y="653" fill="#c4c3df" font-size="20" font-weight="400" font-family="ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" text-anchor="start" letter-spacing="0">PriceDeviation  ·  source log #2</text>
   <g transform="translate(367 589)" fill="none">
     <path d="M2 1 H27 V31 L23 28 L19 31 L15 28 L11 31 L7 28 L2 31 Z" stroke="#ffca69" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M7 10 L11 14 L20 7 M8 21 H21" stroke="#ffca69" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
   </g>
   <rect x="24" y="695" width="392" height="91" fill="#050916" rx="18" opacity=".6" />
   <rect x="24" y="691" width="392" height="91" fill="url(#review)" rx="18" stroke="#42536b" stroke-width="1.6" />
-  <text x="43" y="717" fill="#c4c3df" font-size="18" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">OFF-CHAIN AI REVIEW</text>
+  <text x="43" y="717" fill="#c4c3df" font-size="20" font-weight="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="1.35">OFF-CHAIN AI REVIEW</text>
   <text x="43" y="747" fill="#f8f5ff" font-size="26" font-weight="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="-0.5">Scoring deferred</text>
-  <text x="43" y="770" fill="#c4c3df" font-size="18" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Missing USDC/USD and USDT/USD quotes.</text>
+  <text x="43" y="771" fill="#c4c3df" font-size="20" font-weight="400" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="start" letter-spacing="0">Missing both USD reference prices.</text>
 </svg>
