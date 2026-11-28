@@ -6,6 +6,8 @@ DAO 财库看到 1 USDC 只能换 0.9930 USDT 时，如何判断这条报价是�
 
 **[观看公开测试网录屏 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · [三笔原始回执](evidence/public-run.json) · [下载流程图 PNG](architecture.png) · [英文解说与中文字幕](video/README.md)
 
+[11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](demo-day/README.md) · [含双语备注的 PowerPoint](demo-day/Stablecoin-Alerts-Demo-Day.pptx)
+
 **For judges.** Stablecoin Alerts follows a simulated USDC/USDT quote through Ethereum Sepolia, Reactive Lasna and Base Sepolia. A deviation above 50 basis points creates a traceable alert. Given recent pair history and independent dollar references, an off-chain neural network recommends escalation or continued observation. The public run retained the alert and withheld its score because no reference packet was supplied. The video replays the same verified event with labeled synthetic inputs to demonstrate both model decisions.
 
 ## 公开部署与三笔运行交易

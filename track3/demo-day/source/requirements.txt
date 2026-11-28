@@ -1,0 +1,6 @@
+sherpa-onnx==1.12.30
+numpy==2.3.5
+PyMuPDF==1.26.6
+Pillow==13.0.0
+playwright==1.62.0
+python-pptx==1.0.2

@@ -1,0 +1,227 @@
+1
+00:00:00,760 --> 00:00:04,160
+Hello, I’m Luyao Zhang from Duke Kunshan University.
+
+2
+00:00:04,160 --> 00:00:08,017
+My digital avatar will walk you through a stablecoin alert.
+
+3
+00:00:08,347 --> 00:00:14,560
+Imagine running a DAO treasury. One USDC now buys only 0.9930 USDT.
+
+4
+00:00:14,560 --> 00:00:18,269
+Should a colleague review it right away?
+
+5
+00:00:18,599 --> 00:00:22,462
+I wanted to answer two questions. Did the alert actually happen?
+
+6
+00:00:22,462 --> 00:00:25,359
+What evidence makes it worth a colleague’s time?
+
+7
+00:00:26,119 --> 00:00:33,212
+The center line is parity. The green band extends half a percent on either side.
+
+8
+00:00:33,542 --> 00:00:38,233
+The control quote, 0.9990, is ten basis points below parity.
+
+9
+00:00:38,233 --> 00:00:43,628
+The animation’s 0.9950 sits exactly on the boundary. Both stay quiet.
+
+10
+00:00:43,958 --> 00:00:47,428
+At 0.9930, the gap reaches seventy basis points.
+
+11
+00:00:47,428 --> 00:00:51,839
+Crossing the threshold makes the contract request a callback.
+
+12
+00:00:52,599 --> 00:00:58,514
+These are actual testnet transactions. I published the simulated quote on Ethereum Sepolia.
+
+13
+00:00:58,514 --> 00:01:02,220
+The Lasna contract subscribes to this publisher’s events.
+
+14
+00:01:02,550 --> 00:01:06,587
+Lasna checks the source and threshold, then requests a callback.
+
+15
+00:01:06,587 --> 00:01:11,507
+The recipient on Base Sepolia records the alert. Both steps run automatically.
+
+16
+00:01:11,837 --> 00:01:17,055
+To match the event, compare the source transaction hash and log index two.
+
+17
+00:01:17,055 --> 00:01:21,427
+The three UTC block times are 13:38:12, 13:38:12 and 13:38:14.
+
+18
+00:01:21,757 --> 00:01:26,098
+The first and last block timestamps differ by two seconds in this run.
+
+19
+00:01:26,098 --> 00:01:28,517
+Each receipt has its own explorer link.
+
+20
+00:01:29,277 --> 00:01:31,940
+An off-chain model prioritizes review.
+
+21
+00:01:31,940 --> 00:01:38,597
+It needs earlier pair history and contemporaneous independent dollar references for both coins.
+
+22
+00:01:38,927 --> 00:01:45,271
+The public run had no dollar references. The alert was retained and the score withheld.
+
+23
+00:01:45,271 --> 00:01:47,386
+That is the observed outcome.
+
+24
+00:01:47,716 --> 00:01:54,085
+For the two alternatives I keep the on-chain alert fixed and switch labeled synthetic evidence.
+
+25
+00:01:54,085 --> 00:01:59,985
+Corroborating dollar weakness escalates review. Near-par references support observation.
+
+26
+00:02:00,745 --> 00:02:04,855
+The tool records alerts and moves zero stablecoin principal.
+
+27
+00:02:04,855 --> 00:02:10,129
+Repeating a source log sends one callback. Redelivering it records one alert.
+
+28
+00:02:10,459 --> 00:02:14,448
+The newer contracts cap both individual and lifetime service payments.
+
+29
+00:02:14,448 --> 00:02:19,064
+An empty balance or budget stops new work. Top-ups do not reset the lifetime cap.
+
+30
+00:02:19,394 --> 00:02:24,865
+All fifteen local tests passed, including valid runs, rejection, replay and recovery.
+
+31
+00:02:24,865 --> 00:02:28,791
+The public receipts shown earlier predate the added fee caps.
+
+32
+00:02:29,551 --> 00:02:31,511
+Back to the treasury desk.
+
+33
+00:02:31,511 --> 00:02:38,901
+At 0.9930 the team can first verify the three receipts, then identify the missing market evidence.
+
+34
+00:02:39,231 --> 00:02:44,884
+Next I want to connect independent market feeds and measure how many alerts warrant a human review.
+
+35
+00:02:44,884 --> 00:02:49,280
+The repository contains the code, receipts and reproduction steps. Thank you.
+
+36
+00:02:50,760 --> 00:02:52,832
+This is a prerecorded simulated Q&A.
+
+37
+00:02:52,832 --> 00:02:56,804
+First question: how can a judge verify that the destination executed?
+
+38
+00:02:57,134 --> 00:03:03,077
+Open the Base Sepolia receipt and find the recipient’s PriceDeviation event.
+
+39
+00:03:03,077 --> 00:03:09,099
+Match its source transaction hash and log index two to the event ID on Lasna.
+
+40
+00:03:09,429 --> 00:03:11,639
+This verifies that the alert was recorded.
+
+41
+00:03:11,639 --> 00:03:15,848
+Two seconds is the difference between the endpoint block timestamps in this run.
+
+42
+00:03:16,608 --> 00:03:19,797
+Second question: what work does Reactive actually do?
+
+43
+00:03:20,127 --> 00:03:27,984
+It subscribes to the designated contract, checks source, threshold and event identity, then requests the cross-chain callback.
+
+44
+00:03:27,984 --> 00:03:32,786
+Otherwise the team would operate its own listener, relay and replay controls.
+
+45
+00:03:33,116 --> 00:03:35,676
+I signed two quotes during the public test.
+
+46
+00:03:35,676 --> 00:03:41,334
+Once the threshold was crossed, the relay and target write needed no further signature from me.
+
+47
+00:03:42,094 --> 00:03:47,438
+Third question: does one pool quote establish a depeg?
+
+48
+00:03:47,768 --> 00:03:50,810
+One pool quote warrants investigation.
+
+49
+00:03:50,810 --> 00:03:56,734
+The model also needs history and independent dollar prices for both coins.
+
+50
+00:03:56,734 --> 00:04:01,857
+The public run kept the alert and identified the missing inputs.
+
+51
+00:04:02,187 --> 00:04:10,175
+Holding the same alert fixed, we can change the two dollar references and test whether the recommendation changes.
+
+52
+00:04:10,935 --> 00:04:16,288
+Final question: what if a callback fails or an event arrives twice?
+
+53
+00:04:16,618 --> 00:04:20,949
+A failed call leaves the destination count unchanged.
+
+54
+00:04:20,949 --> 00:04:26,505
+Inspect the proxy, target event, balance, debt and remaining budget.
+
+55
+00:04:26,505 --> 00:04:30,508
+Authorized redelivery can record that event once.
+
+56
+00:04:30,838 --> 00:04:34,723
+You can rerun all fifteen tests from the repository.
+
+57
+00:04:34,723 --> 00:04:39,280
+Please collect additional questions for my written follow-up.

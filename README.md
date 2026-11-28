@@ -6,6 +6,8 @@
 
 **[公开测试网演示视频 · 2 分 30 秒](https://cdn.jsdelivr.net/gh/sunshineluyao/reactive-builder-camp-2026@main/track3/video/public/demo.mp4)** · **[三个合约地址、三笔交易与复现说明](track3/README.md)** · [原始回执 JSON](track3/evidence/public-run.json) · [复制训练营提交链接](assignments/hackathon-submission.txt)
 
+[11 月 29 日营内 Demo Day · 展示与模拟问答（4 分 40 秒）](track3/demo-day/README.md) · [含双语备注的 PowerPoint](track3/demo-day/Stablecoin-Alerts-Demo-Day.pptx)
+
 2026 年 11 月 27 日完成六次测试网签名。0.9990 的对照报价只产生源链记录。0.9930 的测试报价触发了 Lasna 的回调请求，Base Sepolia 记下一条预警。公开运行缺少同期美元证据，复核程序暂缓评分。录屏还演示了模型在合成价格证据齐全时给出的两种建议。
 
 [![两次模拟报价经过 Lasna 的阈值判断，0.9930 在 Base 触发预警。链下系统核对回执和市场证据后决定复核优先级。](track3/architecture.png)](track3/README.md#从报价到人工复核)
